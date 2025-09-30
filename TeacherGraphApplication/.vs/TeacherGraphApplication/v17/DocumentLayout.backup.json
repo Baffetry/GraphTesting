@@ -49,7 +49,7 @@
               "RelativeDocumentMoniker": "TeacherGraphApplication\\MainWindow.xaml.cs",
               "ToolTip": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\MainWindow.xaml.cs",
               "RelativeToolTip": "TeacherGraphApplication\\MainWindow.xaml.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAADcAAAASAAAAAAAAAA==",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAiwA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-30T14:38:30.378Z",
               "IsPinned": true,
@@ -70,15 +70,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "TeacherGraphApplication",
+              "Title": "TeacherGraphApplication.csproj",
               "DocumentMoniker": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\TeacherGraphApplication.csproj",
               "RelativeDocumentMoniker": "TeacherGraphApplication\\TeacherGraphApplication.csproj",
               "ToolTip": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\TeacherGraphApplication.csproj",
               "RelativeToolTip": "TeacherGraphApplication\\TeacherGraphApplication.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-09-30T16:35:32.465Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-30T16:35:32.465Z"
             }
           ]
         }

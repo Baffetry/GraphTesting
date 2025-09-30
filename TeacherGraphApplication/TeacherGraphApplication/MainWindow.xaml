@@ -5,72 +5,96 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeacherGraphApplication"
         mc:Ignorable="d"
-        Title="Graph tester" Height="1080" Width="1920"
+        Title="Graph tester" 
         WindowState="Maximized"
         WindowStyle="ThreeDBorderWindow"
-        >
-    <Window.Resources>
+        MinWidth="1400" MinHeight="900">
 
+    <Window.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="/Fonts/#Inter"/>
         </Style>
 
-        <ControlTemplate x:Key="NoMouseOverButtonTemplate"   
-                 TargetType="Button">
+        <ControlTemplate x:Key="NoMouseOverButtonTemplate" TargetType="Button">
             <Border Background="{TemplateBinding Background}"  
-          BorderBrush="{TemplateBinding BorderBrush}"  
-          BorderThickness="{TemplateBinding BorderThickness}">
+                    BorderBrush="{TemplateBinding BorderBrush}"  
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="20">
                 <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"  
-                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
             </Border>
 
             <ControlTemplate.Triggers>
-                <Trigger Property="IsEnabled"  
-             Value="False">
-                    <Setter Property="Background"  
-              Value="{x:Static SystemColors.ControlLightBrush}" />
-                    <Setter Property="Foreground"  
-              Value="{x:Static SystemColors.GrayTextBrush}" />
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="{x:Static SystemColors.ControlLightBrush}" />
+                    <Setter Property="Foreground" Value="{x:Static SystemColors.GrayTextBrush}" />
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
     </Window.Resources>
-    <DockPanel>
-        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" DockPanel.Dock="Top" >
 
-            <Button x:Name="ButtonProperties" Width="500" Height="120" Margin="70,40,70,0" Background="#ffffff" Foreground="Black"                   
-              BorderBrush="Black" BorderThickness="4" Content="Характеристика" FontSize="40" FontWeight="Bold" 
-                MouseEnter="ButtonProperties_MouseEnter" MouseLeave="ButtonProperties_MouseLeave" Template="{StaticResource NoMouseOverButtonTemplate}">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="20"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
+    <!-- Основной контейнер с масштабированием -->
+    <Viewbox Stretch="Uniform" StretchDirection="DownOnly">
 
-            <Button x:Name="ButtonResults" Width="500" Height="120" Margin="70,40,70,0" Background="#ffffff" Foreground="Black"
-              BorderBrush="Black" BorderThickness="4" Content="Ответы" FontSize="40" FontWeight="Bold"                    
-                MouseEnter="ButtonResults_MouseEnter" MouseLeave="ButtonResults_MouseLeave" Template="{StaticResource NoMouseOverButtonTemplate}">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="20"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
+        <!-- Контент разработанный для 1920x1080 -->
+        <Grid Width="1920" Height="1080" Background="White">
 
-            <Button x:Name="ButtonExit" Width="500" Height="120" Margin="70,40,70,0" Background="#ffffff" Foreground="Black"                  
-              BorderBrush="Black" BorderThickness="4" Content="Выход" FontSize="40" FontWeight="Bold" MouseEnter="ButtonExit_MouseEnter"
-                MouseLeave="ButtonExit_MouseLeave" Click="ButtonExit_Click" Template="{StaticResource NoMouseOverButtonTemplate}">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="20"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
+            <DockPanel>
+                <!-- Основные кнопки навигации -->
+                <StackPanel Orientation="Horizontal" 
+                            VerticalAlignment="Top" 
+                            DockPanel.Dock="Top"
+                            HorizontalAlignment="Center">
 
-        </StackPanel>
-        <StackPanel>
-            
-        </StackPanel>
-    </DockPanel>
+                    <Button x:Name="ButtonProperties" 
+                            Width="500" Height="120" 
+                            Margin="70,40,70,0" 
+                            Background="#ffffff" 
+                            Foreground="Black"                   
+                            BorderBrush="Black" 
+                            BorderThickness="4" 
+                            Content="Характеристика" 
+                            FontSize="40" 
+                            FontWeight="Bold" 
+                            MouseEnter="ButtonProperties_MouseEnter" 
+                            MouseLeave="ButtonProperties_MouseLeave" 
+                            Template="{StaticResource NoMouseOverButtonTemplate}"/>
+
+                    <Button x:Name="ButtonResults" 
+                            Width="500" Height="120" 
+                            Margin="70,40,70,0" 
+                            Background="#ffffff" 
+                            Foreground="Black"
+                            BorderBrush="Black" 
+                            BorderThickness="4" 
+                            Content="Ответы" 
+                            FontSize="40" 
+                            FontWeight="Bold"                    
+                            MouseEnter="ButtonResults_MouseEnter" 
+                            MouseLeave="ButtonResults_MouseLeave" 
+                            Template="{StaticResource NoMouseOverButtonTemplate}"/>
+
+                    <Button x:Name="ButtonExit" 
+                            Width="500" Height="120" 
+                            Margin="70,40,70,0" 
+                            Background="#ffffff" 
+                            Foreground="Black"                  
+                            BorderBrush="Black" 
+                            BorderThickness="4" 
+                            Content="Выход" 
+                            FontSize="40" 
+                            FontWeight="Bold" 
+                            MouseEnter="ButtonExit_MouseEnter"
+                            MouseLeave="ButtonExit_MouseLeave" 
+                            Click="ButtonExit_Click" 
+                            Template="{StaticResource NoMouseOverButtonTemplate}"/>
+
+                </StackPanel>
+                <StackPanel>
+                    
+                </StackPanel>
+            </DockPanel>
+
+        </Grid>
+    </Viewbox>
 </Window>
