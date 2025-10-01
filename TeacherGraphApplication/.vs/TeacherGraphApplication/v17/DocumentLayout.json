@@ -1,21 +1,21 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\",
+  "WorkspaceRootPath": "C:\\Users\\matve\\Desktop\\\u0418\u041D\u0424\u0410\\MP\\ProjectGraph\\GraphTesting\\TeacherGraphApplication\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|d:\\data\\programming\\graphproject\\teachergraphapplication\\teachergraphapplication\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|c:\\users\\matve\\desktop\\\u0438\u043D\u0444\u0430\\mp\\projectgraph\\graphtesting\\teachergraphapplication\\teachergraphapplication\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|solutionrelative:teachergraphapplication\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|d:\\data\\programming\\graphproject\\teachergraphapplication\\teachergraphapplication\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|c:\\users\\matve\\desktop\\\u0438\u043D\u0444\u0430\\mp\\projectgraph\\graphtesting\\teachergraphapplication\\teachergraphapplication\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|solutionrelative:teachergraphapplication\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|d:\\data\\programming\\graphproject\\teachergraphapplication\\teachergraphapplication\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|c:\\users\\matve\\desktop\\\u0438\u043D\u0444\u0430\\mp\\projectgraph\\graphtesting\\teachergraphapplication\\teachergraphapplication\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|solutionrelative:teachergraphapplication\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|d:\\data\\programming\\graphproject\\teachergraphapplication\\teachergraphapplication\\teachergraphapplication.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "AbsoluteMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|c:\\users\\matve\\desktop\\\u0438\u043D\u0444\u0430\\mp\\projectgraph\\graphtesting\\teachergraphapplication\\teachergraphapplication\\teachergraphapplication.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|solutionrelative:teachergraphapplication\\teachergraphapplication.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     }
   ],
@@ -32,9 +32,9 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "MainWindow.xaml",
-              "DocumentMoniker": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\matve\\Desktop\\\u0418\u041D\u0424\u0410\\MP\\ProjectGraph\\GraphTesting\\TeacherGraphApplication\\TeacherGraphApplication\\MainWindow.xaml",
               "RelativeDocumentMoniker": "TeacherGraphApplication\\MainWindow.xaml",
-              "ToolTip": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\MainWindow.xaml",
+              "ToolTip": "C:\\Users\\matve\\Desktop\\\u0418\u041D\u0424\u0410\\MP\\ProjectGraph\\GraphTesting\\TeacherGraphApplication\\TeacherGraphApplication\\MainWindow.xaml",
               "RelativeToolTip": "TeacherGraphApplication\\MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2025-09-29T17:12:30.729Z",
@@ -45,11 +45,11 @@
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\matve\\Desktop\\\u0418\u041D\u0424\u0410\\MP\\ProjectGraph\\GraphTesting\\TeacherGraphApplication\\TeacherGraphApplication\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "TeacherGraphApplication\\MainWindow.xaml.cs",
-              "ToolTip": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\matve\\Desktop\\\u0418\u041D\u0424\u0410\\MP\\ProjectGraph\\GraphTesting\\TeacherGraphApplication\\TeacherGraphApplication\\MainWindow.xaml.cs",
               "RelativeToolTip": "TeacherGraphApplication\\MainWindow.xaml.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAiwA8AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-30T14:38:30.378Z",
               "IsPinned": true,
@@ -59,9 +59,9 @@
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "App.xaml",
-              "DocumentMoniker": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\App.xaml",
+              "DocumentMoniker": "C:\\Users\\matve\\Desktop\\\u0418\u041D\u0424\u0410\\MP\\ProjectGraph\\GraphTesting\\TeacherGraphApplication\\TeacherGraphApplication\\App.xaml",
               "RelativeDocumentMoniker": "TeacherGraphApplication\\App.xaml",
-              "ToolTip": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\App.xaml",
+              "ToolTip": "C:\\Users\\matve\\Desktop\\\u0418\u041D\u0424\u0410\\MP\\ProjectGraph\\GraphTesting\\TeacherGraphApplication\\TeacherGraphApplication\\App.xaml",
               "RelativeToolTip": "TeacherGraphApplication\\App.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2025-09-30T16:37:14.244Z",
@@ -71,13 +71,14 @@
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "TeacherGraphApplication.csproj",
-              "DocumentMoniker": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\TeacherGraphApplication.csproj",
+              "DocumentMoniker": "C:\\Users\\matve\\Desktop\\\u0418\u041D\u0424\u0410\\MP\\ProjectGraph\\GraphTesting\\TeacherGraphApplication\\TeacherGraphApplication\\TeacherGraphApplication.csproj",
               "RelativeDocumentMoniker": "TeacherGraphApplication\\TeacherGraphApplication.csproj",
-              "ToolTip": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\TeacherGraphApplication.csproj",
+              "ToolTip": "C:\\Users\\matve\\Desktop\\\u0418\u041D\u0424\u0410\\MP\\ProjectGraph\\GraphTesting\\TeacherGraphApplication\\TeacherGraphApplication\\TeacherGraphApplication.csproj",
               "RelativeToolTip": "TeacherGraphApplication\\TeacherGraphApplication.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-09-30T16:35:32.465Z"
+              "WhenOpened": "2025-09-30T16:35:32.465Z",
+              "EditorCaption": ""
             }
           ]
         }

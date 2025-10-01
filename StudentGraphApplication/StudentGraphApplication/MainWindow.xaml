@@ -5,8 +5,242 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StudentGraphApplication"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="StudentApp" 
+        WindowState="Maximized"
+        WindowStyle="ThreeDBorderWindow"
+        MinWidth="1400" MinHeight="900">
 
-    </Grid>
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="/Fonts/#Inter"/>
+        </Style>
+
+        <ControlTemplate x:Key="NoMouseOverButtonTemplate" TargetType="Button">
+            <Border Background="{TemplateBinding Background}"  
+                    BorderBrush="{TemplateBinding BorderBrush}"  
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="20">
+                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"  
+                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+            </Border>
+
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="{x:Static SystemColors.ControlLightBrush}" />
+                    <Setter Property="Foreground" Value="{x:Static SystemColors.GrayTextBrush}" />
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </Window.Resources>
+
+    <!-- Основной контейнер с масштабированием -->
+    <Viewbox Stretch="Uniform" StretchDirection="DownOnly">
+
+        <!-- Контент разработанный для 1920x1080 -->
+        <Grid Width="1920" Height="1080" Background="Transparent">
+
+            <!-- Основное белое окно с закруглением -->
+            <Border Background="#FFFFFF" CornerRadius="30"/>
+
+            <!-- MenuWindow (видимо по умолчанию) -->
+            <Grid x:Name="MenuPanel" Visibility="Visible">
+                <!-- Фоновое изображение графа -->
+                <Grid.Background>
+                    <ImageBrush Stretch="UniformToFill"/>
+                </Grid.Background>
+
+                <!-- Контейнер для кнопок -->
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <!-- Кнопка Начать -->
+                    <Button x:Name="StartButton" Width="630" Height="120" Margin="0,0,0,50"
+                            Background="#FFFFFF"
+                            BorderBrush="#000000"
+                            BorderThickness="7"
+                            Click="StartButton_Click"
+                            MouseEnter="StartButton_MouseEnter"
+                            MouseLeave="StartButton_MouseLeave"
+                            Template="{StaticResource NoMouseOverButtonTemplate}">
+                        <TextBlock Text="Начать" 
+                                  FontSize="40" 
+                                  FontWeight="Bold"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+                    </Button>
+
+                    <!-- Кнопка Файл -->
+                    <Button Width="630" Height="120" Margin="0,0,0,50"
+                            Name="FileButton"
+                            Background="#FFFFFF"
+                            BorderBrush="#000000"
+                            BorderThickness="7"
+                            MouseEnter="FileButton_MouseEnter"
+                            MouseLeave="FileButton_MouseLeave"
+                            Template="{StaticResource NoMouseOverButtonTemplate}">
+                        <TextBlock Text="Файл" 
+                                  FontSize="40" 
+                                  FontWeight="Bold"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+                    </Button>
+
+                    <!-- Кнопка Выход -->
+                    <Button Width="630" Height="120"
+                            Name="ExitButton"
+                            Background="#FFFFFF"
+                            BorderBrush="#000000"
+                            BorderThickness="7"
+                            Click="ExitButton_Click"
+                            MouseEnter="ExitButton_MouseEnter"
+                            MouseLeave="ExitButton_MouseLeave"
+                            Template="{StaticResource NoMouseOverButtonTemplate}">
+                        <TextBlock Text="Выход" 
+                                  FontSize="40" 
+                                  FontWeight="Bold"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+                    </Button>
+                </StackPanel>
+            </Grid>
+
+            <!-- TaskWindow (скрыто по умолчанию) -->
+            <Grid x:Name="TaskPanel" Visibility="Collapsed" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <!-- Столбик с кнопками задач -->
+                    <ColumnDefinition Width="110"/>
+                    <ColumnDefinition Width="14"/>
+
+                    <!-- Окно с задачей и полем ответа -->
+
+                    <!-- Место для графа -->
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Панель задач (столбик с кнопками) -->
+                <Border Grid.Column="0" 
+                        Background="#F1F7F7"
+                        Width="110" Height="1040"
+                        BorderThickness="3"
+                        HorizontalAlignment="Left"
+                        BorderBrush="#000000"
+                        CornerRadius="20">
+
+
+                </Border>
+
+                <!-- Окно графа -->
+                <Border Grid.Column="3" 
+                        Background="#F1F7F7"
+                        BorderBrush="#000000"
+                        BorderThickness="3"
+                        HorizontalAlignment="Right"
+                        Width="1001" Height="1040"
+                        CornerRadius="20"
+                        Margin="0,10,10,10"/>
+
+                <!-- Окно с задачей и полем ответа -->
+                <Border Grid.Column="2" 
+            Background="#F1F7F7"
+            BorderBrush="#000000"
+            Width="750" Height="1040"
+            HorizontalAlignment="Left"
+            BorderThickness="3"
+            CornerRadius="20"
+            Margin="0,10,10,10">
+
+                    <Grid>
+                        <!-- Основная сетка для размещения элементов -->
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Верхняя панель с таймером и заголовком -->
+                        <StackPanel Grid.Row="0" Margin="30,30,30,0">
+                            <!-- Панель таймер -->
+                            <Border Width="225" 
+                                Height="70" 
+                                  BorderBrush="#000000"
+                                     BorderThickness="3"
+                                    CornerRadius="20"
+                                    HorizontalAlignment="Left"
+                        Margin="0,0,0,10">
+                                <!-- Здесь будет содержимое таймера -->
+                            </Border>
+
+                            <!-- Label "Задача" -->
+                            <Label Content="Задача" 
+                       Width="175" 
+                       Height="45"
+                       HorizontalAlignment="Left"
+                       FontSize="40"
+                       FontWeight="Bold"
+                       Padding="0"
+                       Margin="0"/>
+                        </StackPanel>
+
+                        <!-- Нижняя панель с кнопками -->
+                        <StackPanel Grid.Row="2" 
+                        Orientation="Horizontal" 
+                        HorizontalAlignment="Center"
+                        Margin="30"
+                        VerticalAlignment="Bottom">
+
+                            <!-- Панель ответа -->
+                            <Border Width="440" 
+                        Height="70" 
+                        Background="White"
+                        BorderBrush="#000000"
+                        BorderThickness="3"
+                        CornerRadius="20"
+                        Margin="0,0,20,0">
+                                <!-- Здесь будет поле для ответа -->
+                            </Border>
+
+                            <!-- Панель сохранить ответ -->
+                            <Button Width="200" 
+                                    Name="SaveButton"
+        Height="70" 
+        Content="Сохранить"
+        FontSize="25"
+        FontWeight="Bold"
+        Background="#4dd49e"
+        BorderBrush="#000000"
+                                    Click="SaveButton_Click"
+        BorderThickness="3">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="border"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    CornerRadius="20">
+                                            <ContentPresenter HorizontalAlignment="Center" 
+                                  VerticalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="border" Property="Background" Value="#3bc48d"/>
+                                            </Trigger>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter TargetName="border" Property="Background" Value="#2aa47c"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+
+                        </StackPanel>
+
+                        <!-- Центральная область для содержимого задачи -->
+                        <ContentControl Grid.Row="1" 
+                           Margin="30"
+                           VerticalAlignment="Stretch"
+                           HorizontalAlignment="Stretch"/>
+
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+    </Viewbox>
 </Window>
