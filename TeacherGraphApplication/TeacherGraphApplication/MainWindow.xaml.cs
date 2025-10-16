@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -19,10 +20,14 @@ namespace TeacherGraphApplication
         {
             ButtonProperties.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4dd49e"));
         }
-
         private void ButtonProperties_MouseLeave(object sender, MouseEventArgs e)
         {
             ButtonProperties.Background = Brushes.White;
+        }
+        private void ButtonProperties_Click(object sender, RoutedEventArgs e)
+        {
+            PropertiesGrid.Visibility = Visibility.Visible;
+            ResultGrid.Visibility = Visibility.Collapsed;
         }
         #endregion
 
@@ -31,10 +36,14 @@ namespace TeacherGraphApplication
         {
             ButtonResults.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4dd49e"));
         }
-
         private void ButtonResults_MouseLeave(object sender, MouseEventArgs e)
         {
             ButtonResults.Background = Brushes.White;
+        }
+        private void ButtonResults_Click(object sender, RoutedEventArgs e)
+        {
+            PropertiesGrid.Visibility = Visibility.Collapsed;
+            ResultGrid.Visibility = Visibility.Visible;
         }
         #endregion
 
@@ -48,10 +57,29 @@ namespace TeacherGraphApplication
         {
             ButtonExit.Background = Brushes.White;
         }
-        
+
         private void ButtonExit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+        #endregion
+
+        #region Buttons events
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.Text, 0);
+        }
+        #endregion
+
+        #region ScrollBar
+        private void ScrollViewer_ScrollChanged(object sender, System.Windows.Controls.ScrollChangedEventArgs e)
+        {
+            var scrollViewer = (ScrollViewer)sender;
+
+            if (scrollViewer.ExtentHeight > scrollViewer.ViewportHeight)
+                Labels.Margin = new Thickness(0, 0, 17, 0);
+            else
+                Labels.Margin = new Thickness(0, 0, 0, 0);
         }
         #endregion
     }

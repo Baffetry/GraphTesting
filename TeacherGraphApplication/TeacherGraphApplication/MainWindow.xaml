@@ -11,11 +11,60 @@
         MinWidth="1400" MinHeight="900">
 
     <Window.Resources>
-        <Style TargetType="TextBlock">
+        <Style TargetType="TextBox">
             <Setter Property="FontFamily" Value="/Fonts/#Inter"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="40"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="BorderBrush" Value="#000000"/>
+            <Setter Property="BorderThickness" Value="4"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Background" Value="#ffffff"/>
+        </Style>
+        
+        <Style TargetType="Label">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="FontSize" Value="40"/>
+            <Setter Property="FontFamily" Value="/Fonts/#Inter"/>
+            <Setter Property="FontWeight" Value="Bold"/>
         </Style>
 
-        <ControlTemplate x:Key="NoMouseOverButtonTemplate" TargetType="Button">
+        <Style TargetType="ScrollBar">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollBar">
+                        <Border CornerRadius="6" Background="#ffffff" BorderBrush="#000000" BorderThickness="2">
+                            <Grid>
+                                <Track x:Name="PART_Track" IsDirectionReversed="true">
+                                    <Track.Thumb>
+                                        <Thumb>
+                                            <Thumb.Template>
+                                                <ControlTemplate TargetType="Thumb">
+                                                    <Border CornerRadius="4" Background="#4dd49e" 
+                                                            Margin="1" BorderBrush="#000000" BorderThickness="1"/>
+                                                </ControlTemplate>
+                                            </Thumb.Template>
+                                        </Thumb>
+                                    </Track.Thumb>
+                                </Track>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--<Style TargetType="Thumb">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Thumb">
+                        <Border CornerRadius="6" Background="#4dd49e" BorderBrush="#000000" BorderThickness="2"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>-->
+
+                <ControlTemplate x:Key="NoMouseOverButtonTemplate" TargetType="Button">
             <Border Background="{TemplateBinding Background}"  
                     BorderBrush="{TemplateBinding BorderBrush}"  
                     BorderThickness="{TemplateBinding BorderThickness}"
@@ -40,7 +89,6 @@
         <Grid Width="1920" Height="1080" Background="White">
 
             <DockPanel>
-                <!-- Основные кнопки навигации -->
                 <StackPanel Orientation="Horizontal" 
                             VerticalAlignment="Top" 
                             DockPanel.Dock="Top"
@@ -57,7 +105,8 @@
                             FontSize="40" 
                             FontWeight="Bold" 
                             MouseEnter="ButtonProperties_MouseEnter" 
-                            MouseLeave="ButtonProperties_MouseLeave" 
+                            MouseLeave="ButtonProperties_MouseLeave"
+                            Click="ButtonProperties_Click"
                             Template="{StaticResource NoMouseOverButtonTemplate}"/>
 
                     <Button x:Name="ButtonResults" 
@@ -72,6 +121,7 @@
                             FontWeight="Bold"                    
                             MouseEnter="ButtonResults_MouseEnter" 
                             MouseLeave="ButtonResults_MouseLeave" 
+                            Click="ButtonResults_Click"
                             Template="{StaticResource NoMouseOverButtonTemplate}"/>
 
                     <Button x:Name="ButtonExit" 
@@ -90,11 +140,88 @@
                             Template="{StaticResource NoMouseOverButtonTemplate}"/>
 
                 </StackPanel>
-                <StackPanel>
-                    
-                </StackPanel>
-            </DockPanel>
 
+
+                <!-- Окно характеристик -->
+                <Grid x:Name="PropertiesGrid" Visibility="Collapsed" Margin="80, 120, 80, 30">
+                    <!-- Разделение панелий -->
+                    <Grid.ColumnDefinitions>
+                        <!-- Панель характеристик графа -->
+                        <ColumnDefinition Width="600"/>
+                        <!-- Панель задач для контрольной работы -->
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Панель характеристик графа -->
+                    <StackPanel Grid.Column="0" Margin="5, 0">
+                        <Label  Content="Параметры графа: " Width="470" Height="70" 
+                                Margin="0, 10"/>
+
+                        <!-- Панель кол-ва вершин -->
+                        <DockPanel Margin="0, 20">
+                            <Label Content="Количество вершин:"/>
+                            <TextBox HorizontalAlignment="Right" Margin="20, 0" 
+                                     MaxLength="2" PreviewTextInput="TextBox_PreviewTextInput"/>
+                        </DockPanel>
+
+                        <!-- Панель кол-ва рёбер -->
+                        <DockPanel >
+                            <Label Content="Количество рёбер:"/>
+                            <TextBox HorizontalAlignment="Right" Margin="20, 0" 
+                                     MaxLength="2" PreviewTextInput="TextBox_PreviewTextInput"/>
+                        </DockPanel>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Margin="200,0,0,0">
+                        <Label Content="Задания: " HorizontalAlignment="Left" Margin="0,10"/>
+
+                        <!-- Панель задач для контрольной работы -->
+                        <Grid x:Name="TaskGrid" Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                        
+                        
+                        </Grid>
+                    </StackPanel>
+                
+                </Grid>
+                
+                <!-- Окно результатов -->
+                <DockPanel x:Name="ResultGrid" Visibility="Collapsed" Margin="80, 120, 80, 30">
+                    <!-- Загаловки -->
+                    <Grid x:Name="Labels" Height="60" DockPanel.Dock="Top" Margin="0,0,17,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Студент" FontWeight="Bold"/>
+                        <Label Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Решено" FontWeight="Bold"/>
+                        <Label Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Процент" FontWeight="Bold"/>
+                        <Label Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Оценка" FontWeight="Bold"/>
+                    </Grid>
+
+                    <!-- Данные -->
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" ScrollChanged="ScrollViewer_ScrollChanged">
+
+                        <Grid x:Name="ResultTable" Margin="0,15,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+                        
+                    </ScrollViewer>
+                    
+                </DockPanel>
+                
+            </DockPanel>
         </Grid>
     </Viewbox>
 </Window>
