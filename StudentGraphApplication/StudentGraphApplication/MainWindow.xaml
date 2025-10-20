@@ -171,7 +171,7 @@
                             <!-- Label "Задача" -->
                             <Label Content="Задача" 
                        Width="175" 
-                       Height="45"
+                       Height="50"
                        HorizontalAlignment="Left"
                        FontSize="40"
                        FontWeight="Bold"

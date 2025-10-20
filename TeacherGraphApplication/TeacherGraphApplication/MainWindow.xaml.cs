@@ -1,7 +1,10 @@
-﻿using System.Windows;
+﻿
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Task_Panel_Drawer;
+using Graph_Panel_Drawer;
 
 namespace TeacherGraphApplication
 {
@@ -10,9 +13,15 @@ namespace TeacherGraphApplication
     /// </summary>
     public partial class MainWindow : Window
     {
+        private IDrawProperties _propertiesDrower;
+
         public MainWindow()
         {
             InitializeComponent();
+            _propertiesDrower = PropertiesDrawer.SetPropertiesDrower(
+                new GraphPanelDrawer(new StackPanelCreator(new GraphDockPanelCreator())),
+                new TaskPanelDrawer(new MainDockPanel(new TaskDockPanelCreator()))
+            );
         }
 
         #region ButtonProperties
@@ -28,6 +37,8 @@ namespace TeacherGraphApplication
         {
             PropertiesGrid.Visibility = Visibility.Visible;
             ResultGrid.Visibility = Visibility.Collapsed;
+
+            _propertiesDrower.DrowProperties(PropertiesGrid);
         }
         #endregion
 
@@ -61,13 +72,6 @@ namespace TeacherGraphApplication
         private void ButtonExit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-        #endregion
-
-        #region Buttons events
-        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = !char.IsDigit(e.Text, 0);
         }
         #endregion
 
