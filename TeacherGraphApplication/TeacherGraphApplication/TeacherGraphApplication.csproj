@@ -9,4 +9,12 @@
     <AppDesignerFolder>Props</AppDesignerFolder>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Resources\free-icon-warning-159469.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\warning32x32_black.png" />
+  </ItemGroup>
+
 </Project>

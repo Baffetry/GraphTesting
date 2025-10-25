@@ -19,7 +19,7 @@
             <Setter Property="BorderBrush" Value="#000000"/>
             <Setter Property="BorderThickness" Value="4"/>
             <Setter Property="Width" Value="100"/>
-            <Setter Property="Background" Value="#ffffff"/>
+            <Setter Property="Background" Value="#f0f0f0"/>
         </Style>
 
         <Style TargetType="Label">
@@ -40,7 +40,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ScrollBar">
-                        <Border CornerRadius="6" Background="#ffffff" BorderBrush="#000000" BorderThickness="2">
+                        <Border CornerRadius="6" Background="#f0f0f0" BorderBrush="#000000" BorderThickness="2">
                             <Grid>
                                 <Track x:Name="PART_Track" IsDirectionReversed="true">
                                     <Track.Thumb>
@@ -89,6 +89,13 @@
             </Setter>
         </Style>
 
+        <Style x:Key="MessageBoxStyle" TargetType="Window">
+            <Setter Property="WindowStyle" Value="None"/>
+            <Setter Property="AllowsTransparency" Value="True"/>
+            <Setter Property="Background" Value="Transparent"/>
+
+        </Style>
+
         <ControlTemplate x:Key="NoMouseOverButtonTemplate" TargetType="Button">
             <Border Background="{TemplateBinding Background}"  
                     BorderBrush="{TemplateBinding BorderBrush}"  
@@ -107,21 +114,29 @@
         </ControlTemplate>
     </Window.Resources>
 
-    <!-- Основной контейнер с масштабированием -->
-    <Viewbox Stretch="Uniform" StretchDirection="DownOnly">
+    <Border Background="#f0f0f0">
+        <!-- Основной контейнер с масштабированием -->
+        <Viewbox Stretch="Uniform" StretchDirection="DownOnly" >
 
-        <!-- Контент разработанный для 1920x1080 -->
-        <Grid Width="1920" Height="1080" Background="White">
+            <!-- Контент разработанный для 1920x1080 -->
+            <Grid Width="1920" Height="1080" Background="#f0f0f0">
 
-            <StackPanel Orientation="Horizontal" 
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="180"/>
+                    <RowDefinition Height="720"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Horizontal" 
                             VerticalAlignment="Top" 
                             DockPanel.Dock="Top"
-                            HorizontalAlignment="Center">
+                            HorizontalAlignment="Center"
+                            Grid.Row="0">
 
-                <Button x:Name="ButtonProperties" 
+                    <Button x:Name="ButtonProperties" 
                             Width="500" Height="120" 
                             Margin="70,40,70,0" 
-                            Background="#ffffff" 
+                            Background="#f0f0f0" 
                             Foreground="Black"                   
                             BorderBrush="Black" 
                             BorderThickness="4" 
@@ -133,10 +148,10 @@
                             Click="ButtonProperties_Click"
                             Template="{StaticResource NoMouseOverButtonTemplate}"/>
 
-                <Button x:Name="ButtonResults" 
+                    <Button x:Name="ButtonResults" 
                             Width="500" Height="120" 
                             Margin="70,40,70,0" 
-                            Background="#ffffff" 
+                            Background="#f0f0f0" 
                             Foreground="Black"
                             BorderBrush="Black" 
                             BorderThickness="4" 
@@ -148,10 +163,10 @@
                             Click="ButtonResults_Click"
                             Template="{StaticResource NoMouseOverButtonTemplate}"/>
 
-                <Button x:Name="ButtonExit" 
+                    <Button x:Name="ButtonExit" 
                             Width="500" Height="120" 
                             Margin="70,40,70,0" 
-                            Background="#ffffff" 
+                            Background="#f0f0f0" 
                             Foreground="Black"                  
                             BorderBrush="Black" 
                             BorderThickness="4" 
@@ -162,60 +177,83 @@
                             MouseLeave="ButtonExit_MouseLeave" 
                             Click="ButtonExit_Click" 
                             Template="{StaticResource NoMouseOverButtonTemplate}"/>
-                
-            </StackPanel>
 
-            <!-- Окно характеристик -->
+                </StackPanel>
 
-            <DockPanel Margin="80, 280, 80, 30">
-                <Grid x:Name="PropertiesGrid" >
+                <!-- Окно характеристик -->
+
+                <DockPanel Margin="80, 50, 80, 10" Grid.Row="1">
                     
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="600"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                    <Grid x:Name="PropertiesGrid" DockPanel.Dock="Top">
 
-                </Grid>
-            </DockPanel>
-            
-            <!-- Окно результатов -->
-            <DockPanel x:Name="ResultGrid" Visibility="Collapsed" Margin="80, 280, 80, 30">
-                <!-- Загаловки -->
-                <Grid x:Name="Labels" Height="60" DockPanel.Dock="Top" Margin="0,0,17,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="600"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
 
-                    <Label Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Студент" FontWeight="Bold"/>
-                    <Label Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Решено" FontWeight="Bold"/>
-                    <Label Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Процент" FontWeight="Bold"/>
-                    <Label Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Оценка" FontWeight="Bold"/>
-                </Grid>
+                    </Grid>
 
-                <!-- Данные -->
-                <ScrollViewer VerticalScrollBarVisibility="Auto" ScrollChanged="ScrollViewer_ScrollChanged">
+                </DockPanel>
 
-                    <Grid x:Name="ResultTable" Margin="0,15,0,0">
-                        
+                <!-- Окно результатов -->
+                <DockPanel x:Name="ResultGrid" 
+                           Visibility="Collapsed" 
+                           Margin="80, 50, 80, 10"
+                           Grid.Row="1">
+                    <!-- Загаловки -->
+                    <Grid x:Name="Labels" Height="60" DockPanel.Dock="Top" Margin="0,0,17,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        
+
+                        <Label Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Студент" FontWeight="Bold"/>
+                        <Label Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Решено" FontWeight="Bold"/>
+                        <Label Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Процент" FontWeight="Bold"/>
+                        <Label Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Оценка" FontWeight="Bold"/>
                     </Grid>
 
+                    <!-- Данные -->
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" ScrollChanged="ScrollViewer_ScrollChanged">
 
+                        <Grid x:Name="ResultTable" Margin="0,15,0,0">
 
-                </ScrollViewer>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-            </DockPanel>
+                        </Grid>
+                    </ScrollViewer>
 
-            <!--</DockPanel>-->
-        </Grid>
-    </Viewbox>
+                </DockPanel>
+
+                <StackPanel x:Name="PropButtons" 
+                            Grid.Row="2"
+                            Orientation="Horizontal" 
+                            Visibility="Collapsed" 
+                            HorizontalAlignment="Right">
+
+                    <Button x:Name="ButtonSave" 
+                            Width="500" Height="120" 
+                            Margin="0, 0, 50, 60"
+                            Background="#f0f0f0" 
+                            Foreground="Black"
+                            BorderBrush="Black" 
+                            BorderThickness="4" 
+                            Content="Сохранить вариант" 
+                            FontSize="40" 
+                            FontWeight="Bold"                    
+                            MouseEnter="ButtonSaveVariant_MouseEnter" 
+                            MouseLeave="ButtonSaveVariant_MouseLeave" 
+                            Click="ButtonSaveVariant_Click"
+                            Template="{StaticResource NoMouseOverButtonTemplate}"/>
+                </StackPanel>
+            </Grid>
+        </Viewbox>
+    </Border>
 </Window>

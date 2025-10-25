@@ -1,20 +1,13 @@
 ﻿using System.Windows.Controls;
-using System.Windows;
+using TeacherGraphApplication.Props.TaskPanelDrawer.Generators;
 
 namespace Task_Panel_Drawer
 {
     class TaskPanelDrawer : ITaskDrawer
     {
-        private IMainDockPanel creator;
-
-        public TaskPanelDrawer(IMainDockPanel mainDockPanel)
-        {
-            creator = mainDockPanel;
-        }
-
         public void Draw(Grid grid)
         {
-            var panel = creator.GetDockPanel();
+            var panel = new DockPanelWithScrollViewerGenerator().GenerateDockPanelWithScrollViewer();
 
             Grid.SetColumn(panel, 1);
             grid.Children.Add(panel);
