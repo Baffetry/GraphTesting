@@ -248,9 +248,9 @@
                             Content="Сохранить вариант" 
                             FontSize="40" 
                             FontWeight="Bold"                    
-                            MouseEnter="ButtonSaveVariant_MouseEnter" 
-                            MouseLeave="ButtonSaveVariant_MouseLeave" 
-                            Click="ButtonSaveVariant_Click"
+                            MouseEnter="ButtonSave_MouseEnter" 
+                            MouseLeave="ButtonSave_MouseLeave" 
+                            Click="ButtonSave_Click"
                             Template="{StaticResource NoMouseOverButtonTemplate}"/>
                 </StackPanel>
             </Grid>

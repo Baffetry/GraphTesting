@@ -29,16 +29,36 @@ namespace TeacherGraphApplication
     {
         public MessageBoxResult result { get; set; }
 
-        public CustomMessageBox(string message, string title, MessageType type)
+        public CustomMessageBox(string message, string title, MessageType type, MessageBoxButton button)
         {
             InitializeComponent();
 
-            TitleLabel.Content = title;
-            ContentLabel.Content = message;
             SetIcon(type);
 
-            ButtonYes.Click += (s, e) => { result = MessageBoxResult.Yes; Close(); };
-            ButtonNo.Click += (s, e) => { result = MessageBoxResult.No; Close(); };
+            TitleLabel.Content = title;
+            ContentLabel.Content = message;
+
+            switch (button)
+            {
+                case MessageBoxButton.YesNo:
+
+                    YesNoPanel.Visibility = Visibility.Visible;
+                    
+                    ButtonYes.Click += (s, e) => { result = MessageBoxResult.Yes; Close(); };
+                    ButtonNo.Click += (s, e) => { result = MessageBoxResult.No; Close(); };
+
+                    break;
+
+                case MessageBoxButton.OK:
+
+                    OkPanel.Visibility = Visibility.Visible;
+
+                    ButtonOk.Click += (s, e) => { result = MessageBoxResult.OK; Close(); };
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -47,9 +67,9 @@ namespace TeacherGraphApplication
                 this.DragMove();
         }
 
-        public static MessageBoxResult Show(string message, string title, MessageType type)
+        public static MessageBoxResult Show(string message, string title, MessageType type, MessageBoxButton button)
         {
-            var messageBox = new CustomMessageBox(message, title, type);
+            var messageBox = new CustomMessageBox(message, title, type, button);
             messageBox.ShowDialog();
             return messageBox.result;
         }
@@ -65,54 +85,18 @@ namespace TeacherGraphApplication
             IconImage.Source = new BitmapImage(new Uri(iconPath, UriKind.Relative));
         }
 
-        #region Button yes
-        private void ButtonYes_MouseEnter(object sender, MouseEventArgs e)
-        {
-            ButtonYes.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4dd49e"));
-        }
-
-        private void ButtonYes_MouseLeave(object sender, MouseEventArgs e)
-        {
-            ButtonYes.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#f0f0f0"));
-        }
-
-        private void ButtonYes_Click(object sender, RoutedEventArgs e)
-        {
-            result = MessageBoxResult.Yes; Close();
-        }
-        #endregion
-
-        #region Button no
-        private void ButtonNo_MouseEnter(object sender, MouseEventArgs e)
-        {
-            ButtonNo.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#db5174"));
-        }
-
-        private void ButtonNo_MouseLeave(object sender, MouseEventArgs e)
-        {
-            ButtonNo.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#f0f0f0"));
-        }
-
-        private void ButtonNo_Click(object sender, RoutedEventArgs e)
-        {
-            result = MessageBoxResult.No; Close();
-        }
-        #endregion
-
         #region Button close
         private void ButtonClose_MouseEnter(object sender, MouseEventArgs e)
         {
             ButtonClose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#db5174"));
         }
-
         private void ButtonClose_MouseLeave(object sender, MouseEventArgs e)
         {
             ButtonClose.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#f0f0f0"));
         }
-
         private void ButtonClose_Click(object sender, RoutedEventArgs e)
         {
-            result= MessageBoxResult.Cancel; Close();
+            result = MessageBoxResult.Cancel; Close();
         }
         #endregion
     }

@@ -1,5 +1,4 @@
 ﻿using Graph_Panel_Drawer;
-using System.Windows;
 using System.Windows.Controls;
 using Task_Panel_Drawer;
 

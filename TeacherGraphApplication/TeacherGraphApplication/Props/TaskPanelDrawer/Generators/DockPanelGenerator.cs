@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using TeacherGraphApplication.Props.TaskPanelDrawer.Generators.Container;
+using BoxContainerSpace;
 
 namespace TeacherGraphApplication.Props.TaskPanelDrawer.Generators
 {
@@ -20,7 +20,7 @@ namespace TeacherGraphApplication.Props.TaskPanelDrawer.Generators
             var dockPanel = new DockPanel();
             dockPanel.Margin = new Thickness(0, 10, 0, 10);
 
-            var checkBox = container[index];
+            var checkBox = container.GetCheckBox(index);
             var label = labelGenerator.GenerateLabel(content);
 
             DockPanel.SetDock(label, Dock.Left);

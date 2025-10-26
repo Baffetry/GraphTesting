@@ -1,13 +1,12 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using Serializer;
 
 namespace TeacherGraphApplication.Props.TaskPanelDrawer.Generators
 {
     internal class ScrollViewerGenerator
     {
         private DockPanelGenerator generator;
-        private int amountOfPanels;
+        private int amountOfPanels = (int)Application.Current.FindResource("AmountOfTask");
 
         private string[] taskName =
         {
@@ -26,7 +25,6 @@ namespace TeacherGraphApplication.Props.TaskPanelDrawer.Generators
         public ScrollViewerGenerator()
         {
             generator = new DockPanelGenerator(new LabelGenerator());
-            amountOfPanels = new Serializer<int>().LoadFromFile("AmountOfTasks.json");
         }
 
         public ScrollViewer GenerateScrollViewer()

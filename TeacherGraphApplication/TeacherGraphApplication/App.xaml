@@ -1,8 +1,10 @@
 ﻿<Application x:Class="TeacherGraphApplication.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:TeacherGraphApplication"
+             xmlns:local="clr-namespace:TeacherGraphApplication" xmlns:system="clr-namespace:System;assembly=netstandard"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <system:Int32 x:Key="AmountOfTask">10</system:Int32>
+        <system:Int32 x:Key="AmountOfGraphParameters">2</system:Int32>
     </Application.Resources>
 </Application>

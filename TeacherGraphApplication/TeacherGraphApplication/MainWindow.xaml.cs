@@ -1,13 +1,15 @@
 ﻿
+using Graph_Panel_Drawer;
+using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using Task_Panel_Drawer;
-using Graph_Panel_Drawer;
-using TeacherGraphApplication.Props.TaskPanelDrawer.Generators.Container;
-using Microsoft.Win32;
+using TeacherGraphApplication.CWC;
 using TeacherGraphApplication.Props.Brusher;
+using BoxContainerSpace;
+using System.Text.Json;
+using System.IO;
 
 namespace TeacherGraphApplication
 {
@@ -18,7 +20,6 @@ namespace TeacherGraphApplication
     {
         private IContainer container;
         private Brusher brush;
-       
 
         public MainWindow()
         {
@@ -38,43 +39,57 @@ namespace TeacherGraphApplication
             var result = CustomMessageBox.Show(
                 "Хотите сохранить параметры контрольной работы?",
                 "Предупреждение",
-                MessageType.Warning
+                MessageType.Warning,
+                MessageBoxButton.YesNo
             );
 
             if (result is MessageBoxResult.Yes)
-                e.Cancel = !SaveWithFileDialog();
+                e.Cancel = !SaveWithFileDialog("Template");
             else if (result is MessageBoxResult.Cancel || result is MessageBoxResult.None)
                 e.Cancel = true;
-
-            container.Stop();
         }
         #endregion
 
         #region Functional methods of the main window
-        private void LoadWithFileDialog()
-        {
-            var openDialog = new OpenFileDialog 
-            {
-                Filter = "JSON files (*.json)|*.json",
-                DefaultExt = ".json"
-            };
+        //private void LoadWithFileDialog()
+        //{
+        //    //var openDialog = new OpenFileDialog 
+        //    //{
+        //    //    Filter = "JSON files (*.json)|*.json",
+        //    //    DefaultExt = ".json"
+        //    //};
 
 
-            if (openDialog.ShowDialog() is true)
-                container.Load(openDialog.FileName);
-        }
-        private bool SaveWithFileDialog()
+        //    //if (openDialog.ShowDialog() is true)
+        //    //    container.Load(openDialog.FileName);
+        //}
+        private bool SaveWithFileDialog(string fileName)
         {
             var saveDialog = new SaveFileDialog
             {
                 Filter = "JSON files (*.json)|*.json",
                 DefaultExt = ".json",
-                FileName = "ControlWork"
+                FileName = fileName
             };
+
+            var generator = new ControlWorkConfigGenerator(container.GetStates(), null);
 
             if (saveDialog.ShowDialog() is true)
             {
-                container.Save(saveDialog.FileName);
+                var temp = new ControlWorkConfig(
+                    int.Parse(container.GetTextBox(0).Text),
+                    int.Parse(container.GetTextBox(1).Text),
+                    generator.GenerateControlWorkConfig()
+                );
+
+                var json = JsonSerializer.Serialize(temp, new JsonSerializerOptions {
+                    IncludeFields = true,
+                    WriteIndented = true,
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                });
+
+                File.WriteAllText(saveDialog.FileName, json);
+
                 return true;
             }
 
@@ -107,11 +122,12 @@ namespace TeacherGraphApplication
             container.Load();
 
             var properties = new PropertiesDrawer(
-                new GraphPanelDrawer(new StackPanelCreator(new GraphDockPanelCreator())),
+                new GraphPanelDrawer(),
                 new TaskPanelDrawer()
             );
 
             properties.Draw(PropertiesGrid);
+
         }
         #endregion
 
@@ -171,19 +187,33 @@ namespace TeacherGraphApplication
         #endregion
 
         #region Button save variant
-        private void ButtonSaveVariant_MouseEnter(object sender, MouseEventArgs e)
+        private void ButtonSave_MouseEnter(object sender, MouseEventArgs e)
         {
             ButtonSave.Background = brush.Enable;
         }
 
-        private void ButtonSaveVariant_MouseLeave(object sender, MouseEventArgs e)
+        private void ButtonSave_MouseLeave(object sender, MouseEventArgs e)
         {
             ButtonSave.Background = brush.Disable;
         }
 
-        private void ButtonSaveVariant_Click(object sender, RoutedEventArgs e)
+        private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
-            SaveWithFileDialog();
+            if (string.IsNullOrEmpty(container.GetTextBox(0).Text) ||
+                string.IsNullOrEmpty(container.GetTextBox(1).Text))
+            {
+                var result = CustomMessageBox.Show(
+                    "Проверьте, правильно ли вы ввели кол-во рёбер или вершин.",
+                    "Предупреждение",
+                    MessageType.Warning,
+                    MessageBoxButton.OK
+                );
+
+                return;
+            }
+
+            container.Update();
+            SaveWithFileDialog("ControlWorkConfig");
         }
         #endregion
     }
