@@ -186,15 +186,23 @@ namespace TeacherGraphApplication
         }
         #endregion
 
-        #region Button save variant
+        #region ButtonSave
         private void ButtonSave_MouseEnter(object sender, MouseEventArgs e)
         {
             ButtonSave.Background = brush.Enable;
+
+            ButtonSave.Height = 120;
+            ButtonSave.Width = 500;
+            ButtonSave.FontSize = 44;
         }
 
         private void ButtonSave_MouseLeave(object sender, MouseEventArgs e)
         {
             ButtonSave.Background = brush.Disable;
+
+            ButtonSave.Height = 110;
+            ButtonSave.Width = 490;
+            ButtonSave.FontSize = 40;
         }
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
@@ -214,6 +222,33 @@ namespace TeacherGraphApplication
 
             container.Update();
             SaveWithFileDialog("ControlWorkConfig");
+        }
+        #endregion
+
+        #region ButtonReset
+        private void ButtonReset_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ButtonReset.Background = brush.Exit;
+            ButtonReset.Height = 120;
+            ButtonReset.Width = 120;
+
+            ResetButtonIcon.Height = 90;
+            ResetButtonIcon.Width = 90;
+        }
+
+        private void ButtonReset_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ButtonReset.Background = brush.Disable;
+            ButtonReset.Height = 110;
+            ButtonReset.Width = 110;
+
+            ResetButtonIcon.Height = 70;
+            ResetButtonIcon.Width = 70;
+        }
+
+        private void ButtonReset_Click(object sender, RoutedEventArgs e)
+        {
+            container.Stop();
         }
         #endregion
     }

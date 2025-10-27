@@ -54,6 +54,7 @@ namespace TeacherGraphApplication
                     OkPanel.Visibility = Visibility.Visible;
 
                     ButtonOk.Click += (s, e) => { result = MessageBoxResult.OK; Close(); };
+
                     break;
 
                 default:
@@ -78,8 +79,8 @@ namespace TeacherGraphApplication
         {
             string iconPath = type switch
             {
-                MessageType.Warning => "/Resources/warning32x32_black.png",
-                _ => "/Resources/warning32x32_black.png"
+                MessageType.Warning => "/Resources/warning96x96.png",
+                _ => "/Resources/warning96x96.png"
             };
 
             IconImage.Source = new BitmapImage(new Uri(iconPath, UriKind.Relative));
@@ -97,6 +98,54 @@ namespace TeacherGraphApplication
         private void ButtonClose_Click(object sender, RoutedEventArgs e)
         {
             result = MessageBoxResult.Cancel; Close();
+        }
+        #endregion
+
+        #region ButtonYes
+        private void ButtonYes_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ButtonYes.Height = 60;
+            ButtonYes.Width = 70;
+            ButtonYes.FontSize = 22;
+        }
+
+        private void ButtonYes_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ButtonYes.Height = 50;
+            ButtonYes.Width = 60;
+            ButtonYes.FontSize = 18;
+        }
+        #endregion
+
+        #region ButtonNo
+        private void ButtonNo_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ButtonNo.Height = 60;
+            ButtonNo.Width = 70;
+            ButtonNo.FontSize = 22;
+        }
+
+        private void ButtonNo_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ButtonNo.Height = 50;
+            ButtonNo.Width = 60;
+            ButtonNo.FontSize = 18;
+        }
+        #endregion
+
+        #region ButtonOk
+        private void ButtonOk_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ButtonOk.Height = 60;
+            ButtonOk.Width = 70;
+            ButtonOk.FontSize = 22;
+        }
+
+        private void ButtonOk_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ButtonOk.Height = 50;
+            ButtonOk.Width = 60;
+            ButtonOk.FontSize = 18;
         }
         #endregion
     }

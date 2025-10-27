@@ -11,16 +11,14 @@
 
   <ItemGroup>
     <None Remove="Resources\free-icon-warning-159469.png" />
+    <None Remove="Resources\reset96x96.png" />
+    <None Remove="Resources\warning64x64.png" />
+    <None Remove="Resources\warning96x96.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Serializer">
-      <HintPath>..\..\CommonDll\Serializer.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Resources\warning32x32_black.png" />
+    <Resource Include="Resources\reset96x96.png" />
+    <Resource Include="Resources\warning96x96.png" />
   </ItemGroup>
 
 </Project>

@@ -3,24 +3,19 @@
   "WorkspaceRootPath": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|d:\\data\\programming\\graphproject\\teachergraphapplication\\teachergraphapplication\\custommessageboxwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|solutionrelative:teachergraphapplication\\custommessageboxwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\dotnet\\sdk\\9.0.305\\Sdks\\Microsoft.NET.Sdk.WindowsDesktop\\targets\\Microsoft.WinFX.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|d:\\data\\programming\\graphproject\\teachergraphapplication\\teachergraphapplication\\custommessageboxwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|solutionrelative:teachergraphapplication\\custommessageboxwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|d:\\data\\programming\\graphproject\\teachergraphapplication\\teachergraphapplication\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|solutionrelative:teachergraphapplication\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|d:\\data\\programming\\graphproject\\teachergraphapplication\\teachergraphapplication\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|solutionrelative:teachergraphapplication\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|d:\\data\\programming\\graphproject\\teachergraphapplication\\teachergraphapplication\\boxcontainer\\boxcontainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|solutionrelative:teachergraphapplication\\boxcontainer\\boxcontainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|d:\\data\\programming\\graphproject\\teachergraphapplication\\teachergraphapplication\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|solutionrelative:teachergraphapplication\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|d:\\data\\programming\\graphproject\\teachergraphapplication\\teachergraphapplication\\custommessageboxwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|solutionrelative:teachergraphapplication\\custommessageboxwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,11 +25,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 169,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\MainWindow.xaml",
               "RelativeDocumentMoniker": "TeacherGraphApplication\\MainWindow.xaml",
@@ -53,7 +48,7 @@
               "RelativeDocumentMoniker": "TeacherGraphApplication\\MainWindow.xaml.cs",
               "ToolTip": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\MainWindow.xaml.cs",
               "RelativeToolTip": "TeacherGraphApplication\\MainWindow.xaml.cs",
-              "ViewState": "AgIAAIUAAAAAAAAAAAAwwNMAAAAXAAAAAAAAAA==",
+              "ViewState": "AgIAABkAAAAAAAAAAAAgwDQAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-16T14:37:38.205Z",
               "IsPinned": true,
@@ -61,40 +56,26 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "BoxContainer.cs",
-              "DocumentMoniker": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\BoxContainer\\BoxContainer.cs",
-              "RelativeDocumentMoniker": "TeacherGraphApplication\\BoxContainer\\BoxContainer.cs",
-              "ToolTip": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\BoxContainer\\BoxContainer.cs",
-              "RelativeToolTip": "TeacherGraphApplication\\BoxContainer\\BoxContainer.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAAQwHMAAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-26T21:41:34.514Z",
+              "DocumentIndex": 0,
+              "Title": "Microsoft.WinFX.targets",
+              "DocumentMoniker": "C:\\Program Files\\dotnet\\sdk\\9.0.305\\Sdks\\Microsoft.NET.Sdk.WindowsDesktop\\targets\\Microsoft.WinFX.targets",
+              "ToolTip": "C:\\Program Files\\dotnet\\sdk\\9.0.305\\Sdks\\Microsoft.NET.Sdk.WindowsDesktop\\targets\\Microsoft.WinFX.targets",
+              "ViewState": "AgIAAKwCAAAAAAAAAADgv8ICAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2025-10-27T18:41:41.001Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "CustomMessageBoxWindow.xaml.cs",
               "DocumentMoniker": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\CustomMessageBoxWindow.xaml.cs",
               "RelativeDocumentMoniker": "TeacherGraphApplication\\CustomMessageBoxWindow.xaml.cs",
               "ToolTip": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\CustomMessageBoxWindow.xaml.cs",
               "RelativeToolTip": "TeacherGraphApplication\\CustomMessageBoxWindow.xaml.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAlwDgAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-26T21:39:29.003Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "CustomMessageBoxWindow.xaml",
-              "DocumentMoniker": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\CustomMessageBoxWindow.xaml",
-              "RelativeDocumentMoniker": "TeacherGraphApplication\\CustomMessageBoxWindow.xaml",
-              "ToolTip": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\CustomMessageBoxWindow.xaml",
-              "RelativeToolTip": "TeacherGraphApplication\\CustomMessageBoxWindow.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-10-26T21:39:05.717Z",
+              "WhenOpened": "2025-10-27T18:39:16.469Z",
               "EditorCaption": ""
             }
           ]

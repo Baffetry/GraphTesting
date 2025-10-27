@@ -101,13 +101,13 @@
             <Label x:Name="ContentLabel" 
                    Content="Some text"
                    Width="480"
-                   Height="160"
+                   Height="140"
                    FontSize="24"
                    Margin="10, 20, 10, 10"/>
 
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="70"/>
                 </Grid.RowDefinitions>
 
                 <StackPanel x:Name="YesNoPanel"
@@ -118,31 +118,39 @@
                             Margin="15,0">
 
                     <Button x:Name="ButtonYes" 
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
                             Height="50"
                             Width="60"
                             Content="Yes" 
                             Margin="0,0,3,0" 
-                            FontSize="20"
+                            FontSize="18"
                             FontWeight="Bold"
                             FontFamily="/Fonts/#Inter"
                             Foreground="Black"     
                             Background="#4dd49e"
                             BorderBrush="Black" 
                             BorderThickness="1" 
-                            Template="{StaticResource NoMouseOverButtonTemplate}"/>
+                            Template="{StaticResource NoMouseOverButtonTemplate}"
+                            MouseEnter="ButtonYes_MouseEnter"
+                            MouseLeave="ButtonYes_MouseLeave"/>
 
                     <Button x:Name="ButtonNo" 
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
                             Content="No" 
                             Height="50"
                             Width="60"
-                            FontSize="20"
+                            FontSize="18"
                             FontWeight="Bold"
                             FontFamily="/Fonts/#Inter"
                             Foreground="Black"   
                             Background="#db5174"
                             BorderBrush="Black" 
                             BorderThickness="1" 
-                            Template="{StaticResource NoMouseOverButtonTemplate}"/>
+                            Template="{StaticResource NoMouseOverButtonTemplate}"
+                            MouseEnter="ButtonNo_MouseEnter"
+                            MouseLeave="ButtonNo_MouseLeave"/>
                     
                 </StackPanel>
 
@@ -157,14 +165,16 @@
                             Content="OK" 
                             Height="50"
                             Width="60"
-                            FontSize="20"
+                            FontSize="18"
                             FontWeight="Bold"
                             FontFamily="/Fonts/#Inter"
                             Foreground="Black"   
                             Background="#4dd49e"
                             BorderBrush="Black" 
                             BorderThickness="1" 
-                            Template="{StaticResource NoMouseOverButtonTemplate}"/>
+                            Template="{StaticResource NoMouseOverButtonTemplate}"
+                            MouseEnter="ButtonOk_MouseEnter"
+                            MouseLeave="ButtonOk_MouseLeave"/>
                     
                 </StackPanel>
                 
