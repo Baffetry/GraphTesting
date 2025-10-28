@@ -1,0 +1,55 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\matve\\Desktop\\\u0418\u041D\u0424\u0410\\MP\\ProjectGraph\\GraphTesting\\GraphTesting\\TeacherGraphApplication\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|c:\\users\\matve\\desktop\\\u0438\u043D\u0444\u0430\\mp\\projectgraph\\graphtesting\\graphtesting\\teachergraphapplication\\teachergraphapplication\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|solutionrelative:teachergraphapplication\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|c:\\users\\matve\\desktop\\\u0438\u043D\u0444\u0430\\mp\\projectgraph\\graphtesting\\graphtesting\\teachergraphapplication\\teachergraphapplication\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|solutionrelative:teachergraphapplication\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 169,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\matve\\Desktop\\\u0418\u041D\u0424\u0410\\MP\\ProjectGraph\\GraphTesting\\GraphTesting\\TeacherGraphApplication\\TeacherGraphApplication\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "TeacherGraphApplication\\MainWindow.xaml",
+              "ToolTip": "C:\\Users\\matve\\Desktop\\\u0418\u041D\u0424\u0410\\MP\\ProjectGraph\\GraphTesting\\GraphTesting\\TeacherGraphApplication\\TeacherGraphApplication\\MainWindow.xaml",
+              "RelativeToolTip": "TeacherGraphApplication\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-10-20T20:17:15.627Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\matve\\Desktop\\\u0418\u041D\u0424\u0410\\MP\\ProjectGraph\\GraphTesting\\GraphTesting\\TeacherGraphApplication\\TeacherGraphApplication\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "TeacherGraphApplication\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\matve\\Desktop\\\u0418\u041D\u0424\u0410\\MP\\ProjectGraph\\GraphTesting\\GraphTesting\\TeacherGraphApplication\\TeacherGraphApplication\\MainWindow.xaml.cs",
+              "RelativeToolTip": "TeacherGraphApplication\\MainWindow.xaml.cs",
+              "ViewState": "AgIAADwAAAAAAAAAAAAgwEYAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-16T14:37:38.205Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
