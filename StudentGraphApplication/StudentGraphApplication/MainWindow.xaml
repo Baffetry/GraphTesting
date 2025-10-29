@@ -169,17 +169,19 @@
 
                 <!-- Панель задач (столбик с кнопками) -->
                 <Border Grid.Column="0" 
-                        Background="#f0f0f0"
-                        Width="110" Height="1040"
-                        BorderThickness="3"
-                        HorizontalAlignment="Left"
-                        BorderBrush="#000000"
-                        CornerRadius="20">
+        Background="#f0f0f0"
+        Width="110" Height="1040"
+        BorderThickness="3"
+        HorizontalAlignment="Left"
+        BorderBrush="#000000"
+        CornerRadius="20">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <StackPanel x:Name="TaskButtonsPanel" 
-                                    Orientation="Vertical" 
-                                    Margin="10"
-                                    VerticalAlignment="Top"/>
+                    Orientation="Vertical" 
+                    Margin="10"
+                    VerticalAlignment="Top">
+                            <!-- Кнопки задач будут добавляться здесь через код -->
+                        </StackPanel>
                     </ScrollViewer>
                 </Border>
 

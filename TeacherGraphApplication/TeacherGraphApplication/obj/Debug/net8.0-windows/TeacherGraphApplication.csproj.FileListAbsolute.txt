@@ -70,3 +70,9 @@ C:\Users\matve\Desktop\ИНФА\MP\ProjectGraph\GraphTesting\GraphTesting\Teache
 C:\Users\matve\Desktop\ИНФА\MP\ProjectGraph\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\bin\Debug\net8.0-windows\Encryption.dll
 C:\Users\matve\Desktop\ИНФА\MP\ProjectGraph\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\TeacherGraphApplication.csproj.AssemblyReference.cache
 C:\Users\matve\Desktop\ИНФА\MP\ProjectGraph\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\TeacherG.AC8625A1.Up2Date
+C:\Users\matve\Desktop\ИНФА\MP\ProjectGraph\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\bin\Debug\net8.0-windows\Encryption.dll
+C:\Users\matve\Desktop\ИНФА\MP\ProjectGraph\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\TeacherGraphApplication.csproj.AssemblyReference.cache
+C:\Users\matve\Desktop\ИНФА\MP\ProjectGraph\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\CustomMessageBoxWindow.g.cs
+C:\Users\matve\Desktop\ИНФА\MP\ProjectGraph\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\App.baml
+C:\Users\matve\Desktop\ИНФА\MP\ProjectGraph\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\CustomMessageBoxWindow.baml
+C:\Users\matve\Desktop\ИНФА\MP\ProjectGraph\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\TeacherG.AC8625A1.Up2Date
