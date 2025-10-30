@@ -11,7 +11,12 @@
 
   <ItemGroup>
     <None Remove="Resources\free-icon-warning-159469.png" />
+    <None Remove="Resources\newpercent96x96.png" />
+    <None Remove="Resources\openFile96x96.png" />
+    <None Remove="Resources\person96x96.png" />
+    <None Remove="Resources\rate96x96.png" />
     <None Remove="Resources\reset96x96.png" />
+    <None Remove="Resources\solvedproblems96x96.png" />
     <None Remove="Resources\warning64x64.png" />
     <None Remove="Resources\warning96x96.png" />
   </ItemGroup>
@@ -23,7 +28,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\newpercent96x96.png" />
+    <Resource Include="Resources\openFile96x96.png" />
+    <Resource Include="Resources\person96x96.png" />
+    <Resource Include="Resources\rate96x96.png" />
     <Resource Include="Resources\reset96x96.png" />
+    <Resource Include="Resources\solvedproblems96x96.png" />
     <Resource Include="Resources\warning96x96.png" />
   </ItemGroup>
 

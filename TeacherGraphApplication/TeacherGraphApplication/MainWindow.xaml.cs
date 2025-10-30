@@ -1,15 +1,20 @@
 ﻿
+using BoxContainerSpace;
+using Generators;
 using Graph_Panel_Drawer;
 using Microsoft.Win32;
+using Results;
+using StudentResultsSpace;
+using System.IO;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using Task_Panel_Drawer;
 using TeacherGraphApplication.CWC;
 using TeacherGraphApplication.Props.Brusher;
-using BoxContainerSpace;
-using System.Text.Json;
-using System.IO;
+using TeacherGraphApplication.Results.Generators;
 
 namespace TeacherGraphApplication
 {
@@ -19,6 +24,8 @@ namespace TeacherGraphApplication
     public partial class MainWindow : Window
     {
         private IContainer container;
+        private ITableGenerator _tableGenerator;
+        private ScrollViewer _scrollViewer;
         private Brusher brush;
 
         public MainWindow()
@@ -29,6 +36,10 @@ namespace TeacherGraphApplication
 
             brush = new Brusher();
             container = BoxContainer.Instance();
+            _tableGenerator = TableGenerator.Instance(new GridGenerator(Labels),
+                new StudentResultGenerator(ResultTable));
+
+            _scrollViewer = FindName("ResultViewer") as ScrollViewer;
         }
 
         #region MainWindow event
@@ -51,18 +62,6 @@ namespace TeacherGraphApplication
         #endregion
 
         #region Functional methods of the main window
-        //private void LoadWithFileDialog()
-        //{
-        //    //var openDialog = new OpenFileDialog 
-        //    //{
-        //    //    Filter = "JSON files (*.json)|*.json",
-        //    //    DefaultExt = ".json"
-        //    //};
-
-
-        //    //if (openDialog.ShowDialog() is true)
-        //    //    container.Load(openDialog.FileName);
-        //}
         private bool SaveWithFileDialog(string fileName)
         {
             var saveDialog = new SaveFileDialog
@@ -96,29 +95,53 @@ namespace TeacherGraphApplication
 
             return false;
         }
+
+        private List<Border> GetColumnElementsFromResultTable(int columnIndex)
+        {
+            List<Border> borders = new List<Border>();
+
+            foreach (UIElement child in ResultTable.Children)
+                if (child is Border border && Grid.GetColumn(border) == columnIndex)
+                    borders.Add(border);
+
+            return borders;
+        }
+
+        private void ChangeBordersBackgroundInResultTable(int index, SolidColorBrush colorBrush)
+        {
+            var borders = GetColumnElementsFromResultTable(index);
+            foreach (var border in borders)
+                border.Background = colorBrush;
+        }
+
         #endregion
 
         #region ButtonProperties
         private void ButtonProperties_MouseEnter(object sender, MouseEventArgs e)
         {
-            ButtonProperties.Background = brush.Enable;
+            ButtonProperties.Background = brush.CandyGreen;
         }
         private void ButtonProperties_MouseLeave(object sender, MouseEventArgs e)
         {
             if (ButtonProperties.IsEnabled)
-                ButtonProperties.Background = brush.Disable;
+                ButtonProperties.Background = brush.CandyGray;
         }
         private void ButtonProperties_Click(object sender, RoutedEventArgs e)
         {
+            // Props
             PropertiesGrid.Visibility = Visibility.Visible;
             PropButtons.Visibility = Visibility.Visible;
+
+            // Results
             ResultGrid.Visibility = Visibility.Collapsed;
+            OpenFilePanel.Visibility = Visibility.Collapsed;
+            FilterPanel.Visibility = Visibility.Collapsed;
 
             ButtonProperties.IsEnabled = false;
             ButtonResults.IsEnabled = true;
 
-            ButtonProperties.Background = brush.Enable;
-            ButtonResults.Background = brush.Disable;
+            ButtonProperties.Background = brush.CandyGreen;
+            ButtonResults.Background = brush.CandyGray;
 
             container.Load();
 
@@ -135,47 +158,51 @@ namespace TeacherGraphApplication
         #region ButtonResults
         private void ButtonResults_MouseEnter(object sender, MouseEventArgs e)
         {
-            ButtonResults.Background = brush.Enable;
+            ButtonResults.Background = brush.CandyGreen;
         }
         private void ButtonResults_MouseLeave(object sender, MouseEventArgs e)
         {
             if (ButtonResults.IsEnabled)
-                ButtonResults.Background = brush.Disable;
+                ButtonResults.Background = brush.CandyGray;
         }
         private void ButtonResults_Click(object sender, RoutedEventArgs e)
         {
+            // Props
             PropertiesGrid.Visibility = Visibility.Collapsed;
             PropButtons.Visibility = Visibility.Collapsed;
+
+            // Results
             ResultGrid.Visibility = Visibility.Visible;
+            OpenFilePanel.Visibility = Visibility.Visible;
 
             ButtonProperties.IsEnabled = true;
             ButtonResults.IsEnabled = false;
 
-            ButtonProperties.Background = brush.Disable;
-            ButtonResults.Background = brush.Enable;
+            ButtonProperties.Background = brush.CandyGray;
+            ButtonResults.Background = brush.CandyGreen;
 
             container.Save();
+
+            _tableGenerator.DrawLabels();
         }
         #endregion
 
         #region ButtonExit
         private void ButtonExit_MouseEnter(object sender, MouseEventArgs e)
         {
-            ButtonExit.Background = brush.Exit;
+            ButtonExit.Background = brush.CandyRed;
         }
-
         private void ButtonExit_MouseLeave(object sender, MouseEventArgs e)
         {
-            ButtonExit.Background = brush.Disable;
+            ButtonExit.Background = brush.CandyGray;
         }
-
         private void ButtonExit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
         #endregion
 
-        #region ScrollBar
+        #region ScrollViewer
         private void ScrollViewer_ScrollChanged(object sender, System.Windows.Controls.ScrollChangedEventArgs e)
         {
             var scrollViewer = (ScrollViewer)sender;
@@ -185,27 +212,34 @@ namespace TeacherGraphApplication
             else
                 Labels.Margin = new Thickness(0, 0, 0, 0);
         }
+
+        private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (_tableGenerator != null)
+            {
+                _scrollViewer.ScrollToVerticalOffset(_scrollViewer.VerticalOffset - e.Delta);
+                e.Handled = true;
+            }
+        }
         #endregion
 
         #region ButtonSave
         private void ButtonSave_MouseEnter(object sender, MouseEventArgs e)
         {
-            ButtonSave.Background = brush.Enable;
+            ButtonSave.Background = brush.CandyGreen;
 
             ButtonSave.Height = 120;
             ButtonSave.Width = 500;
             ButtonSave.FontSize = 44;
         }
-
         private void ButtonSave_MouseLeave(object sender, MouseEventArgs e)
         {
-            ButtonSave.Background = brush.Disable;
+            ButtonSave.Background = brush.CandyGray;
 
             ButtonSave.Height = 110;
             ButtonSave.Width = 490;
             ButtonSave.FontSize = 40;
         }
-
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(container.GetTextBox(0).Text) ||
@@ -229,28 +263,197 @@ namespace TeacherGraphApplication
         #region ButtonReset
         private void ButtonReset_MouseEnter(object sender, MouseEventArgs e)
         {
-            ButtonReset.Background = brush.Exit;
+            ButtonReset.Background = brush.CandyRed;
             ButtonReset.Height = 120;
             ButtonReset.Width = 120;
 
             ResetButtonIcon.Height = 90;
             ResetButtonIcon.Width = 90;
         }
-
         private void ButtonReset_MouseLeave(object sender, MouseEventArgs e)
         {
-            ButtonReset.Background = brush.Disable;
+            ButtonReset.Background = brush.CandyGray;
             ButtonReset.Height = 110;
             ButtonReset.Width = 110;
 
             ResetButtonIcon.Height = 70;
             ResetButtonIcon.Width = 70;
         }
-
         private void ButtonReset_Click(object sender, RoutedEventArgs e)
         {
             container.Stop();
         }
         #endregion
+
+        #region ButtonOpenFile
+        private void ButtonOpenFile_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ButtonOpenFile.Background = brush.CandyGreen;
+            ButtonOpenFile.Height = 120;
+            ButtonOpenFile.Width = 120;
+
+            OpenFileI.Height = 90;
+            OpenFileI.Width = 90;
+        }
+
+        private void ButtonOpenFile_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ButtonOpenFile.Background = brush.CandyGray;
+            ButtonOpenFile.Height = 110;
+            ButtonOpenFile.Width = 110;
+
+            OpenFileI.Height = 70;
+            OpenFileI.Width = 70;
+        }
+
+        private void ButtonOpenFile_Click(object sender, RoutedEventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog
+            { 
+                Filter = "(*.txt)|*.txt",
+                Title = "Выберите файл"
+            };
+
+            if (openFileDialog.ShowDialog() is true)
+            {
+                _tableGenerator.DrawResults(openFileDialog.FileName);
+                FilterPanel.Visibility = Visibility.Visible;
+            }
+        }
+        #endregion
+
+        #region ButtonNameFilter
+        private void ButtonNameFilter_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Mouse.AddPreviewMouseWheelHandler(this, ScrollViewer_PreviewMouseWheel);
+
+            ButtonNameFilter.Background = brush.CandyBlue;
+            ButtonNameFilter.Height = 120;
+            ButtonNameFilter.Width = 120;
+
+            FByPerson.Height = 90;
+            FByPerson.Width = 90;
+
+            ChangeBordersBackgroundInResultTable(0, brush.CandyBlue);
+        }
+        private void ButtonNameFilter_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Mouse.RemovePreviewMouseWheelHandler(this, ScrollViewer_PreviewMouseWheel);
+
+            ButtonNameFilter.Background = brush.CandyGray;
+            ButtonNameFilter.Height = 110;
+            ButtonNameFilter.Width = 110;
+
+            FByPerson.Height = 70;
+            FByPerson.Width = 70;
+            
+            ChangeBordersBackgroundInResultTable(0, brush.CandyGray);
+        }
+        private void ButtonNameFilter_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        #endregion
+
+        #region ButtonSPFilter
+        private void ButtonSPFilter_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Mouse.AddPreviewMouseWheelHandler(this, ScrollViewer_PreviewMouseWheel);
+
+            ButtonSPFilter.Background = brush.CandyBlue;
+            ButtonSPFilter.Height = 120;
+            ButtonSPFilter.Width = 120;
+
+            FBySP.Height = 90;
+            FBySP.Width = 90;
+
+            ChangeBordersBackgroundInResultTable(1, brush.CandyBlue);
+        }
+        private void ButtonSPFilter_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Mouse.RemovePreviewMouseWheelHandler(this, ScrollViewer_PreviewMouseWheel);
+
+            ButtonSPFilter.Background = brush.CandyGray;
+            ButtonSPFilter.Height = 110;
+            ButtonSPFilter.Width = 110;
+
+            FBySP.Height = 70;
+            FBySP.Width = 70;
+
+            ChangeBordersBackgroundInResultTable(1, brush.CandyGray);
+        }
+        private void ButtonSPFilter_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        #endregion
+
+        #region ButtonPercentFilter
+        private void ButtonPercentFilter_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Mouse.AddPreviewMouseWheelHandler(this, ScrollViewer_PreviewMouseWheel);
+
+            ButtonPercentFilter.Background = brush.CandyBlue;
+            ButtonPercentFilter.Height = 120;
+            ButtonPercentFilter.Width = 120;
+
+            FByPercent.Height = 90;
+            FByPercent.Width = 90;
+
+            ChangeBordersBackgroundInResultTable(2, brush.CandyBlue);
+        }
+        private void ButtonPercentFilter_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Mouse.RemovePreviewMouseWheelHandler(this, ScrollViewer_PreviewMouseWheel);
+
+            ButtonPercentFilter.Background = brush.CandyGray;
+            ButtonPercentFilter.Height = 110;
+            ButtonPercentFilter.Width = 110;
+
+            FByPercent.Height = 70;
+            FByPercent.Width = 70;
+
+            ChangeBordersBackgroundInResultTable(2, brush.CandyGray);
+        }
+        private void ButtonPercentFilter_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        #endregion
+
+        #region ButtonRateFilter
+        private void ButtonRateFilter_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Mouse.AddPreviewMouseWheelHandler(this, ScrollViewer_PreviewMouseWheel);
+
+            ButtonRateFilter.Background = brush.CandyBlue;
+            ButtonRateFilter.Height = 120;
+            ButtonRateFilter.Width = 120;
+
+            FByRate.Height = 110;
+            FByRate.Width = 110;
+
+            ChangeBordersBackgroundInResultTable(3, brush.CandyBlue);
+        }
+        private void ButtonRateFilter_MouseLeave(object sender, MouseEventArgs e)
+        {
+            Mouse.RemovePreviewMouseWheelHandler(this, ScrollViewer_PreviewMouseWheel);
+
+            ButtonRateFilter.Background = brush.CandyGray;
+            ButtonRateFilter.Height = 110;
+            ButtonRateFilter.Width = 110;
+
+            FByRate.Height = 90;
+            FByRate.Width = 90;
+
+            ChangeBordersBackgroundInResultTable(3, brush.CandyGray);
+        }
+        private void ButtonRateFilter_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        #endregion
+
     }
 }

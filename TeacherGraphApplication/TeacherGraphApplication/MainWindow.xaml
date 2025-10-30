@@ -19,7 +19,7 @@
             <Setter Property="BorderBrush" Value="#000000"/>
             <Setter Property="BorderThickness" Value="4"/>
             <Setter Property="Width" Value="100"/>
-            <Setter Property="Background" Value="#f0f0f0"/>
+            <Setter Property="Background" Value="#ededed"/>
         </Style>
 
         <Style TargetType="Label">
@@ -40,7 +40,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ScrollBar">
-                        <Border CornerRadius="6" Background="#f0f0f0" BorderBrush="#000000" BorderThickness="2">
+                        <Border CornerRadius="6" Background="#ededed" BorderBrush="#000000" BorderThickness="2">
                             <Grid>
                                 <Track x:Name="PART_Track" IsDirectionReversed="true">
                                     <Track.Thumb>
@@ -114,12 +114,12 @@
         </ControlTemplate>
     </Window.Resources>
 
-    <Border Background="#f0f0f0">
+    <Border Background="#ededed">
         <!-- Основной контейнер с масштабированием -->
         <Viewbox Stretch="Uniform" StretchDirection="DownOnly" >
 
             <!-- Контент разработанный для 1920x1080 -->
-            <Grid Width="1920" Height="1080" Background="#f0f0f0">
+            <Grid Width="1920" Height="1080" Background="#ededed">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="180"/>
@@ -136,7 +136,7 @@
                     <Button x:Name="ButtonProperties" 
                             Width="500" Height="120" 
                             Margin="70,40,70,0" 
-                            Background="#f0f0f0" 
+                            Background="#ededed" 
                             Foreground="Black"                   
                             BorderBrush="Black" 
                             BorderThickness="4" 
@@ -151,7 +151,7 @@
                     <Button x:Name="ButtonResults" 
                             Width="500" Height="120" 
                             Margin="70,40,70,0" 
-                            Background="#f0f0f0" 
+                            Background="#ededed" 
                             Foreground="Black"
                             BorderBrush="Black" 
                             BorderThickness="4" 
@@ -166,7 +166,7 @@
                     <Button x:Name="ButtonExit" 
                             Width="500" Height="120" 
                             Margin="70,40,70,0" 
-                            Background="#f0f0f0" 
+                            Background="#ededed" 
                             Foreground="Black"                  
                             BorderBrush="Black" 
                             BorderThickness="4" 
@@ -197,26 +197,20 @@
 
                 <!-- Окно результатов -->
                 <DockPanel x:Name="ResultGrid" 
-                           Visibility="Collapsed" 
+                           Visibility="Visible" 
                            Margin="80, 50, 80, 10"
                            Grid.Row="1">
                     <!-- Загаловки -->
                     <Grid x:Name="Labels" Height="60" DockPanel.Dock="Top" Margin="0,0,17,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
 
-                        <Label Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Студент" FontWeight="Bold"/>
-                        <Label Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Решено" FontWeight="Bold"/>
-                        <Label Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Процент" FontWeight="Bold"/>
-                        <Label Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" Content="Оценка" FontWeight="Bold"/>
                     </Grid>
 
                     <!-- Данные -->
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" ScrollChanged="ScrollViewer_ScrollChanged">
+                    <ScrollViewer   x:Name="ResultViewer"
+                                    Margin="0, 20, 0, 10"
+                                    VerticalScrollBarVisibility="Auto" 
+                                    ScrollChanged="ScrollViewer_ScrollChanged"
+                                    PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
 
                         <Grid x:Name="ResultTable" Margin="0,15,0,0">
 
@@ -244,7 +238,7 @@
                             VerticalAlignment="Center"
                             Width="110" Height="110" 
                             Margin="0, 0, 20, 0"
-                            Background="#f0f0f0" 
+                            Background="#ededed" 
                             Foreground="Black"
                             BorderBrush="Black" 
                             BorderThickness="4" 
@@ -262,7 +256,7 @@
                             VerticalAlignment="Center"
                             Width="490" Height="110" 
                             Margin="0, 0, 60, 0"
-                            Background="#f0f0f0" 
+                            Background="#ededed" 
                             Foreground="Black"
                             BorderBrush="Black" 
                             BorderThickness="4" 
@@ -273,6 +267,115 @@
                             MouseLeave="ButtonSave_MouseLeave" 
                             Click="ButtonSave_Click"
                             Template="{StaticResource NoMouseOverButtonTemplate}"/>
+                </StackPanel>
+
+                <StackPanel x:Name="OpenFilePanel"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Visibility="Collapsed"
+                            Grid.Row="2"
+                            Margin="80, 0, 0, 0">
+
+                    <Button x:Name="ButtonOpenFile" 
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Width="110" Height="110" 
+                            Margin="10, 0"
+                            Background="#ededed" 
+                            Foreground="Black"
+                            BorderBrush="Black" 
+                            BorderThickness="4" 
+                            FontSize="40" 
+                            FontWeight="Bold"                    
+                            MouseEnter="ButtonOpenFile_MouseEnter" 
+                            MouseLeave="ButtonOpenFile_MouseLeave" 
+                            Click="ButtonOpenFile_Click"
+                            Template="{StaticResource NoMouseOverButtonTemplate}">
+                        <Image x:Name="OpenFileI" Source="/Resources/openFile96x96.png" Height="70" Width="70" />
+                    </Button>
+
+                </StackPanel>
+                
+                <StackPanel x:Name="FilterPanel"
+                            Grid.Row="2" 
+                            Orientation="Horizontal" 
+                            Visibility="Collapsed" 
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0,0,0,0">
+                    
+                    <Button x:Name="ButtonNameFilter" 
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Width="110" Height="110" 
+                            Margin="10, 0"
+                            Background="#ededed" 
+                            Foreground="Black"
+                            BorderBrush="Black" 
+                            BorderThickness="4" 
+                            FontSize="40" 
+                            FontWeight="Bold"                    
+                            MouseEnter="ButtonNameFilter_MouseEnter" 
+                            MouseLeave="ButtonNameFilter_MouseLeave" 
+                            Click="ButtonNameFilter_Click"
+                            Template="{StaticResource NoMouseOverButtonTemplate}">
+                        <Image x:Name="FByPerson" Source="/Resources/person96x96.png" Height="70" Width="70" />
+                    </Button>
+                    
+                    <Button x:Name="ButtonSPFilter" 
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Width="110" Height="110" 
+                            Margin="10, 0"
+                            Background="#ededed" 
+                            Foreground="Black"
+                            BorderBrush="Black" 
+                            BorderThickness="4" 
+                            FontSize="40" 
+                            FontWeight="Bold"                    
+                            MouseEnter="ButtonSPFilter_MouseEnter" 
+                            MouseLeave="ButtonSPFilter_MouseLeave" 
+                            Click="ButtonSPFilter_Click"
+                            Template="{StaticResource NoMouseOverButtonTemplate}">
+                        <Image x:Name="FBySP" Source="/Resources/solvedproblems96x96.png" Height="70" Width="70" />
+                    </Button>
+                    
+                    <Button x:Name="ButtonPercentFilter" 
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Width="110" Height="110" 
+                            Margin="10, 0"
+                            Background="#ededed" 
+                            Foreground="Black"
+                            BorderBrush="Black" 
+                            BorderThickness="4" 
+                            FontSize="40" 
+                            FontWeight="Bold"                    
+                            MouseEnter="ButtonPercentFilter_MouseEnter" 
+                            MouseLeave="ButtonPercentFilter_MouseLeave" 
+                            Click="ButtonPercentFilter_Click"
+                            Template="{StaticResource NoMouseOverButtonTemplate}">
+                        <Image x:Name="FByPercent" Source="/Resources/newpercent96x96.png" Height="70" Width="70" />
+                    </Button>
+                    
+                    <Button x:Name="ButtonRateFilter" 
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Width="110" Height="110" 
+                            Margin="10, 0"
+                            Background="#ededed" 
+                            Foreground="Black"
+                            BorderBrush="Black" 
+                            BorderThickness="4" 
+                            FontSize="40" 
+                            FontWeight="Bold"                    
+                            MouseEnter="ButtonRateFilter_MouseEnter" 
+                            MouseLeave="ButtonRateFilter_MouseLeave" 
+                            Click="ButtonRateFilter_Click"
+                            Template="{StaticResource NoMouseOverButtonTemplate}">
+                        <Image x:Name="FByRate" Source="/Resources/rate96x96.png" Height="90" Width="90" />
+                    </Button>
+                    
                 </StackPanel>
             </Grid>
         </Viewbox>

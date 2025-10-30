@@ -5,12 +5,14 @@ namespace TeacherGraphApplication.Props.Brusher
 {
     internal class Brusher
     {
-        private SolidColorBrush enableBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4dd49e"));
-        private SolidColorBrush disableBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#f0f0f0"));
-        private SolidColorBrush exitBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#db5174"));
+        private SolidColorBrush candyGray = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ededed"));
+        private SolidColorBrush candyGreen = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4dd49e"));
+        private SolidColorBrush candyRed = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#db5174"));
+        private SolidColorBrush candyBlue = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#82e1fe"));
 
-        public SolidColorBrush Enable => enableBrush;
-        public SolidColorBrush Disable => disableBrush;
-        public SolidColorBrush Exit => exitBrush;
+        public SolidColorBrush CandyGray => candyGray;
+        public SolidColorBrush CandyGreen => candyGreen;
+        public SolidColorBrush CandyRed => candyRed;
+        public SolidColorBrush CandyBlue => candyBlue;
     }
 }
