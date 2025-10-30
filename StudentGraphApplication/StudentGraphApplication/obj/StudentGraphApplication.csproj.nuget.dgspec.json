@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\matve\\Desktop\\ИНФА\\MP\\ProjectGraph\\GraphTesting\\StudentGraphApplication\\StudentGraphApplication\\StudentGraphApplication.csproj": {}
+    "D:\\Data\\Programming\\GraphProject\\StudentGraphApplication\\StudentGraphApplication\\StudentGraphApplication.csproj": {}
   },
   "projects": {
-    "C:\\Users\\matve\\Desktop\\ИНФА\\MP\\ProjectGraph\\GraphTesting\\StudentGraphApplication\\StudentGraphApplication\\StudentGraphApplication.csproj": {
+    "D:\\Data\\Programming\\GraphProject\\StudentGraphApplication\\StudentGraphApplication\\StudentGraphApplication.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\matve\\Desktop\\ИНФА\\MP\\ProjectGraph\\GraphTesting\\StudentGraphApplication\\StudentGraphApplication\\StudentGraphApplication.csproj",
+        "projectUniqueName": "D:\\Data\\Programming\\GraphProject\\StudentGraphApplication\\StudentGraphApplication\\StudentGraphApplication.csproj",
         "projectName": "StudentGraphApplication",
-        "projectPath": "C:\\Users\\matve\\Desktop\\ИНФА\\MP\\ProjectGraph\\GraphTesting\\StudentGraphApplication\\StudentGraphApplication\\StudentGraphApplication.csproj",
-        "packagesPath": "C:\\Users\\matve\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\matve\\Desktop\\ИНФА\\MP\\ProjectGraph\\GraphTesting\\StudentGraphApplication\\StudentGraphApplication\\obj\\",
+        "projectPath": "D:\\Data\\Programming\\GraphProject\\StudentGraphApplication\\StudentGraphApplication\\StudentGraphApplication.csproj",
+        "packagesPath": "C:\\Users\\aleks\\.nuget\\packages\\",
+        "outputPath": "D:\\Data\\Programming\\GraphProject\\StudentGraphApplication\\StudentGraphApplication\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\matve\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\aleks\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

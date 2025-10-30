@@ -21,7 +21,7 @@ namespace Generators
             {
                 _grid.ColumnDefinitions.Add(new ColumnDefinition 
                 { 
-                    Width = new GridLength(437, GridUnitType.Pixel)
+                    Width = new GridLength(1, GridUnitType.Star)
                 });
 
                 var label = new LabelGenerator().GenerateLabel(_labels[i]);

@@ -447,9 +447,8 @@ namespace StudentGraphApplication
                     string directory = Path.GetDirectoryName(dialog.FileName);
                     string graphResultsPath = Path.Combine(directory, "GraphResults.txt");
 
-                    string resultLine = $"=== {DateTime.Now:yyyy-MM-dd HH:mm:ss} ===\n" +
-                                       $"Результаты:\n{encryptedJson}\n" +
-                                       new string('=', 50) + "\n";
+                    string resultLine = encryptedJson + "\n";
+
                     if (File.Exists(graphResultsPath))
                     {
                         File.AppendAllText(graphResultsPath, Environment.NewLine + resultLine);
@@ -530,8 +529,6 @@ namespace StudentGraphApplication
             var savedAnswer = studentResults.GetAnswerForQuestion(task.Content?.ToString());
             AnswerTextBox.Text = savedAnswer?.ToString() ?? "";
         }
-        #endregion
-
-       
+        #endregion      
     }
 }
