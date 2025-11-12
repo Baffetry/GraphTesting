@@ -2,15 +2,15 @@
 
 namespace Filters
 {
-    public class SortByName(bool ascending) : ISorter
+    public class SortByName : Filter
     {
-        public IEnumerable<StudentResults> Sort(ResultContainer container)
+        public override IEnumerable<StudentResults> Sort(ResultContainer container)
         {
             IEnumerable<StudentResults> sorted = container.Students
                     .OrderBy(s => s.Student.LastName)
                     .ThenBy(s => s.Student.FirstName);
 
-            return ascending ? sorted : sorted.Reverse();
+            return Ascending ? sorted : sorted.Reverse();
         }
     }
 }

@@ -125,6 +125,34 @@ namespace TeacherGraphApplication
             foreach (var border in borders)
                 border.Background = colorBrush;
         }
+        private void UseSort(ref SortState state, Filter filter)
+        {
+            switch (state)
+            {
+                case SortState.Default:
+                    _tableGenerator.DrawResults(resultTableWithStudentsResultsPath);
+                    state = SortState.Ascending;
+                    break;
+
+                case SortState.Ascending:
+
+                    filter.Ascending = true;
+                    _tableGenerator.DrawResults(resultTableWithStudentsResultsPath,
+                        filter);
+
+                    state = SortState.Descending;
+                    break;
+
+                case SortState.Descending:
+
+                    filter.Ascending = false;
+                    _tableGenerator.DrawResults(resultTableWithStudentsResultsPath,
+                        filter);
+
+                    state = SortState.Default;
+                    break;
+            }
+        }
         #endregion
 
         #region ScrollViewer
@@ -370,6 +398,11 @@ namespace TeacherGraphApplication
 
             FilterPanel.Visibility = Visibility.Collapsed;
             ErasePanel.Visibility = Visibility.Collapsed;
+
+            sortByNameState = SortState.Ascending;
+            sortBySPState = SortState.Ascending;
+            sortByPercentState = SortState.Ascending;
+            sortByRateState = SortState.Ascending;
         }
         #endregion
 
@@ -406,27 +439,7 @@ namespace TeacherGraphApplication
         }
         private void ButtonNameFilter_Click(object sender, RoutedEventArgs e)
         {
-            switch (sortByNameState)
-            {
-                case SortState.Default:
-                    _tableGenerator.DrawResults(resultTableWithStudentsResultsPath);
-                    sortByNameState = SortState.Ascending;
-                    break;
-
-                case SortState.Ascending:
-                    _tableGenerator.DrawResults(resultTableWithStudentsResultsPath,
-                        new SortByName(true));
-
-                    sortByNameState = SortState.Descending;
-                    break;
-
-                case SortState.Descending:
-                    _tableGenerator.DrawResults(resultTableWithStudentsResultsPath,
-                        new SortByName(false));
-
-                    sortByNameState = SortState.Default;
-                    break;
-            }
+            UseSort(ref sortByNameState, new SortByName());
         }
         #endregion
 
@@ -459,27 +472,7 @@ namespace TeacherGraphApplication
         }
         private void ButtonSPFilter_Click(object sender, RoutedEventArgs e)
         {
-            switch (sortBySPState)
-            {
-                case SortState.Default:
-                    _tableGenerator.DrawResults(resultTableWithStudentsResultsPath);
-                    sortBySPState = SortState.Ascending;
-                    break;
-
-                case SortState.Ascending:
-                    _tableGenerator.DrawResults(resultTableWithStudentsResultsPath,
-                        new SortBySolvedProblems(true));
-
-                    sortBySPState = SortState.Descending;
-                    break;
-
-                case SortState.Descending:
-                    _tableGenerator.DrawResults(resultTableWithStudentsResultsPath,
-                        new SortBySolvedProblems(false));
-
-                    sortBySPState = SortState.Default;
-                    break;
-            }
+            UseSort(ref sortBySPState, new SortBySolvedProblems());
         }
         #endregion
 
@@ -512,27 +505,7 @@ namespace TeacherGraphApplication
         }
         private void ButtonPercentFilter_Click(object sender, RoutedEventArgs e)
         {
-            switch (sortByPercentState)
-            {
-                case SortState.Default:
-                    _tableGenerator.DrawResults(resultTableWithStudentsResultsPath);
-                    sortByPercentState = SortState.Ascending;
-                    break;
-
-                case SortState.Ascending:
-                    _tableGenerator.DrawResults(resultTableWithStudentsResultsPath,
-                        new SortByPercent(true));
-
-                    sortByPercentState = SortState.Descending;
-                    break;
-
-                case SortState.Descending:
-                    _tableGenerator.DrawResults(resultTableWithStudentsResultsPath,
-                        new SortByPercent(false));
-
-                    sortByPercentState = SortState.Default;
-                    break;
-            }
+            UseSort(ref sortByPercentState, new SortByPercent());
         }
 
         #endregion
@@ -566,27 +539,7 @@ namespace TeacherGraphApplication
         }
         private void ButtonRateFilter_Click(object sender, RoutedEventArgs e)
         {
-            switch (sortByRateState)
-            {
-                case SortState.Default:
-                    _tableGenerator.DrawResults(resultTableWithStudentsResultsPath);
-                    sortByRateState = SortState.Ascending;
-                    break;
-
-                case SortState.Ascending:
-                    _tableGenerator.DrawResults(resultTableWithStudentsResultsPath,
-                        new SortByRate(true));
-
-                    sortByRateState = SortState.Descending;
-                    break;
-
-                case SortState.Descending:
-                    _tableGenerator.DrawResults(resultTableWithStudentsResultsPath,
-                        new SortByRate(false));
-
-                    sortByRateState = SortState.Default;
-                    break;
-            }
+            UseSort(ref sortByRateState, new SortByRate());
         }
         #endregion
 

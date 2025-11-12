@@ -2,12 +2,12 @@
 
 namespace Filters
 {
-    public class SortByPercent(bool ascending) : ISorter
+    public class SortByPercent : Filter
     {
-        public IEnumerable<StudentResults> Sort(ResultContainer container)
+        public override IEnumerable<StudentResults> Sort(ResultContainer container)
         {
             var sorted = container.Students.OrderBy(x => x.Percent);
-            return ascending ? sorted : sorted.Reverse();
+            return Ascending ? sorted : sorted.Reverse();
         }
     }
 }

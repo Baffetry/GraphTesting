@@ -3,26 +3,6 @@
   "WorkspaceRootPath": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|d:\\data\\programming\\graphproject\\teachergraphapplication\\teachergraphapplication\\results\\studentresults\\taskanswer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|solutionrelative:teachergraphapplication\\results\\studentresults\\taskanswer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|d:\\data\\programming\\graphproject\\teachergraphapplication\\teachergraphapplication\\results\\studentresults\\studentresults.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|solutionrelative:teachergraphapplication\\results\\studentresults\\studentresults.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|d:\\data\\programming\\graphproject\\teachergraphapplication\\teachergraphapplication\\results\\studentresults\\resultcontainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|solutionrelative:teachergraphapplication\\results\\studentresults\\resultcontainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|d:\\data\\programming\\graphproject\\teachergraphapplication\\teachergraphapplication\\cwc\\controlworkconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|solutionrelative:teachergraphapplication\\cwc\\controlworkconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|d:\\data\\programming\\graphproject\\teachergraphapplication\\teachergraphapplication\\results\\generators\\studentresultgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|solutionrelative:teachergraphapplication\\results\\generators\\studentresultgenerator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|d:\\data\\programming\\graphproject\\teachergraphapplication\\teachergraphapplication\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{EF9102B0-DDA8-4163-B613-339997F2AACA}|TeacherGraphApplication\\TeacherGraphApplication.csproj|solutionrelative:teachergraphapplication\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -38,11 +18,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 169,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 1,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\MainWindow.xaml",
               "RelativeDocumentMoniker": "TeacherGraphApplication\\MainWindow.xaml",
@@ -55,81 +35,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "TeacherGraphApplication\\MainWindow.xaml.cs",
               "ToolTip": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\MainWindow.xaml.cs",
               "RelativeToolTip": "TeacherGraphApplication\\MainWindow.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFICAAABAAAAAAAAAA==",
+              "ViewState": "AgIAABcAAAAAAAAAAAAIwCMCAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-16T14:37:38.205Z",
               "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "TaskAnswer.cs",
-              "DocumentMoniker": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\Results\\StudentResults\\TaskAnswer.cs",
-              "RelativeDocumentMoniker": "TeacherGraphApplication\\Results\\StudentResults\\TaskAnswer.cs",
-              "ToolTip": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\Results\\StudentResults\\TaskAnswer.cs",
-              "RelativeToolTip": "TeacherGraphApplication\\Results\\StudentResults\\TaskAnswer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-12T17:54:50.753Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ControlWorkConfig.cs",
-              "DocumentMoniker": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\CWC\\ControlWorkConfig.cs",
-              "RelativeDocumentMoniker": "TeacherGraphApplication\\CWC\\ControlWorkConfig.cs",
-              "ToolTip": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\CWC\\ControlWorkConfig.cs",
-              "RelativeToolTip": "TeacherGraphApplication\\CWC\\ControlWorkConfig.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-12T17:53:35.262Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "StudentResultGenerator.cs",
-              "DocumentMoniker": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\Results\\Generators\\StudentResultGenerator.cs",
-              "RelativeDocumentMoniker": "TeacherGraphApplication\\Results\\Generators\\StudentResultGenerator.cs",
-              "ToolTip": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\Results\\Generators\\StudentResultGenerator.cs",
-              "RelativeToolTip": "TeacherGraphApplication\\Results\\Generators\\StudentResultGenerator.cs",
-              "ViewState": "AgIAACcAAAAAAAAAAAAowEIAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-12T17:51:16.497Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ResultContainer.cs",
-              "DocumentMoniker": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\Results\\StudentResults\\ResultContainer.cs",
-              "RelativeDocumentMoniker": "TeacherGraphApplication\\Results\\StudentResults\\ResultContainer.cs",
-              "ToolTip": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\Results\\StudentResults\\ResultContainer.cs",
-              "RelativeToolTip": "TeacherGraphApplication\\Results\\StudentResults\\ResultContainer.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAwwDYAAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-12T17:47:12.809Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "StudentResults.cs",
-              "DocumentMoniker": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\Results\\StudentResults\\StudentResults.cs",
-              "RelativeDocumentMoniker": "TeacherGraphApplication\\Results\\StudentResults\\StudentResults.cs",
-              "ToolTip": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\Results\\StudentResults\\StudentResults.cs",
-              "RelativeToolTip": "TeacherGraphApplication\\Results\\StudentResults\\StudentResults.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-12T17:47:10.927Z",
               "EditorCaption": ""
             }
           ]

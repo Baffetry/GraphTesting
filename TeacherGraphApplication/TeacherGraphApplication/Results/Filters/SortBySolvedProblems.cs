@@ -2,12 +2,12 @@
 
 namespace Filters
 {
-    public class SortBySolvedProblems(bool ascending) : ISorter
+    public class SortBySolvedProblems : Filter
     {
-        public IEnumerable<StudentResults> Sort(ResultContainer container)
+        public override IEnumerable<StudentResults> Sort(ResultContainer container)
         {
             var sorted = container.Students.OrderBy(s => s.SolvedProblems);
-            return ascending ? sorted : sorted.Reverse();
+            return Ascending ? sorted : sorted.Reverse();
         }
     }
 }

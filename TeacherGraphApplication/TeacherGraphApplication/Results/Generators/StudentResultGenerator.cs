@@ -58,7 +58,7 @@ namespace TeacherGraphApplication.Results.Generators
             Border[] borders =
             {
                 borderGenerator.GenerateBorder($"{student.LastName} {student.FirstName}", index),
-                borderGenerator.GenerateBorder(result.TaskAnswers.Count, index),
+                borderGenerator.GenerateBorder(result./*TaskAnswers.Count*/SolvedProblems, index),
                 borderGenerator.GenerateBorder(result.Percent, index),
                 borderGenerator.GenerateBorder(result.Rate, index)
             };

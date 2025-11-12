@@ -33,6 +33,7 @@ namespace StudentResultsSpace
                     string json = decrypter.Decrypt(encodedJson);
                     var studentResult = JsonSerializer.Deserialize<StudentResults>(json);
 
+                    studentResult.SolvedProblems = studentResult.TaskAnswers.Count;
                     studentResult.Percent = GetPersent(studentResult);
                     studentResult.Rate = GetRate(studentResult.Percent);
 
@@ -43,16 +44,11 @@ namespace StudentResultsSpace
 
         private int GetRate(int persent)
         {
-            //if (persent < 50) return 2;
-            //else if (persent >= 50 && persent < 65) return 3;
-            //else if (persent >= 65 && persent < 80) return 4;
-            //else return 5;
-
-            return new Random().Next(2, 6);
+            return 1;
         }
         private int GetPersent(StudentResults result)
         {
-            return new Random().Next(0, 101);
+            return 1;
         }
 
         #region IEnumerable
