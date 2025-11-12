@@ -1,5 +1,5 @@
 ﻿using Generators;
-using Sorters;
+using Filters;
 using StudentResultsSpace;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,31 +11,33 @@ namespace TeacherGraphApplication.Results.Generators
         private Grid _grid;
         private ResultContainer container;
         private BorderGenerator borderGenerator;
-        private List<StudentResults> results;
 
         public StudentResultGenerator(Grid grid)
         {
             _grid = grid;
 
             container = new ResultContainer();
-            results = container.Students;
 
             borderGenerator = new BorderGenerator();
         }
 
-        public void GenerateResults(string path, ISorter sorter = null)
+        public void GenerateResults(string path, ISorter? sorter = null)
         {
+            _grid.Children.Clear();
+            _grid.RowDefinitions.Clear();
+
             container.LoadFromFile(path);
-            borderGenerator.MaxIndex = results.Count - 1;
+            borderGenerator.MaxIndex = container.Students.Count - 1;
 
-            if (sorter != null)
-                results = (List<StudentResults>)sorter.Sort(container);
+            var displayResults = sorter != null
+                ? [.. sorter.Sort(container)]
+                : container.Students;
 
-            for (int i = 0; i < results.Count; i++)
+            for (int i = 0; i < displayResults.Count; i++)
             {
                 _grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(100, GridUnitType.Pixel) });
 
-                List<Border> borders = SetBordersArray(i).ToList();
+                List<Border> borders = SetBordersArray(i, displayResults).ToList();
 
                 foreach (var border in borders)
                     Grid.SetRow(border, i);
@@ -48,9 +50,9 @@ namespace TeacherGraphApplication.Results.Generators
             }
         }
 
-        private IEnumerable<Border> SetBordersArray(int index)
+        private IEnumerable<Border> SetBordersArray(int index, List<StudentResults> displayResults)
         {
-            var result = container[index];
+            var result = displayResults[index];
             var student = result.Student;
 
             Border[] borders =

@@ -17,6 +17,9 @@ namespace Generators
 
         public void SetLabelsInGrid()
         {
+            _grid.Children.Clear();
+            _grid.ColumnDefinitions.Clear();
+
             for (int i = 0; i < _labels.Length; i++)
             {
                 _grid.ColumnDefinitions.Add(new ColumnDefinition 

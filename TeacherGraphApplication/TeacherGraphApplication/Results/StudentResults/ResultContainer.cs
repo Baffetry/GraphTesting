@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.IO;
 using System.Text.Json;
-using Sorters;
 
 namespace StudentResultsSpace
 {
@@ -20,6 +19,9 @@ namespace StudentResultsSpace
 
         public void LoadFromFile(string path)
         {
+            if (students.Count > 0)
+                students.Clear();
+
             if (File.Exists(path))
             {
                 string[] studentsJson = File.ReadAllText(path).Split(new char[] { '\n', '\r' },
@@ -46,11 +48,11 @@ namespace StudentResultsSpace
             //else if (persent >= 65 && persent < 80) return 4;
             //else return 5;
 
-            return persent / 100;
+            return new Random().Next(2, 6);
         }
         private int GetPersent(StudentResults result)
         {
-            return result.TaskAnswers.Count;
+            return new Random().Next(0, 101);
         }
 
         #region IEnumerable

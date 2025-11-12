@@ -1,10 +1,10 @@
 ﻿
 using BoxContainerSpace;
+using Filters;
 using Generators;
 using Graph_Panel_Drawer;
 using Microsoft.Win32;
 using Results;
-using StudentResultsSpace;
 using System.IO;
 using System.Text.Json;
 using System.Windows;
@@ -27,6 +27,20 @@ namespace TeacherGraphApplication
         private ITableGenerator _tableGenerator;
         private ScrollViewer _scrollViewer;
         private Brusher brush;
+
+        private string resultTableWithStudentsResultsPath;
+
+        private SortState sortByNameState = SortState.Ascending;
+        private SortState sortBySPState = SortState.Ascending;
+        private SortState sortByPercentState = SortState.Ascending;
+        private SortState sortByRateState = SortState.Ascending;
+
+        public enum SortState
+        {
+            Default,
+            Ascending,
+            Descending
+        }
 
         public MainWindow()
         {
@@ -95,7 +109,6 @@ namespace TeacherGraphApplication
 
             return false;
         }
-
         private List<Border> GetColumnElementsFromResultTable(int columnIndex)
         {
             List<Border> borders = new List<Border>();
@@ -106,15 +119,36 @@ namespace TeacherGraphApplication
 
             return borders;
         }
-
         private void ChangeBordersBackgroundInResultTable(int index, SolidColorBrush colorBrush)
         {
             var borders = GetColumnElementsFromResultTable(index);
             foreach (var border in borders)
                 border.Background = colorBrush;
         }
-
         #endregion
+
+        #region ScrollViewer
+        private void ScrollViewer_ScrollChanged(object sender, System.Windows.Controls.ScrollChangedEventArgs e)
+        {
+            var scrollViewer = (ScrollViewer)sender;
+
+            if (scrollViewer.ExtentHeight > scrollViewer.ViewportHeight)
+                Labels.Margin = new Thickness(0, 0, 17, 0);
+            else
+                Labels.Margin = new Thickness(0, 0, 0, 0);
+        }
+
+        private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (_tableGenerator != null)
+            {
+                _scrollViewer.ScrollToVerticalOffset(_scrollViewer.VerticalOffset - e.Delta);
+                e.Handled = true;
+            }
+        }
+        #endregion
+
+        #region Buttons
 
         #region ButtonProperties
         private void ButtonProperties_MouseEnter(object sender, MouseEventArgs e)
@@ -136,6 +170,7 @@ namespace TeacherGraphApplication
             ResultGrid.Visibility = Visibility.Collapsed;
             OpenFilePanel.Visibility = Visibility.Collapsed;
             FilterPanel.Visibility = Visibility.Collapsed;
+            ErasePanel.Visibility = Visibility.Collapsed;
 
             ButtonProperties.IsEnabled = false;
             ButtonResults.IsEnabled = true;
@@ -145,13 +180,13 @@ namespace TeacherGraphApplication
 
             container.Load();
 
+
             var properties = new PropertiesDrawer(
                 new GraphPanelDrawer(),
                 new TaskPanelDrawer()
             );
 
             properties.Draw(PropertiesGrid);
-
         }
         #endregion
 
@@ -184,6 +219,14 @@ namespace TeacherGraphApplication
             container.Save();
 
             _tableGenerator.DrawLabels();
+
+            FilterPanel.Visibility = ResultTable.Children.Count > 0
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+
+            ErasePanel.Visibility = ResultTable.Children.Count > 0
+                ? Visibility.Visible
+                : Visibility.Collapsed;
         }
         #endregion
 
@@ -199,27 +242,6 @@ namespace TeacherGraphApplication
         private void ButtonExit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-        #endregion
-
-        #region ScrollViewer
-        private void ScrollViewer_ScrollChanged(object sender, System.Windows.Controls.ScrollChangedEventArgs e)
-        {
-            var scrollViewer = (ScrollViewer)sender;
-
-            if (scrollViewer.ExtentHeight > scrollViewer.ViewportHeight)
-                Labels.Margin = new Thickness(0, 0, 17, 0);
-            else
-                Labels.Margin = new Thickness(0, 0, 0, 0);
-        }
-
-        private void ScrollViewer_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            if (_tableGenerator != null)
-            {
-                _scrollViewer.ScrollToVerticalOffset(_scrollViewer.VerticalOffset - e.Delta);
-                e.Handled = true;
-            }
         }
         #endregion
 
@@ -295,7 +317,6 @@ namespace TeacherGraphApplication
             OpenFileI.Height = 90;
             OpenFileI.Width = 90;
         }
-
         private void ButtonOpenFile_MouseLeave(object sender, MouseEventArgs e)
         {
             ButtonOpenFile.Background = brush.CandyGray;
@@ -305,7 +326,6 @@ namespace TeacherGraphApplication
             OpenFileI.Height = 70;
             OpenFileI.Width = 70;
         }
-
         private void ButtonOpenFile_Click(object sender, RoutedEventArgs e)
         {
             var openFileDialog = new OpenFileDialog
@@ -316,11 +336,46 @@ namespace TeacherGraphApplication
 
             if (openFileDialog.ShowDialog() is true)
             {
-                _tableGenerator.DrawResults(openFileDialog.FileName);
+                resultTableWithStudentsResultsPath = openFileDialog.FileName;
+                _tableGenerator.DrawResults(resultTableWithStudentsResultsPath);
                 FilterPanel.Visibility = Visibility.Visible;
+                ErasePanel.Visibility = Visibility.Visible;
             }
         }
         #endregion
+
+        #region ButtonErase
+        private void ButtonEraseTable_MouseEnter(object sender, MouseEventArgs e)
+        {
+            ButtonEraseTable.Background = brush.CandyRed;
+            ButtonEraseTable.Height = 120;
+            ButtonEraseTable.Width = 120;
+
+            EraseI.Height = 90;
+            EraseI.Width = 90;
+        }
+        private void ButtonEraseTable_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ButtonEraseTable.Background = brush.CandyGray;
+            ButtonEraseTable.Height = 110;
+            ButtonEraseTable.Width = 110;
+
+            EraseI.Height = 70;
+            EraseI.Width = 70;
+        }
+        private void ButtonEraseTable_Click(object sender, RoutedEventArgs e)
+        {
+            ResultTable.Children.Clear();
+            ResultTable.RowDefinitions.Clear();
+
+            FilterPanel.Visibility = Visibility.Collapsed;
+            ErasePanel.Visibility = Visibility.Collapsed;
+        }
+        #endregion
+
+        #endregion
+
+        #region Filters
 
         #region ButtonNameFilter
         private void ButtonNameFilter_MouseEnter(object sender, MouseEventArgs e)
@@ -351,7 +406,27 @@ namespace TeacherGraphApplication
         }
         private void ButtonNameFilter_Click(object sender, RoutedEventArgs e)
         {
+            switch (sortByNameState)
+            {
+                case SortState.Default:
+                    _tableGenerator.DrawResults(resultTableWithStudentsResultsPath);
+                    sortByNameState = SortState.Ascending;
+                    break;
 
+                case SortState.Ascending:
+                    _tableGenerator.DrawResults(resultTableWithStudentsResultsPath,
+                        new SortByName(true));
+
+                    sortByNameState = SortState.Descending;
+                    break;
+
+                case SortState.Descending:
+                    _tableGenerator.DrawResults(resultTableWithStudentsResultsPath,
+                        new SortByName(false));
+
+                    sortByNameState = SortState.Default;
+                    break;
+            }
         }
         #endregion
 
@@ -384,7 +459,27 @@ namespace TeacherGraphApplication
         }
         private void ButtonSPFilter_Click(object sender, RoutedEventArgs e)
         {
+            switch (sortBySPState)
+            {
+                case SortState.Default:
+                    _tableGenerator.DrawResults(resultTableWithStudentsResultsPath);
+                    sortBySPState = SortState.Ascending;
+                    break;
 
+                case SortState.Ascending:
+                    _tableGenerator.DrawResults(resultTableWithStudentsResultsPath,
+                        new SortBySolvedProblems(true));
+
+                    sortBySPState = SortState.Descending;
+                    break;
+
+                case SortState.Descending:
+                    _tableGenerator.DrawResults(resultTableWithStudentsResultsPath,
+                        new SortBySolvedProblems(false));
+
+                    sortBySPState = SortState.Default;
+                    break;
+            }
         }
         #endregion
 
@@ -417,7 +512,27 @@ namespace TeacherGraphApplication
         }
         private void ButtonPercentFilter_Click(object sender, RoutedEventArgs e)
         {
+            switch (sortByPercentState)
+            {
+                case SortState.Default:
+                    _tableGenerator.DrawResults(resultTableWithStudentsResultsPath);
+                    sortByPercentState = SortState.Ascending;
+                    break;
 
+                case SortState.Ascending:
+                    _tableGenerator.DrawResults(resultTableWithStudentsResultsPath,
+                        new SortByPercent(true));
+
+                    sortByPercentState = SortState.Descending;
+                    break;
+
+                case SortState.Descending:
+                    _tableGenerator.DrawResults(resultTableWithStudentsResultsPath,
+                        new SortByPercent(false));
+
+                    sortByPercentState = SortState.Default;
+                    break;
+            }
         }
 
         #endregion
@@ -451,9 +566,30 @@ namespace TeacherGraphApplication
         }
         private void ButtonRateFilter_Click(object sender, RoutedEventArgs e)
         {
+            switch (sortByRateState)
+            {
+                case SortState.Default:
+                    _tableGenerator.DrawResults(resultTableWithStudentsResultsPath);
+                    sortByRateState = SortState.Ascending;
+                    break;
 
+                case SortState.Ascending:
+                    _tableGenerator.DrawResults(resultTableWithStudentsResultsPath,
+                        new SortByRate(true));
+
+                    sortByRateState = SortState.Descending;
+                    break;
+
+                case SortState.Descending:
+                    _tableGenerator.DrawResults(resultTableWithStudentsResultsPath,
+                        new SortByRate(false));
+
+                    sortByRateState = SortState.Default;
+                    break;
+            }
         }
         #endregion
 
+        #endregion
     }
 }

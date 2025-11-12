@@ -377,6 +377,33 @@
                     </Button>
                     
                 </StackPanel>
+
+                <StackPanel x:Name="ErasePanel"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Visibility="Collapsed"
+                            Grid.Row="2"
+                            Margin="0, 0, 80, 0">
+
+                    <Button x:Name="ButtonEraseTable" 
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Width="110" Height="110" 
+                            Margin="10, 0"
+                            Background="#ededed" 
+                            Foreground="Black"
+                            BorderBrush="Black" 
+                            BorderThickness="4" 
+                            FontSize="40" 
+                            FontWeight="Bold"                    
+                            MouseEnter="ButtonEraseTable_MouseEnter" 
+                            MouseLeave="ButtonEraseTable_MouseLeave" 
+                            Click="ButtonEraseTable_Click"
+                            Template="{StaticResource NoMouseOverButtonTemplate}">
+                        <Image x:Name="EraseI" Source="/Resources/erase96x96.png" Height="70" Width="70"/>
+                    </Button>
+
+                </StackPanel>
             </Grid>
         </Viewbox>
     </Border>

@@ -1,5 +1,6 @@
 ﻿using TeacherGraphApplication.Results.Generators;
 using Generators;
+using Filters;
 
 namespace Results
 {
@@ -28,9 +29,9 @@ namespace Results
             _gridGenerator.SetLabelsInGrid();
         }
 
-        public void DrawResults(string path)
+        public void DrawResults(string path, ISorter? sorter = null)
         {
-            _studentResultGenerator.GenerateResults(path);
+            _studentResultGenerator.GenerateResults(path, sorter);
         }
     }
 }

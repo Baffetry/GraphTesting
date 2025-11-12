@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\erase96x96.png" />
     <None Remove="Resources\free-icon-warning-159469.png" />
     <None Remove="Resources\newpercent96x96.png" />
     <None Remove="Resources\openFile96x96.png" />
@@ -28,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\erase96x96.png" />
     <Resource Include="Resources\newpercent96x96.png" />
     <Resource Include="Resources\openFile96x96.png" />
     <Resource Include="Resources\person96x96.png" />
