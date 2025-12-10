@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\Data\Programming\GraphProject\StudentGraphApplication\StudentGraphApplication\obj\Debug\net8.0-windows\
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\StudentGraphApplication\StudentGraphApplication\obj\Debug\net8.0-windows\
 StudentGraphApplication
 none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
-D:\Data\Programming\GraphProject\StudentGraphApplication\StudentGraphApplication\App.xaml
-11407045341
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\StudentGraphApplication\StudentGraphApplication\App.xaml
+2218841686
 
-12948530704
-1991953467410
-MainWindow.xaml;
+131626957032
+199599185416
+CustomMessageBoxWindow.xaml;MainWindow.xaml;
 
 False
 

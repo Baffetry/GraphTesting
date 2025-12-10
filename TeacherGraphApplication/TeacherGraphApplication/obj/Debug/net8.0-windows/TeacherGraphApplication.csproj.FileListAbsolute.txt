@@ -46,3 +46,30 @@ D:\Data\Programming\GraphProject\TeacherGraphApplication\TeacherGraphApplication
 D:\Data\Programming\GraphProject\TeacherGraphApplication\TeacherGraphApplication\bin\Debug\net8.0-windows\Encryption.dll
 D:\Data\Programming\GraphProject\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\TeacherGraphApplication.csproj.AssemblyReference.cache
 D:\Data\Programming\GraphProject\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\TeacherG.AC8625A1.Up2Date
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\bin\Debug\net8.0-windows\TeacherGraphApplication.exe
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\bin\Debug\net8.0-windows\TeacherGraphApplication.deps.json
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\bin\Debug\net8.0-windows\TeacherGraphApplication.runtimeconfig.json
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\bin\Debug\net8.0-windows\TeacherGraphApplication.dll
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\bin\Debug\net8.0-windows\TeacherGraphApplication.pdb
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\bin\Debug\net8.0-windows\Encryption.dll
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\TeacherGraphApplication.csproj.AssemblyReference.cache
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\CustomMessageBoxWindow.g.cs
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\MainWindow.g.cs
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\App.g.cs
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\TeacherGraphApplication_MarkupCompile.cache
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\TeacherGraphApplication_MarkupCompile.lref
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\App.baml
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\CustomMessageBoxWindow.baml
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\MainWindow.baml
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\TeacherGraphApplication.g.resources
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\TeacherGraphApplication.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\TeacherGraphApplication.AssemblyInfoInputs.cache
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\TeacherGraphApplication.AssemblyInfo.cs
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\TeacherGraphApplication.csproj.CoreCompileInputs.cache
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\TeacherGraphApplication.sourcelink.json
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\TeacherG.AC8625A1.Up2Date
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\TeacherGraphApplication.dll
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\refint\TeacherGraphApplication.dll
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\TeacherGraphApplication.pdb
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\TeacherGraphApplication.genruntimeconfig.cache
+C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\ref\TeacherGraphApplication.dll

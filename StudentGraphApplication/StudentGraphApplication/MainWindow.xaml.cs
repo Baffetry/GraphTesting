@@ -8,6 +8,8 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Automation.Text;
+using System.Windows.Media.Animation;
 
 namespace StudentGraphApplication
 {
@@ -84,16 +86,15 @@ namespace StudentGraphApplication
 
             if (string.IsNullOrWhiteSpace(studentAnswer))
             {
-                MessageBox.Show("Введите ответ перед сохранением", "Пустой ответ",
-                              MessageBoxButton.OK, MessageBoxImage.Warning);
+                CustomMessageBoxWindow.Show("Введите ответ перед сохранением", "Пустой ответ",
+                              MessageType.Warning, MessageBoxButton.OK);
                 return;
             }
 
             studentResults.AddOrUpdateAnswer(currentTask.Content?.ToString() ?? "Без названия", studentAnswer);
             SaveButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4dd49e"));
 
-            MessageBox.Show("Ответ сохранен!", "Сохранение",
-                          MessageBoxButton.OK, MessageBoxImage.Information);
+            
         }
         #endregion
 
@@ -112,8 +113,8 @@ namespace StudentGraphApplication
         {
             if (currentConfig == null || currentConfig.TaskList == null || currentConfig.TaskList.Count == 0)
             {
-                MessageBox.Show("Сначала загрузите файл с задачами через кнопку 'Файл'", "Нет задач",
-                              MessageBoxButton.OK, MessageBoxImage.Warning);
+                CustomMessageBoxWindow.Show("Сначала загрузите файл с задачами через кнопку 'Файл'", "Нет задач",
+                              MessageType.Warning, MessageBoxButton.OK);
                 return;
             }
             if (string.IsNullOrEmpty(currentStudent.FirstName) || string.IsNullOrEmpty(currentStudent.LastName))
@@ -172,8 +173,8 @@ namespace StudentGraphApplication
 
                 if (currentConfig != null)
                 {
-                    MessageBox.Show($"Успешно загружено: {currentConfig.TaskList?.Count ?? 0} задач",
-                                  "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+                    CustomMessageBoxWindow.Show($"Успешно загружено: {currentConfig.TaskList?.Count ?? 0} задач",
+                                  "Успех", MessageType.Warning, MessageBoxButton.OK);
                 }
             }
         }
@@ -194,7 +195,7 @@ namespace StudentGraphApplication
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при чтении файла: {ex.Message}", "Ошибка");
+                CustomMessageBoxWindow.Show($"Ошибка при чтении файла: {ex.Message}", "Ошибка", MessageType.Error, MessageBoxButton.OK);
                 return null;
             }
         }
@@ -212,6 +213,7 @@ namespace StudentGraphApplication
                 var button = new Button
                 {
                     Content = $"{i + 1}",
+                    FontSize = 30,
                     Style = (Style)FindResource("TaskButtonStyle"),
                     Tag = i
                 };
@@ -245,10 +247,28 @@ namespace StudentGraphApplication
             button2.FontWeight = FontWeights.Bold;
             button2.Click += TaskButtonExit_Click;
             TaskButtonsPanel.Children.Add(button2);
+            //TaskContentControl.FontSize = 60;
+            GridStudents();
 
         }
 
         private void TaskButtonExit_Click(object sender, RoutedEventArgs e)
+        {
+            var result = CustomMessageBoxWindow.Show(
+               "Хотите закончить работу и сохранить результаты в файл?",
+               "Предупреждение",
+               MessageType.Warning,
+               MessageBoxButton.YesNo
+           );
+
+            if (result is MessageBoxResult.Yes)
+                SaveResultsToFile();
+            else if (result is MessageBoxResult.Cancel || result is MessageBoxResult.None)
+                return;
+            
+        }
+
+        private void GridStudents()
         {
             var inputDialog = new Window()
             {
@@ -258,8 +278,9 @@ namespace StudentGraphApplication
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
                 ResizeMode = ResizeMode.NoResize,
                 Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#f0f0f0"))
+                
             };
-
+            
             var mainGrid = new Grid();
             mainGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
             mainGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
@@ -287,11 +308,12 @@ namespace StudentGraphApplication
                 Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#f0f0f0")),
                 BorderBrush = Brushes.Black,
                 BorderThickness = new Thickness(3),
-                Margin = new Thickness(0, 0, 0, 20)
+                Margin = new Thickness(0, 0, 0, 0),
+                CornerRadius = new CornerRadius(10)
             };
 
             // Устанавливаем скругленные углы через attached property
-            nameBorder.SetValue(ControlAttachedProperties.CornerRadiusProperty, new CornerRadius(20));
+            //nameBorder.SetValue(ControlAttachedProperties.CornerRadiusProperty, new CornerRadius(20));
 
             var nameTextBox = new TextBox
             {
@@ -317,7 +339,7 @@ namespace StudentGraphApplication
             {
                 Orientation = Orientation.Horizontal,
                 HorizontalAlignment = HorizontalAlignment.Center,
-                Margin = new Thickness(0, 10, 0, 0)
+                Margin = new Thickness(0, 0, 0, 0)
             };
 
             var okButton = new Button
@@ -325,34 +347,38 @@ namespace StudentGraphApplication
                 Content = "OK",
                 Width = 100,
                 Height = 40,
-                Margin = new Thickness(0, 0, 15, 0),
+                Margin = new Thickness(0, 0, 0, 0),
                 FontWeight = FontWeights.Bold,
                 FontSize = 14,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Top,
                 Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4dd49e")),
                 Foreground = Brushes.Black,
                 BorderThickness = new Thickness(3),
                 BorderBrush = Brushes.Black
             };
 
-            var cancelButton = new Button
-            {
-                Content = "Отмена",
-                Width = 100,
-                Height = 40,
-                FontWeight = FontWeights.Bold,
-                FontSize = 14,
-                Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#db5174")),
-                Foreground = Brushes.Black,
-                BorderThickness = new Thickness(3),
-                BorderBrush = Brushes.Black
-            };
+            //var cancelButton = new Button
+            //{
+            //    Content = "Отмена",
+            //    Width = 100,
+            //    HorizontalAlignment = HorizontalAlignment.Center,
+            //    VerticalAlignment = VerticalAlignment.Center,
+            //    Height = 40,
+            //    FontWeight = FontWeights.Bold,
+            //    FontSize = 14,
+            //    Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#db5174")),
+            //    Foreground = Brushes.Black,
+            //    BorderThickness = new Thickness(3),
+            //    BorderBrush = Brushes.Black
+            //};
 
-           
+
             okButton.SetValue(ControlAttachedProperties.CornerRadiusProperty, new CornerRadius(12));
-            cancelButton.SetValue(ControlAttachedProperties.CornerRadiusProperty, new CornerRadius(12));
+            //cancelButton.SetValue(ControlAttachedProperties.CornerRadiusProperty, new CornerRadius(12));
 
             buttonPanel.Children.Add(okButton);
-            buttonPanel.Children.Add(cancelButton);
+            //buttonPanel.Children.Add(cancelButton);
 
             Grid.SetRow(contentPanel, 0);
             Grid.SetRow(buttonPanel, 1);
@@ -373,21 +399,21 @@ namespace StudentGraphApplication
                 }
                 else
                 {
-                    MessageBox.Show("Введите фамилию и имя", "Ошибка");
+                    CustomMessageBoxWindow.Show("Введите фамилию и имя", "Ошибка", MessageType.Warning, MessageBoxButton.OK);
                 }
             };
 
-            cancelButton.Click += (s, e2) =>
-            {
-                result = false;
-                inputDialog.Close();
-            };
+            //cancelButton.Click += (s, e2) =>
+            //{
+            //    result = false;
+            //    inputDialog.Close();
+            //};
 
             okButton.MouseEnter += (s, e) => okButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#3bc48d"));
             okButton.MouseLeave += (s, e) => okButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4dd49e"));
 
-            cancelButton.MouseEnter += (s, e) => cancelButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#c93a5c"));
-            cancelButton.MouseLeave += (s, e) => cancelButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#db5174"));
+            //cancelButton.MouseEnter += (s, e) => cancelButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#c93a5c"));
+            //cancelButton.MouseLeave += (s, e) => cancelButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#db5174"));
 
             nameTextBox.Focus();
 
@@ -418,8 +444,8 @@ namespace StudentGraphApplication
                 }
 
                 studentResults.Student = currentStudent;
-                SaveResultsToFile();
-                Application.Current.Shutdown();
+                //SaveResultsToFile();
+                //Application.Current.Shutdown();
             }
         }
 
@@ -445,10 +471,11 @@ namespace StudentGraphApplication
                 if (dialog.ShowDialog() == true)
                 {
                     string directory = Path.GetDirectoryName(dialog.FileName);
-                    string graphResultsPath = Path.Combine(directory, "GraphResults.txt");
+                    string graphResultsPath = Path.Combine(directory, "Results.txt");
 
-                    string resultLine = encryptedJson + "\n";
-
+                    string resultLine =
+                                       $"{encryptedJson}" + " \n"; 
+                                       
                     if (File.Exists(graphResultsPath))
                     {
                         File.AppendAllText(graphResultsPath, Environment.NewLine + resultLine);
@@ -458,12 +485,12 @@ namespace StudentGraphApplication
                         File.WriteAllText(graphResultsPath, resultLine);
                     }
 
-                    MessageBox.Show($"Результаты сохранены в файл: GraphResults.txt", "Сохранение");
+                    CustomMessageBoxWindow.Show($"Результаты сохранены в файл: Results.txt", "Сохранение", MessageType.Warning, MessageBoxButton.OK);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при сохранении результатов: {ex.Message}", "Ошибка");
+                CustomMessageBoxWindow.Show($"Ошибка при сохранении результатов: {ex.Message}", "Ошибка", MessageType.Error, MessageBoxButton.OK);
             }
         }
 
@@ -516,7 +543,7 @@ namespace StudentGraphApplication
             var taskText = new TextBlock
             {
                 Text = task.Content?.ToString() ?? "Текст задачи отсутствует",
-                FontSize = 18,
+                FontSize = 30,
                 FontWeight = FontWeights.Normal,
                 TextWrapping = TextWrapping.Wrap,
                 Margin = new Thickness(0, 0, 0, 20)
@@ -529,6 +556,8 @@ namespace StudentGraphApplication
             var savedAnswer = studentResults.GetAnswerForQuestion(task.Content?.ToString());
             AnswerTextBox.Text = savedAnswer?.ToString() ?? "";
         }
-        #endregion      
+        #endregion
+
+       
     }
 }

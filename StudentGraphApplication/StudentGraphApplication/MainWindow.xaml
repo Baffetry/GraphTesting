@@ -238,14 +238,16 @@
                        Height="50"
                        HorizontalAlignment="Left"
                        FontSize="40"
+                       
                        FontWeight="Bold"
                        Padding="0"
-                       Margin="0"/>
+                       Margin="10,20,0,0"/>
                         </StackPanel>
 
                         <!-- Центральная область для содержимого задачи -->
                         <ContentControl x:Name="TaskContentControl" 
                            Grid.Row="1" 
+                           FontSize="40" 
                            Margin="30"
                            VerticalAlignment="Stretch"
                            HorizontalAlignment="Stretch"/>
