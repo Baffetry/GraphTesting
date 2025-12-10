@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TeacherGraphApplication")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+61622ead9ddd65b6c3856fd15501d896f82b903c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+43c848bba1e48319589996f96868399da64384b2")]
 [assembly: System.Reflection.AssemblyProductAttribute("TeacherGraphApplication")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TeacherGraphApplication")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

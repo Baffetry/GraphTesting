@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\matve\\OneDrive\\Рабочий стол\\Инфа\\5\\GraphTesting\\GraphTesting\\StudentGraphApplication\\StudentGraphApplication\\StudentGraphApplication.csproj": {}
+    "C:\\Users\\matve\\Desktop\\ИНФА\\MP\\ProjectGraph\\GraphTesting\\GraphTesting\\StudentGraphApplication\\StudentGraphApplication\\StudentGraphApplication.csproj": {}
   },
   "projects": {
-    "C:\\Users\\matve\\OneDrive\\Рабочий стол\\Инфа\\5\\GraphTesting\\GraphTesting\\StudentGraphApplication\\StudentGraphApplication\\StudentGraphApplication.csproj": {
+    "C:\\Users\\matve\\Desktop\\ИНФА\\MP\\ProjectGraph\\GraphTesting\\GraphTesting\\StudentGraphApplication\\StudentGraphApplication\\StudentGraphApplication.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\matve\\OneDrive\\Рабочий стол\\Инфа\\5\\GraphTesting\\GraphTesting\\StudentGraphApplication\\StudentGraphApplication\\StudentGraphApplication.csproj",
+        "projectUniqueName": "C:\\Users\\matve\\Desktop\\ИНФА\\MP\\ProjectGraph\\GraphTesting\\GraphTesting\\StudentGraphApplication\\StudentGraphApplication\\StudentGraphApplication.csproj",
         "projectName": "StudentGraphApplication",
-        "projectPath": "C:\\Users\\matve\\OneDrive\\Рабочий стол\\Инфа\\5\\GraphTesting\\GraphTesting\\StudentGraphApplication\\StudentGraphApplication\\StudentGraphApplication.csproj",
+        "projectPath": "C:\\Users\\matve\\Desktop\\ИНФА\\MP\\ProjectGraph\\GraphTesting\\GraphTesting\\StudentGraphApplication\\StudentGraphApplication\\StudentGraphApplication.csproj",
         "packagesPath": "C:\\Users\\matve\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\matve\\OneDrive\\Рабочий стол\\Инфа\\5\\GraphTesting\\GraphTesting\\StudentGraphApplication\\StudentGraphApplication\\obj\\",
+        "outputPath": "C:\\Users\\matve\\Desktop\\ИНФА\\MP\\ProjectGraph\\GraphTesting\\GraphTesting\\StudentGraphApplication\\StudentGraphApplication\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -68,7 +68,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

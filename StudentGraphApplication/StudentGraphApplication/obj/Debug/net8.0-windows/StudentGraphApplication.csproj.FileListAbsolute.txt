@@ -140,3 +140,5 @@ C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTes
 C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\StudentGraphApplication\StudentGraphApplication\obj\Debug\net8.0-windows\StudentGraphApplication.pdb
 C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\StudentGraphApplication\StudentGraphApplication\obj\Debug\net8.0-windows\StudentGraphApplication.genruntimeconfig.cache
 C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\StudentGraphApplication\StudentGraphApplication\obj\Debug\net8.0-windows\ref\StudentGraphApplication.dll
+C:\Users\matve\Desktop\ИНФА\MP\ProjectGraph\GraphTesting\GraphTesting\StudentGraphApplication\StudentGraphApplication\obj\Debug\net8.0-windows\CustomMessageBoxWindow.g.cs
+C:\Users\matve\Desktop\ИНФА\MP\ProjectGraph\GraphTesting\GraphTesting\StudentGraphApplication\StudentGraphApplication\obj\Debug\net8.0-windows\CustomMessageBoxWindow.baml

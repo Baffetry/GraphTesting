@@ -22,6 +22,7 @@ namespace StudentGraphApplication
         private int currentTaskIndex = 0;
         private StudentResults studentResults;
         private Student currentStudent;
+        private bool resultsSaved = false; // Флаг для отслеживания сохранения
 
         public MainWindow()
         {
@@ -32,9 +33,7 @@ namespace StudentGraphApplication
 
         private void InitializeStudent()
         {
-            // Здесь можно добавить диалог для ввода имени студента
-            // Пока используем тестовые данные
-            currentStudent = new Student("Иван", "Иванов");
+            currentStudent = Student.GetInstance();
             studentResults = new StudentResults(currentStudent);
         }
 
@@ -59,7 +58,11 @@ namespace StudentGraphApplication
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            SaveResultsToFile();
+            // Сохраняем результаты только если они еще не сохранены
+            if (!resultsSaved)
+            {
+                SaveResultsToFile();
+            }
 
             TaskPanel.Visibility = Visibility.Collapsed;
             MenuPanel.Visibility = Visibility.Visible;
@@ -67,6 +70,7 @@ namespace StudentGraphApplication
             timeInSeconds = 0;
             currentConfig = null;
             TimerTextBlock.Text = "00:00:00";
+            resultsSaved = false; // Сбрасываем флаг для следующей сессии
         }
 
         #region SaveButton
@@ -93,8 +97,6 @@ namespace StudentGraphApplication
 
             studentResults.AddOrUpdateAnswer(currentTask.Content?.ToString() ?? "Без названия", studentAnswer);
             SaveButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4dd49e"));
-
-            
         }
         #endregion
 
@@ -117,9 +119,13 @@ namespace StudentGraphApplication
                               MessageType.Warning, MessageBoxButton.OK);
                 return;
             }
-            if (string.IsNullOrEmpty(currentStudent.FirstName) || string.IsNullOrEmpty(currentStudent.LastName))
+
+            if (!currentStudent.IsInitialized)
             {
-                //AskStudentName();
+                if (!ShowStudentInputDialog())
+                {
+                    return;
+                }
             }
 
             MenuPanel.Visibility = Visibility.Collapsed;
@@ -127,14 +133,18 @@ namespace StudentGraphApplication
             timer.Start();
             DisplayTasks();
             ShowTask(0);
+            resultsSaved = false; // Сбрасываем флаг при начале новой сессии
         }
-
         #endregion
 
         #region ExitButton
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
-            SaveResultsToFile();
+            // Сохраняем результаты только если они еще не сохранены
+            if (!resultsSaved)
+            {
+                SaveResultsToFile();
+            }
             Application.Current.Shutdown();
         }
 
@@ -218,15 +228,14 @@ namespace StudentGraphApplication
                     Tag = i
                 };
 
-               
                 var taskContent = currentConfig.TaskList[i].Content?.ToString();
                 if (!string.IsNullOrEmpty(taskContent) && studentResults.HasAnswerForQuestion(taskContent))
                 {
-                    button.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4dd49e")); 
+                    button.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4dd49e"));
                 }
                 else if (i == 0)
                 {
-                    button.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4dd49e")); 
+                    button.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4dd49e"));
                 }
                 else
                 {
@@ -237,19 +246,17 @@ namespace StudentGraphApplication
                 taskButtons.Add(button);
                 TaskButtonsPanel.Children.Add(button);
             }
+
             var button2 = new Button
             {
                 Content = $"🔚",
                 Style = (Style)FindResource("TaskButtonStyle"),
                 Tag = 99
             };
-            button2.FontSize = 49; 
+            button2.FontSize = 49;
             button2.FontWeight = FontWeights.Bold;
             button2.Click += TaskButtonExit_Click;
             TaskButtonsPanel.Children.Add(button2);
-            //TaskContentControl.FontSize = 60;
-            GridStudents();
-
         }
 
         private void TaskButtonExit_Click(object sender, RoutedEventArgs e)
@@ -262,13 +269,24 @@ namespace StudentGraphApplication
            );
 
             if (result is MessageBoxResult.Yes)
+            {
                 SaveResultsToFile();
-            else if (result is MessageBoxResult.Cancel || result is MessageBoxResult.None)
-                return;
-            
+                // Возвращаемся в меню (без повторного сохранения)
+                ReturnToMenuWithoutSaving();
+            }
         }
 
-        private void GridStudents()
+        private void ReturnToMenuWithoutSaving()
+        {
+            TaskPanel.Visibility = Visibility.Collapsed;
+            MenuPanel.Visibility = Visibility.Visible;
+            timer.Stop();
+            timeInSeconds = 0;
+            currentConfig = null;
+            TimerTextBlock.Text = "00:00:00";
+        }
+
+        private bool ShowStudentInputDialog()
         {
             var inputDialog = new Window()
             {
@@ -278,9 +296,8 @@ namespace StudentGraphApplication
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
                 ResizeMode = ResizeMode.NoResize,
                 Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#f0f0f0"))
-                
             };
-            
+
             var mainGrid = new Grid();
             mainGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(1, GridUnitType.Star) });
             mainGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
@@ -312,9 +329,6 @@ namespace StudentGraphApplication
                 CornerRadius = new CornerRadius(10)
             };
 
-            // Устанавливаем скругленные углы через attached property
-            //nameBorder.SetValue(ControlAttachedProperties.CornerRadiusProperty, new CornerRadius(20));
-
             var nameTextBox = new TextBox
             {
                 Background = Brushes.Transparent,
@@ -327,7 +341,8 @@ namespace StudentGraphApplication
                 VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
                 Foreground = Brushes.Black,
                 CaretBrush = Brushes.Black,
-                HorizontalContentAlignment = HorizontalAlignment.Center
+                HorizontalContentAlignment = HorizontalAlignment.Center,
+                Text = "Фамилия Имя"
             };
 
             nameBorder.Child = nameTextBox;
@@ -339,7 +354,7 @@ namespace StudentGraphApplication
             {
                 Orientation = Orientation.Horizontal,
                 HorizontalAlignment = HorizontalAlignment.Center,
-                Margin = new Thickness(0, 0, 0, 0)
+                Margin = new Thickness(0, 20, 0, 0)
             };
 
             var okButton = new Button
@@ -358,27 +373,27 @@ namespace StudentGraphApplication
                 BorderBrush = Brushes.Black
             };
 
-            //var cancelButton = new Button
-            //{
-            //    Content = "Отмена",
-            //    Width = 100,
-            //    HorizontalAlignment = HorizontalAlignment.Center,
-            //    VerticalAlignment = VerticalAlignment.Center,
-            //    Height = 40,
-            //    FontWeight = FontWeights.Bold,
-            //    FontSize = 14,
-            //    Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#db5174")),
-            //    Foreground = Brushes.Black,
-            //    BorderThickness = new Thickness(3),
-            //    BorderBrush = Brushes.Black
-            //};
-
+            var cancelButton = new Button
+            {
+                Content = "Отмена",
+                Width = 100,
+                Height = 40,
+                Margin = new Thickness(10, 0, 0, 0),
+                FontWeight = FontWeights.Bold,
+                FontSize = 14,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Top,
+                Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#db5174")),
+                Foreground = Brushes.Black,
+                BorderThickness = new Thickness(3),
+                BorderBrush = Brushes.Black
+            };
 
             okButton.SetValue(ControlAttachedProperties.CornerRadiusProperty, new CornerRadius(12));
-            //cancelButton.SetValue(ControlAttachedProperties.CornerRadiusProperty, new CornerRadius(12));
+            cancelButton.SetValue(ControlAttachedProperties.CornerRadiusProperty, new CornerRadius(12));
 
             buttonPanel.Children.Add(okButton);
-            //buttonPanel.Children.Add(cancelButton);
+            buttonPanel.Children.Add(cancelButton);
 
             Grid.SetRow(contentPanel, 0);
             Grid.SetRow(buttonPanel, 1);
@@ -388,14 +403,36 @@ namespace StudentGraphApplication
 
             inputDialog.Content = mainGrid;
 
-            bool? result = null;
+            bool dialogResult = false;
 
             okButton.Click += (s, e2) =>
             {
-                if (!string.IsNullOrWhiteSpace(nameTextBox.Text))
+                if (!string.IsNullOrWhiteSpace(nameTextBox.Text) && nameTextBox.Text != "Фамилия Имя")
                 {
-                    result = true;
-                    inputDialog.Close();
+                    var nameParts = nameTextBox.Text.Trim().Split(new[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries);
+
+                    try
+                    {
+                        if (nameParts.Length >= 2)
+                        {
+                            currentStudent.Initialize(nameParts[0], nameParts[1]);
+                        }
+                        else
+                        {
+                            currentStudent.Initialize(nameParts[0], "");
+                        }
+
+                        dialogResult = true;
+                        inputDialog.Close();
+                    }
+                    catch (InvalidOperationException ex)
+                    {
+                        CustomMessageBoxWindow.Show(ex.Message, "Ошибка", MessageType.Error, MessageBoxButton.OK);
+                    }
+                    catch (ArgumentException ex)
+                    {
+                        CustomMessageBoxWindow.Show(ex.Message, "Ошибка", MessageType.Error, MessageBoxButton.OK);
+                    }
                 }
                 else
                 {
@@ -403,19 +440,43 @@ namespace StudentGraphApplication
                 }
             };
 
-            //cancelButton.Click += (s, e2) =>
-            //{
-            //    result = false;
-            //    inputDialog.Close();
-            //};
+            cancelButton.Click += (s, e2) =>
+            {
+                dialogResult = false;
+                inputDialog.Close();
+            };
 
             okButton.MouseEnter += (s, e) => okButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#3bc48d"));
             okButton.MouseLeave += (s, e) => okButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4dd49e"));
 
-            //cancelButton.MouseEnter += (s, e) => cancelButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#c93a5c"));
-            //cancelButton.MouseLeave += (s, e) => cancelButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#db5174"));
+            cancelButton.MouseEnter += (s, e) => cancelButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#c93a5c"));
+            cancelButton.MouseLeave += (s, e) => cancelButton.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#db5174"));
+
+            nameTextBox.GotFocus += (s, e) =>
+            {
+                if (nameTextBox.Text == "Фамилия Имя")
+                {
+                    nameTextBox.Text = "";
+                    nameTextBox.Foreground = Brushes.Black;
+                }
+            };
+
+            nameTextBox.LostFocus += (s, e) =>
+            {
+                if (string.IsNullOrWhiteSpace(nameTextBox.Text))
+                {
+                    nameTextBox.Text = "Фамилия Имя";
+                    nameTextBox.Foreground = Brushes.Gray;
+                }
+            };
+
+            if (nameTextBox.Text == "Фамилия Имя")
+            {
+                nameTextBox.Foreground = Brushes.Gray;
+            }
 
             nameTextBox.Focus();
+            nameTextBox.SelectAll();
 
             nameTextBox.KeyDown += (s, e) =>
             {
@@ -424,35 +485,28 @@ namespace StudentGraphApplication
                     okButton.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
                     e.Handled = true;
                 }
+                else if (e.Key == Key.Escape)
+                {
+                    cancelButton.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                    e.Handled = true;
+                }
             };
 
             inputDialog.ShowDialog();
-
-            if (result == true)
-            {
-                var nameParts = nameTextBox.Text.Trim().Split(new[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries);
-
-                if (nameParts.Length >= 2)
-                {
-                    currentStudent.LastName = nameParts[0];
-                    currentStudent.FirstName = nameParts[1];
-                }
-                else
-                {
-                    currentStudent.LastName = nameTextBox.Text.Trim();
-                    currentStudent.FirstName = "";
-                }
-
-                studentResults.Student = currentStudent;
-                //SaveResultsToFile();
-                //Application.Current.Shutdown();
-            }
+            return dialogResult;
         }
 
         private void SaveResultsToFile()
         {
             if (studentResults?.TaskAnswers == null || studentResults.TaskAnswers.Count == 0)
                 return;
+
+            if (!currentStudent.IsInitialized)
+            {
+                CustomMessageBoxWindow.Show("Студент не инициализирован. Результаты не могут быть сохранены.",
+                              "Ошибка", MessageType.Error, MessageBoxButton.OK);
+                return;
+            }
 
             try
             {
@@ -473,9 +527,8 @@ namespace StudentGraphApplication
                     string directory = Path.GetDirectoryName(dialog.FileName);
                     string graphResultsPath = Path.Combine(directory, "Results.txt");
 
-                    string resultLine =
-                                       $"{encryptedJson}" + " \n"; 
-                                       
+                    string resultLine = $"{encryptedJson}" + "\n";
+
                     if (File.Exists(graphResultsPath))
                     {
                         File.AppendAllText(graphResultsPath, Environment.NewLine + resultLine);
@@ -486,6 +539,7 @@ namespace StudentGraphApplication
                     }
 
                     CustomMessageBoxWindow.Show($"Результаты сохранены в файл: Results.txt", "Сохранение", MessageType.Warning, MessageBoxButton.OK);
+                    resultsSaved = true; // Устанавливаем флаг, что результаты сохранены
                 }
             }
             catch (Exception ex)
@@ -517,11 +571,11 @@ namespace StudentGraphApplication
 
                 if (i == taskIndex)
                 {
-                    taskButtons[i].Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4dd49e")); 
+                    taskButtons[i].Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4dd49e"));
                 }
                 else if (hasAnswer)
                 {
-                    taskButtons[i].Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4dd49e")); 
+                    taskButtons[i].Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4dd49e"));
                 }
                 else
                 {
@@ -552,12 +606,9 @@ namespace StudentGraphApplication
             stackPanel.Children.Add(taskText);
             TaskContentControl.Content = stackPanel;
 
-           
             var savedAnswer = studentResults.GetAnswerForQuestion(task.Content?.ToString());
             AnswerTextBox.Text = savedAnswer?.ToString() ?? "";
         }
         #endregion
-
-       
     }
 }

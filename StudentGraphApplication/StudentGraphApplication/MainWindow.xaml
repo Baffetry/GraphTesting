@@ -8,7 +8,7 @@
         Title="StudentApp" 
         WindowState="Maximized"
         WindowStyle="ThreeDBorderWindow"
-        MinWidth="1400" MinHeight="900">
+        MinWidth="1000" MinHeight="600">
 
     <Window.Resources>
         <Style TargetType="TextBlock">

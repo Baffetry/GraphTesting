@@ -8,7 +8,7 @@
         Title="Graph tester" 
         WindowState="Maximized"
         WindowStyle="SingleBorderWindow"
-        MinWidth="1600" MinHeight="900">
+        MinWidth="1000" MinHeight="600">
 
     <Window.Resources>
         <Style TargetType="TextBox">
