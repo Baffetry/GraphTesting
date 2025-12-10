@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeacherGraphApplication"
+        xmlns:graphshape="clr-namespace:GraphShape.Controls;assembly=GraphShape.Controls"
         mc:Ignorable="d"
         Title="Graph tester" 
         WindowState="Maximized"
@@ -112,6 +113,33 @@
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
+
+        <Style TargetType="graphshape:VertexControl">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="graphshape:VertexControl">
+                        <Border BorderBrush="#000000" 
+                                BorderThickness="2" 
+                                Background="#4dd49e" 
+                                CornerRadius="15"
+                                Padding="15,8">
+                            <TextBlock Text="{Binding}" 
+                                HorizontalAlignment="Center" 
+                                VerticalAlignment="Center"
+                                FontWeight="Bold"
+                                FontSize="14"
+                                Foreground="#000000"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
 
     <Border Background="#ededed">
@@ -191,10 +219,39 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
+                        <StackPanel x:Name="GraphPropPanel"
+                                    Visibility="Collapsed"
+                                    Grid.Column="0">
+
+                            <Label Content="Граф: " Margin="0, 0, 0, 10"/>
+
+                            <StackPanel Orientation="Horizontal" Margin="0, 10">
+
+                                <Label Content="Количество вершин:" />
+                                <TextBox x:Name="VertexTB" PreviewTextInput="VertexTB_PreviewTextInput" Margin="20, 0"/>
+
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0, 10">
+
+                                <Label Content="Количество рёбер:" />
+                                <TextBox x:Name="EdgeTB" PreviewTextInput="EdgeTB_PreviewTextInput" Margin="57, 0"/>
+
+                            </StackPanel>
+
+                            <Border x:Name="GraphBorder"
+                                    Margin="5,30" Height="400" Width="590"
+                                    BorderBrush="#000000" BorderThickness="4" CornerRadius="20">
+
+                                <graphshape:GraphLayout x:Name="graphLayout" Margin="10, 10"/>
+                            </Border>
+
+                        </StackPanel>
                     </Grid>
 
                 </DockPanel>
 
+                
                 <!-- Окно результатов -->
                 <DockPanel x:Name="ResultGrid" 
                            Visibility="Visible" 
@@ -269,12 +326,39 @@
                             Template="{StaticResource NoMouseOverButtonTemplate}"/>
                 </StackPanel>
 
+                <StackPanel x:Name="GraphGeneratePanel"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Visibility="Collapsed"
+                            Grid.Row="2"
+                            Margin="80, 0, 0, 25">
+
+                    <Button x:Name="GraphGenerateButton" 
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Width="110" Height="110" 
+                            Margin="10, 0"
+                            Background="#ededed" 
+                            Foreground="Black"
+                            BorderBrush="Black" 
+                            BorderThickness="4" 
+                            FontSize="40" 
+                            FontWeight="Bold"                    
+                            MouseEnter="GraphGenerateButton_MouseEnter" 
+                            MouseLeave="GraphGenerateButton_MouseLeave" 
+                            Click="GraphGenerateButton_Click"
+                            Template="{StaticResource NoMouseOverButtonTemplate}">
+                        <Image x:Name="GraphIcon" Source="/Resources/Graph96x96.png" Height="70" Width="70" />
+                    </Button>
+
+                </StackPanel>
+
                 <StackPanel x:Name="OpenFilePanel"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             Visibility="Collapsed"
                             Grid.Row="2"
-                            Margin="80, 0, 0, 0">
+                            Margin="80, 0, 0, 25">
 
                     <Button x:Name="ButtonOpenFile" 
                             HorizontalAlignment="Center"

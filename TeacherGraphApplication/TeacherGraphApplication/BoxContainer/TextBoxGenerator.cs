@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace TeacherGraphApplication.Props.GraphPanelDrawer
+namespace TeacherGraphApplication.Props.GraphPanelDrawer.DockPanelCreator
 {
     public class TextBoxGenerator
     {

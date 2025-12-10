@@ -3,16 +3,19 @@ using BoxContainerSpace;
 using Filters;
 using Generators;
 using Graph_Panel_Drawer;
+using GraphShape.Controls;
 using Microsoft.Win32;
+using QuikGraph;
 using Results;
+using System;
 using System.IO;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using Task_Panel_Drawer;
 using TeacherGraphApplication.CWC;
+using TeacherGraphApplication.Graph;
 using TeacherGraphApplication.Props.Brusher;
 using TeacherGraphApplication.Results.Generators;
 
@@ -21,8 +24,13 @@ namespace TeacherGraphApplication
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+
     public partial class MainWindow : Window
     {
+
+        public Random _random = new Random();
+        private GraphContainer graphContainer;
+
         private IContainer container;
         private ITableGenerator _tableGenerator;
         private ScrollViewer _scrollViewer;
@@ -55,6 +63,88 @@ namespace TeacherGraphApplication
 
             _scrollViewer = FindName("ResultViewer") as ScrollViewer;
         }
+
+        #region Graph methods
+        private void CreateGraphWithRandomPositions(int amountOfVertex, int amountOfEdge)
+        {
+            int C_n = (amountOfVertex * (amountOfVertex - 1)) / 2;
+
+            int maxEdges = amountOfEdge <= C_n
+                ? amountOfEdge
+                : C_n;
+
+            graphContainer.Clear();
+
+            // Используем object как тип вершин для совместимости
+            var graph = new BidirectionalGraph<object, IEdge<object>>();
+
+            // Создаем вершины со случайными позициями
+            var vertices = new List<GraphVertex>();
+
+            for (int i = 1; i <= amountOfVertex; i++)
+            {
+                var vertex = new GraphVertex($"{i}")
+                {
+                    X = _random.Next(10, (int)GraphBorder.Width - 50),
+                    Y = _random.Next(10, (int)GraphBorder.Height - 50)
+                };
+                graphContainer.AddVertex(vertex);
+            }
+
+            AddRandomEdgesToContainer(graphContainer, maxEdges);
+
+            // Устанавливаем граф
+            graphLayout.Graph = graphContainer.ToGraphLayoutGraph();
+            graphLayout.LayoutAlgorithmType = "None"; // Отключаем авто-компоновку
+
+            // Устанавливаем позиции вершин
+            SetVertexPositions(graphContainer.Vertices);
+        }
+        private void AddRandomEdgesToContainer(GraphContainer container, int amountOfEdges)
+        {
+            var vertices = container.Vertices;
+            var existingEdges = new HashSet<(int, int)>();
+
+            while (amountOfEdges > 0)
+            {
+                int sourceIndex = _random.Next(vertices.Count);
+                int targetIndex = _random.Next(vertices.Count);
+
+                if (sourceIndex == targetIndex)
+                    continue;
+
+                // Создаем ключ для проверки уникальности ребра
+                int minIndex = Math.Min(sourceIndex, targetIndex);
+                int maxIndex = Math.Max(sourceIndex, targetIndex);
+                var edgeKey = (minIndex, maxIndex);
+
+                if (!existingEdges.Contains(edgeKey))
+                {
+                    var sourceVertex = vertices[sourceIndex];
+                    var targetVertex = vertices[targetIndex];
+
+                    // Добавляем ребро через контейнер
+                    container.AddEdge(sourceVertex, targetVertex);
+
+                    existingEdges.Add(edgeKey);
+                    amountOfEdges--;
+                }
+            }
+        }
+        private void SetVertexPositions(List<GraphVertex> vertices)
+        {
+            foreach (var vertex in vertices)
+            {
+                var vertexControl = graphLayout.GetVertexControl(vertex);
+                if (vertexControl != null)
+                {
+                    GraphCanvas.SetX(vertexControl, vertex.X);
+                    GraphCanvas.SetY(vertexControl, vertex.Y);
+                }
+            }
+        }
+
+        #endregion
 
         #region MainWindow event
         private void MainWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
@@ -90,9 +180,10 @@ namespace TeacherGraphApplication
             if (saveDialog.ShowDialog() is true)
             {
                 var temp = new ControlWorkConfig(
-                    int.Parse(container.GetTextBox(0).Text),
-                    int.Parse(container.GetTextBox(1).Text),
-                    generator.GenerateControlWorkConfig()
+                    graphContainer.Vertices.Count(),
+                    graphContainer.Edges.Count(),
+                    generator.GenerateControlWorkConfig(),
+                    graphContainer
                 );
 
                 var json = JsonSerializer.Serialize(temp, new JsonSerializerOptions {
@@ -100,6 +191,7 @@ namespace TeacherGraphApplication
                     WriteIndented = true,
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                 });
+
                 var encprition = new Encryption();
                 string result = encprition.Encrypt(json);
                 File.WriteAllText(saveDialog.FileName, result);
@@ -193,6 +285,8 @@ namespace TeacherGraphApplication
             // Props
             PropertiesGrid.Visibility = Visibility.Visible;
             PropButtons.Visibility = Visibility.Visible;
+            GraphGeneratePanel.Visibility = Visibility.Visible;
+            GraphPropPanel.Visibility = Visibility.Visible;
 
             // Results
             ResultGrid.Visibility = Visibility.Collapsed;
@@ -209,10 +303,7 @@ namespace TeacherGraphApplication
             container.Load();
 
 
-            var properties = new PropertiesDrawer(
-                new GraphPanelDrawer(),
-                new TaskPanelDrawer()
-            );
+            var properties = new PropertiesDrawer();
 
             properties.Draw(PropertiesGrid);
         }
@@ -233,6 +324,8 @@ namespace TeacherGraphApplication
             // Props
             PropertiesGrid.Visibility = Visibility.Collapsed;
             PropButtons.Visibility = Visibility.Collapsed;
+            GraphGeneratePanel.Visibility = Visibility.Collapsed;
+            GraphPropPanel.Visibility = Visibility.Collapsed;
 
             // Results
             ResultGrid.Visibility = Visibility.Visible;
@@ -292,8 +385,8 @@ namespace TeacherGraphApplication
         }
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(container.GetTextBox(0).Text) ||
-                string.IsNullOrEmpty(container.GetTextBox(1).Text))
+            if (string.IsNullOrEmpty(VertexTB.Text) ||
+                string.IsNullOrEmpty(EdgeTB.Text))
             {
                 var result = CustomMessageBox.Show(
                     "Проверьте, правильно ли вы ввели кол-во рёбер или вершин.",
@@ -331,6 +424,10 @@ namespace TeacherGraphApplication
         }
         private void ButtonReset_Click(object sender, RoutedEventArgs e)
         {
+            (VertexTB.Text, EdgeTB.Text) = (string.Empty, string.Empty);
+            graphLayout.Graph = new BidirectionalGraph<object, IEdge<object>>();
+            graphContainer = null;
+
             container.Stop();
         }
         #endregion
@@ -403,6 +500,51 @@ namespace TeacherGraphApplication
             sortBySPState = SortState.Ascending;
             sortByPercentState = SortState.Ascending;
             sortByRateState = SortState.Ascending;
+        }
+        #endregion
+
+        #region ButtonGraphGenerate
+        private void GraphGenerateButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            GraphGenerateButton.Background = brush.CandyGreen;
+            GraphGenerateButton.Height = 120;
+            GraphGenerateButton.Width = 120;
+
+            GraphIcon.Height = 90;
+            GraphIcon.Width = 90;
+        }
+
+        private void GraphGenerateButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            GraphGenerateButton.Background = brush.CandyGray;
+            GraphGenerateButton.Height = 110;
+            GraphGenerateButton.Width = 110;
+
+            GraphIcon.Height = 70;
+            GraphIcon.Width = 70;
+        }
+
+        private void GraphGenerateButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(VertexTB.Text) || string.IsNullOrEmpty(EdgeTB.Text))
+            {
+                var result = CustomMessageBox.Show(
+                        "Некорректные параметры графа!",
+                        "Предупреждение",
+                        MessageType.Warning,
+                        MessageBoxButton.OK
+                );
+
+                if (result is MessageBoxResult.OK || result is MessageBoxResult.Cancel || result is MessageBoxResult.None)
+                    return;
+            }
+
+            graphContainer = new GraphContainer();
+
+            int vertices = int.Parse(VertexTB.Text);
+            int edges = int.Parse(EdgeTB.Text);
+
+            CreateGraphWithRandomPositions(vertices, edges);
         }
         #endregion
 
@@ -543,6 +685,18 @@ namespace TeacherGraphApplication
         }
         #endregion
 
+        #endregion
+
+        #region Graph Text Boxes
+        private void VertexTB_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.Text, 0);
+        }
+
+        private void EdgeTB_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.Text, 0); 
+        }
         #endregion
     }
 }

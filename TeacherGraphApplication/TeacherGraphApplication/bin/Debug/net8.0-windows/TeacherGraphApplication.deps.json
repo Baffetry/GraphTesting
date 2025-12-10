@@ -8,10 +8,41 @@
     ".NETCoreApp,Version=v8.0": {
       "TeacherGraphApplication/1.0.0": {
         "dependencies": {
+          "GraphShape.Controls": "1.2.2",
           "Encryption": "1.0.0.0"
         },
         "runtime": {
           "TeacherGraphApplication.dll": {}
+        }
+      },
+      "GraphShape/1.2.1": {
+        "dependencies": {
+          "QuikGraph": "2.3.0"
+        },
+        "runtime": {
+          "lib/net5.0/GraphShape.dll": {
+            "assemblyVersion": "1.2.1.0",
+            "fileVersion": "1.2.1.0"
+          }
+        }
+      },
+      "GraphShape.Controls/1.2.2": {
+        "dependencies": {
+          "GraphShape": "1.2.1"
+        },
+        "runtime": {
+          "lib/net5.0-windows7.0/GraphShape.Controls.dll": {
+            "assemblyVersion": "1.2.2.0",
+            "fileVersion": "1.2.2.0"
+          }
+        }
+      },
+      "QuikGraph/2.3.0": {
+        "runtime": {
+          "lib/netstandard2.0/QuikGraph.dll": {
+            "assemblyVersion": "2.3.0.0",
+            "fileVersion": "2.3.0.0"
+          }
         }
       },
       "Encryption/1.0.0.0": {
@@ -29,6 +60,27 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "GraphShape/1.2.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-FOa1AGPTtYEcYV0JTa+OHX0VvmMv3aJx0dnwto+qpggFX8VUYqmjr1C2e2aCcINxAd6HZpurc22QbSNoMi+ULg==",
+      "path": "graphshape/1.2.1",
+      "hashPath": "graphshape.1.2.1.nupkg.sha512"
+    },
+    "GraphShape.Controls/1.2.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-TFqH19zHQ4sYxEgWXfPD0MyjC1AgRUjF8vNHhIikOzr0f+BZzlOA3i/kcnNgfm2FiHAWx5nWzqlwinzN9Fhzvw==",
+      "path": "graphshape.controls/1.2.2",
+      "hashPath": "graphshape.controls.1.2.2.nupkg.sha512"
+    },
+    "QuikGraph/2.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Vhj33jEOi4xQlJHFOrhDf29MgYLYnPi4z6ywIVvPhe/nUkCihj3kynWI9PaK+HM29ati5rd1SUON5z2sslEsVw==",
+      "path": "quikgraph/2.3.0",
+      "hashPath": "quikgraph.2.3.0.nupkg.sha512"
     },
     "Encryption/1.0.0.0": {
       "type": "reference",

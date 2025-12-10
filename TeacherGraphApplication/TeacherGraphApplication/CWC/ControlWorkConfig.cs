@@ -1,9 +1,10 @@
 ﻿using System.Text.Json.Serialization;
+using TeacherGraphApplication.Graph;
 
 namespace TeacherGraphApplication.CWC
 {
 
-    public class ControlWorkConfig(int vertices, int edges, List<ControlWorkTask> taskList)
+    public class ControlWorkConfig(int vertices, int edges, List<ControlWorkTask> taskList, GraphContainer graphContainer)
     {
         [JsonPropertyName("Amount of vertices")]
         [JsonInclude]
@@ -17,5 +18,8 @@ namespace TeacherGraphApplication.CWC
         [JsonInclude]
         public List<ControlWorkTask>? TaskList { get; set; } = taskList;
 
+        [JsonPropertyName("Graph container")]
+        [JsonInclude]
+        public GraphContainer Container { get; set; } = graphContainer;
     }
 }

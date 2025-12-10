@@ -100,3 +100,6 @@ C:\Users\matve\Desktop\ИНФА\MP\ProjectGraph\GraphTesting\GraphTesting\Teache
 C:\Users\matve\Desktop\ИНФА\MP\ProjectGraph\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\TeacherGraphApplication.pdb
 C:\Users\matve\Desktop\ИНФА\MP\ProjectGraph\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\TeacherGraphApplication.genruntimeconfig.cache
 C:\Users\matve\Desktop\ИНФА\MP\ProjectGraph\GraphTesting\GraphTesting\TeacherGraphApplication\TeacherGraphApplication\obj\Debug\net8.0-windows\ref\TeacherGraphApplication.dll
+D:\Data\Programming\GraphProject\TeacherGraphApplication\TeacherGraphApplication\bin\Debug\net8.0-windows\GraphShape.dll
+D:\Data\Programming\GraphProject\TeacherGraphApplication\TeacherGraphApplication\bin\Debug\net8.0-windows\GraphShape.Controls.dll
+D:\Data\Programming\GraphProject\TeacherGraphApplication\TeacherGraphApplication\bin\Debug\net8.0-windows\QuikGraph.dll

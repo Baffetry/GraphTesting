@@ -1,24 +1,29 @@
-﻿using Graph_Panel_Drawer;
+﻿using System.Windows;
 using System.Windows.Controls;
-using Task_Panel_Drawer;
+using TeacherGraphApplication.Props.TaskPanelDrawer.Generators;
 
 class PropertiesDrawer
 {
-    private ITaskDrawer task;
-    private IGraphDrawer graph;
-
-    public PropertiesDrawer(IGraphDrawer graphDrawer, ITaskDrawer taskDrawer)
-    {
-        task = taskDrawer;
-        graph = graphDrawer;
-    }
-
     public void Draw(Grid grid)
     {
-        grid.Children.Clear();
         grid.RowDefinitions.Clear();
 
-        graph.Draw(grid);
-        task.Draw(grid);
+        var panel = new DockPanelWithScrollViewerGenerator().GenerateDockPanelWithScrollViewer();
+
+        ClearColumn(grid, 1);
+
+        Grid.SetColumn(panel, 1);
+        grid.Children.Add(panel);
+    }
+
+    private void ClearColumn(Grid grid, int column)
+    {
+        var itemsToRemove = grid.Children
+            .Cast<UIElement>()
+            .Where(element => Grid.GetColumn(element) == column)
+            .ToList();
+
+        foreach (var item in itemsToRemove)
+            grid.Children.Remove(item);
     }
 }
