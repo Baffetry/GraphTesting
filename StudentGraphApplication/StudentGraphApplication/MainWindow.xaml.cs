@@ -1,15 +1,17 @@
-﻿using System;
+﻿using GraphShape.Controls;
+using StudentGraphApplication.Graph;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Windows;
+using System.Windows.Automation.Text;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Threading;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Automation.Text;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace StudentGraphApplication
 {
@@ -133,6 +135,8 @@ namespace StudentGraphApplication
             timer.Start();
             DisplayTasks();
             ShowTask(0);
+            graphLayout.Graph = currentConfig.Container.ToGraph();
+            SetVertexPositions(graphLayout.Graph.Vertices);
             resultsSaved = false; // Сбрасываем флаг при начале новой сессии
         }
         #endregion
@@ -200,6 +204,7 @@ namespace StudentGraphApplication
                 {
                     PropertyNameCaseInsensitive = true
                 };
+                
                 ControlWorkConfig config = JsonSerializer.Deserialize<ControlWorkConfig>(decryptedJson, options);
                 return config;
             }
@@ -212,6 +217,22 @@ namespace StudentGraphApplication
         #endregion
 
         #region Task Management
+        private void SetVertexPositions(IEnumerable<object> vertices)
+        {
+            foreach (var vertexObj in vertices)
+            {
+                if (vertexObj is GraphVertex vertex)
+                {
+                    var vertexControl = graphLayout.GetVertexControl(vertex);
+                    if (vertexControl != null)
+                    {
+                        Canvas.SetLeft(vertexControl, vertex.X);
+                        Canvas.SetTop(vertexControl, vertex.Y);
+                    }
+                }
+            }
+        }
+
         private void DisplayTasks()
         {
             taskButtons.Clear();

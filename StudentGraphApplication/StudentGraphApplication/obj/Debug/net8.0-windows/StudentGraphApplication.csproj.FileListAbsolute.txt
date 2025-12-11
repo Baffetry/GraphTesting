@@ -142,3 +142,10 @@ C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTes
 C:\Users\matve\OneDrive\Рабочий стол\Инфа\5\GraphTesting\GraphTesting\StudentGraphApplication\StudentGraphApplication\obj\Debug\net8.0-windows\ref\StudentGraphApplication.dll
 C:\Users\matve\Desktop\ИНФА\MP\ProjectGraph\GraphTesting\GraphTesting\StudentGraphApplication\StudentGraphApplication\obj\Debug\net8.0-windows\CustomMessageBoxWindow.g.cs
 C:\Users\matve\Desktop\ИНФА\MP\ProjectGraph\GraphTesting\GraphTesting\StudentGraphApplication\StudentGraphApplication\obj\Debug\net8.0-windows\CustomMessageBoxWindow.baml
+D:\Data\Programming\GraphProject\StudentGraphApplication\StudentGraphApplication\bin\Debug\net8.0-windows\GraphShape.dll
+D:\Data\Programming\GraphProject\StudentGraphApplication\StudentGraphApplication\bin\Debug\net8.0-windows\GraphShape.Controls.dll
+D:\Data\Programming\GraphProject\StudentGraphApplication\StudentGraphApplication\bin\Debug\net8.0-windows\QuikGraph.dll
+D:\Data\Programming\GraphProject\StudentGraphApplication\StudentGraphApplication\obj\Debug\net8.0-windows\StudentGraphApplication.csproj.AssemblyReference.cache
+D:\Data\Programming\GraphProject\StudentGraphApplication\StudentGraphApplication\obj\Debug\net8.0-windows\CustomMessageBoxWindow.g.cs
+D:\Data\Programming\GraphProject\StudentGraphApplication\StudentGraphApplication\obj\Debug\net8.0-windows\CustomMessageBoxWindow.baml
+D:\Data\Programming\GraphProject\StudentGraphApplication\StudentGraphApplication\obj\Debug\net8.0-windows\StudentG.4D6490A5.Up2Date

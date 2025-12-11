@@ -1,6 +1,7 @@
 ﻿using TeacherGraphApplication.Results.Generators;
 using Generators;
 using Filters;
+using TeacherGraphApplication.Graph;
 
 namespace Results
 {
@@ -9,7 +10,7 @@ namespace Results
         private static TableGenerator instance;
 
         private GridGenerator _gridGenerator;
-        private StudentResultGenerator _studentResultGenerator;
+        private static StudentResultGenerator _studentResultGenerator;
 
         private TableGenerator(GridGenerator gridGenerator, StudentResultGenerator resultGenerator)
         {
@@ -22,6 +23,11 @@ namespace Results
             if (instance is null)
                 instance = new TableGenerator(gridGenerator, resultGenerator);
             return instance;
+        }
+
+        public static void SetGraph(GraphContainer container)
+        {
+            _studentResultGenerator.SetGraphContainer(container);
         }
 
         public void DrawLabels()

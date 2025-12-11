@@ -1,12 +1,18 @@
 ﻿using System.Collections;
 using System.IO;
 using System.Text.Json;
+using TeacherGraphApplication.Graph;
+using TeacherGraphApplication.Results.VariantManager;
 
 namespace StudentResultsSpace
 {
     public class ResultContainer : IEnumerable<StudentResults>
     {
         private List<StudentResults> students = new();
+        Dictionary<string, object> Results;
+        private GraphCalc graph;
+
+        public ResultContainer() { }
 
         public int Count 
             => students.Count;
@@ -16,6 +22,25 @@ namespace StudentResultsSpace
 
         public StudentResults this[int index]
             => students[index];
+
+        public void SetGraph(GraphContainer container)
+        {
+            graph = new GraphCalc(container);
+
+            Results = new Dictionary<string, object>()
+            {
+                {"Посчитайте цикломатическое число.", graph.GetCyclomaticNumber() },
+                {"Посчитайте число независимости.", graph.GetIndependenceNumber() },
+                {"Посчитайте хроматическое число.", graph.GetChromaticNumber() },
+                {"Посчитайте радиус.", graph.GetRadius() },
+                {"Посчитайте диаметр.", graph.GetDiameter() },
+                {"Посчитайте число вершинного покрытия.", graph.GetVertexCoverNumber() },
+                {"Посчитайте число реберного покрытия.", graph.GetEdgeCoverNumber() },
+                {"Посчитайте плотность графа.", graph.GetDensity() },
+                {"Посчитайте число паросочетания.", graph.GetMatchingNumber() },
+                {"Посчитайте хроматический индекс.", graph.GetChromaticIndex() }
+            };
+        }
 
         public void LoadFromFile(string path)
         {
@@ -28,13 +53,29 @@ namespace StudentResultsSpace
                     StringSplitOptions.RemoveEmptyEntries);
                 var decrypter = new Encryption();
 
+
+
                 foreach (var encodedJson in studentsJson)
                 {
                     string json = decrypter.Decrypt(encodedJson);
                     var studentResult = JsonSerializer.Deserialize<StudentResults>(json);
 
-                    studentResult.SolvedProblems = studentResult.TaskAnswers.Count;
-                    studentResult.Percent = GetPersent(studentResult);
+                    int totalQuestions = studentResult.TaskAnswers.Count;
+                    //int solvedQuestions = CountSolvedTasks(studentResult, out List<string> questions);
+
+                    int solvedQuestions = studentResult.TaskAnswers
+                        .Where(x => x.Answer != null)
+                        .Count();
+
+                    int correctSolvedQuestions = studentResult.TaskAnswers
+                        .Where(x => x.Answer.Equals(Results[x.Question]))
+                        .Count();
+
+
+                    studentResult.SolvedProblems = correctSolvedQuestions;
+                    studentResult.Percent = totalQuestions > 0 
+                        ? (double) correctSolvedQuestions / totalQuestions
+                        : 0;
                     studentResult.Rate = GetRate(studentResult.Percent);
 
                     students.Add(studentResult);
@@ -42,13 +83,16 @@ namespace StudentResultsSpace
             }
         }
 
-        private int GetRate(int persent)
+        private int GetRate(double percent)
         {
-            return 1;
-        }
-        private int GetPersent(StudentResults result)
-        {
-            return 1;
+            return percent switch
+            {
+                >= 0.9 => 5,
+                >= 0.75 => 4,
+                >= 0.6 => 3,
+                >= 0.4 => 2,
+                _ => 1
+            };
         }
 
         #region IEnumerable

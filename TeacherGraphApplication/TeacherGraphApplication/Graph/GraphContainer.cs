@@ -13,7 +13,6 @@ namespace TeacherGraphApplication.Graph
         [JsonInclude]
         public List<GraphEdge> Edges { get; set; } = new List<GraphEdge>();
 
-        [JsonIgnore]
         private Dictionary<GraphVertex, List<GraphEdge>> adjacencyList = new Dictionary<GraphVertex, List<GraphEdge>>();
 
         // Метод для добавления вершины

@@ -1,25 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
+using StudentGraphApplication.Graph;
 
 namespace StudentGraphApplication
 {
-    public class ControlWorkConfig(int vertices, int edges, List<ControlWorkTask> taskList)
+    public class ControlWorkConfig
     {
         [JsonPropertyName("Amount of vertices")]
-        [JsonInclude]
-        public int Vertices { get; set; } = vertices;
+        public int Vertices { get; set; }
 
         [JsonPropertyName("Amount of edges")]
-        [JsonInclude]
-        public int Edges { get; set; } = edges;
+        public int Edges { get; set; }
 
         [JsonPropertyName("Task list")]
-        [JsonInclude]
-        public List<ControlWorkTask>? TaskList { get; set; } = taskList;
+        public List<ControlWorkTask>? TaskList { get; set; }
 
+        [JsonPropertyName("Graph container")]
+        public GraphContainer? Container { get; set; }
+
+        public ControlWorkConfig() { }
+
+        public ControlWorkConfig(int vertices, int edges, List<ControlWorkTask> taskList, GraphContainer graphContainer)
+        {
+            Vertices = vertices;
+            Edges = edges;
+            TaskList = taskList;
+            Container = graphContainer;
+        }
     }
 }

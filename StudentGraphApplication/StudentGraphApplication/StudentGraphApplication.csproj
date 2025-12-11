@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="GraphShape.Controls" Version="1.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="Encryption">
       <HintPath>bin\Debug\net8.0-windows\Encryption.dll</HintPath>
     </Reference>

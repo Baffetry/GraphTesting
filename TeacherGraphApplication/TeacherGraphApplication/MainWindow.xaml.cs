@@ -2,11 +2,12 @@
 using BoxContainerSpace;
 using Filters;
 using Generators;
-using Graph_Panel_Drawer;
 using GraphShape.Controls;
 using Microsoft.Win32;
 using QuikGraph;
 using Results;
+using StudentGraphApplication;
+using StudentResultsSpace;
 using System;
 using System.IO;
 using System.Text.Json;
@@ -14,6 +15,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Shapes;
 using TeacherGraphApplication.CWC;
 using TeacherGraphApplication.Graph;
 using TeacherGraphApplication.Props.Brusher;
@@ -175,22 +177,25 @@ namespace TeacherGraphApplication
                 FileName = fileName
             };
 
-            var generator = new ControlWorkConfigGenerator(container.GetStates(), null);
+            var generator = new ControlWorkConfigGenerator(container.GetStates());
 
             if (saveDialog.ShowDialog() is true)
             {
-                var temp = new ControlWorkConfig(
-                    graphContainer.Vertices.Count(),
-                    graphContainer.Edges.Count(),
-                    generator.GenerateControlWorkConfig(),
-                    graphContainer
-                );
+                var temp = new ControlWorkConfig {
+                    Vertices = graphContainer.Vertices.Count(),
+                    Edges = graphContainer.Edges.Count(),
+                    TaskList = generator.GenerateControlWorkConfig(),
+                    Container = graphContainer
+                };
 
                 var json = JsonSerializer.Serialize(temp, new JsonSerializerOptions {
                     IncludeFields = true,
                     WriteIndented = true,
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                 });
+
+                File.WriteAllText(saveDialog.FileName + "JSON", json);
+
 
                 var encprition = new Encryption();
                 string result = encprition.Encrypt(json);
@@ -456,8 +461,11 @@ namespace TeacherGraphApplication
             var openFileDialog = new OpenFileDialog
             { 
                 Filter = "(*.txt)|*.txt",
-                Title = "Выберите файл"
+                Title = "Выберите файл с результатами студентов. . ."
             };
+
+            var targetCfg = OpenTargetCfg(openFileDialog);
+            TableGenerator.SetGraph(targetCfg.Container);
 
             if (openFileDialog.ShowDialog() is true)
             {
@@ -466,6 +474,22 @@ namespace TeacherGraphApplication
                 FilterPanel.Visibility = Visibility.Visible;
                 ErasePanel.Visibility = Visibility.Visible;
             }
+        }
+
+        private ControlWorkConfig OpenTargetCfg(OpenFileDialog opf)
+        {
+            opf.Title = "Выберите варинт контрольной работы. . .";
+            ControlWorkConfig target = null;
+
+            if (opf.ShowDialog() is true)
+            {
+                string temp = File.ReadAllText(opf.FileName);
+                var decrypt = new Encryption();
+                var json = decrypt.Decrypt(temp);
+                target = JsonSerializer.Deserialize<ControlWorkConfig>(json);
+            }
+
+            return target;
         }
         #endregion
 
@@ -540,6 +564,7 @@ namespace TeacherGraphApplication
             }
 
             graphContainer = new GraphContainer();
+            //TableGenerator.SetGraph(graphContainer);
 
             int vertices = int.Parse(VertexTB.Text);
             int edges = int.Parse(EdgeTB.Text);

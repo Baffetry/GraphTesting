@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace TeacherGraphApplication.Graph
+namespace StudentGraphApplication.Graph
 {
     public class GraphEdge
     {

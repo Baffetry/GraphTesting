@@ -12,7 +12,7 @@ namespace StudentResultsSpace
         [JsonInclude]
         public List<TaskAnswer> TaskAnswers { get; set; }
 
-        public int Percent { get; set; }
+        public double Percent { get; set; }
 
         public int Rate { get; set; }
 

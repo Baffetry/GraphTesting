@@ -3,6 +3,7 @@ using Filters;
 using StudentResultsSpace;
 using System.Windows;
 using System.Windows.Controls;
+using TeacherGraphApplication.Graph;
 
 namespace TeacherGraphApplication.Results.Generators
 {
@@ -19,6 +20,11 @@ namespace TeacherGraphApplication.Results.Generators
             container = new ResultContainer();
 
             borderGenerator = new BorderGenerator();
+        }
+
+        public void SetGraphContainer(GraphContainer graphContainer)
+        {
+            container.SetGraph(graphContainer);
         }
 
         public void GenerateResults(string path, ISorter? sorter = null)
@@ -58,7 +64,7 @@ namespace TeacherGraphApplication.Results.Generators
             Border[] borders =
             {
                 borderGenerator.GenerateBorder($"{student.LastName} {student.FirstName}", index),
-                borderGenerator.GenerateBorder(result./*TaskAnswers.Count*/SolvedProblems, index),
+                borderGenerator.GenerateBorder(result.SolvedProblems, index),
                 borderGenerator.GenerateBorder(result.Percent, index),
                 borderGenerator.GenerateBorder(result.Rate, index)
             };

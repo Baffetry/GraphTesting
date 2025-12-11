@@ -1,25 +1,31 @@
 ﻿using System.Text.Json.Serialization;
+using TeacherGraphApplication.CWC;
 using TeacherGraphApplication.Graph;
 
-namespace TeacherGraphApplication.CWC
+namespace StudentGraphApplication
 {
-
-    public class ControlWorkConfig(int vertices, int edges, List<ControlWorkTask> taskList, GraphContainer graphContainer)
+    public class ControlWorkConfig
     {
         [JsonPropertyName("Amount of vertices")]
-        [JsonInclude]
-        public int Vertices { get; set; } = vertices;
+        public int Vertices { get; set; }
 
         [JsonPropertyName("Amount of edges")]
-        [JsonInclude]
-        public int Edges { get; set; } = edges;
+        public int Edges { get; set; }
 
         [JsonPropertyName("Task list")]
-        [JsonInclude]
-        public List<ControlWorkTask>? TaskList { get; set; } = taskList;
+        public List<ControlWorkTask>? TaskList { get; set; }
 
         [JsonPropertyName("Graph container")]
-        [JsonInclude]
-        public GraphContainer Container { get; set; } = graphContainer;
+        public GraphContainer? Container { get; set; }
+
+        public ControlWorkConfig() { }
+
+        public ControlWorkConfig(int vertices, int edges, List<ControlWorkTask> taskList, GraphContainer graphContainer)
+        {
+            Vertices = vertices;
+            Edges = edges;
+            TaskList = taskList;
+            Container = graphContainer;
+        }
     }
 }

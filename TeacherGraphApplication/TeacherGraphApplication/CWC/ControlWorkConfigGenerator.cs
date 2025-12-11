@@ -1,9 +1,8 @@
 ﻿namespace TeacherGraphApplication.CWC
 {
-    internal class ControlWorkConfigGenerator(List<bool> Flags, List<object> Answers) : IControlWorkConfigGenerator
+    internal class ControlWorkConfigGenerator(List<bool> Flags) : IControlWorkConfigGenerator
     {
         private List<bool> flags = Flags;
-        private List<object> answers = Answers;
 
         private static string[] taskContens =
 {
