@@ -27,32 +27,48 @@ namespace TeacherGraphApplication.Results.Generators
             container.SetGraph(graphContainer);
         }
 
+        public bool GraphInitialized()
+        {
+            return container.GraphInitialized();
+        }
+
         public void GenerateResults(string path, ISorter? sorter = null)
         {
             _grid.Children.Clear();
             _grid.RowDefinitions.Clear();
 
             container.LoadFromFile(path);
-            borderGenerator.MaxIndex = container.Students.Count - 1;
 
-            var displayResults = sorter != null
-                ? [.. sorter.Sort(container)]
-                : container.Students;
-
-            for (int i = 0; i < displayResults.Count; i++)
+            try
             {
-                _grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(100, GridUnitType.Pixel) });
+                if (!(container is ResultContainer))
+                    throw new ArgumentException();
 
-                List<Border> borders = SetBordersArray(i, displayResults).ToList();
+                borderGenerator.MaxIndex = container.Students.Count - 1;
 
-                foreach (var border in borders)
-                    Grid.SetRow(border, i);
+                var displayResults = sorter != null
+                    ? [.. sorter.Sort(container)]
+                    : container.Students;
 
-                for (int index = 0; index < 4;  index++)
-                    Grid.SetColumn(borders[index], index);
+                for (int i = 0; i < displayResults.Count; i++)
+                {
+                    _grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(100, GridUnitType.Pixel) });
 
-                foreach (var border in borders)
-                    _grid.Children.Add(border);
+                    List<Border> borders = SetBordersArray(i, displayResults).ToList();
+
+                    foreach (var border in borders)
+                        Grid.SetRow(border, i);
+
+                    for (int index = 0; index < 4; index++)
+                        Grid.SetColumn(borders[index], index);
+
+                    foreach (var border in borders)
+                        _grid.Children.Add(border);
+                }
+            } 
+            catch (Exception)
+            {
+                throw new ArgumentException();
             }
         }
 

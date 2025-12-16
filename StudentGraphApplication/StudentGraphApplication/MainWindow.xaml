@@ -9,7 +9,8 @@
         Title="StudentApp" 
         WindowState="Maximized"
         WindowStyle="ThreeDBorderWindow"
-        MinWidth="1000" MinHeight="600">
+        MinWidth="1000" MinHeight="600"
+        Icon="/Resources/applicationIcon96x96.png">
 
     <Window.Resources>
         <Style TargetType="TextBlock">
@@ -223,8 +224,9 @@
                         CornerRadius="20"
                         Margin="0,10,10,10">
 
-                    <graphshape:GraphLayout x:Name="graphLayout" Margin="10, 10"/>
-
+                    <graphshape:GraphCanvas Margin="10, 10">
+                        <graphshape:GraphLayout x:Name="graphLayout"/>
+                    </graphshape:GraphCanvas>
                 </Border>
 
                 <!-- Окно с задачей и полем ответа -->

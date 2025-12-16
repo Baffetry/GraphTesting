@@ -390,21 +390,31 @@ namespace TeacherGraphApplication
         }
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(VertexTB.Text) ||
-                string.IsNullOrEmpty(EdgeTB.Text))
+            try
+            {
+                container.Update();
+
+                if (string.IsNullOrEmpty(VertexTB.Text) ||
+                    string.IsNullOrEmpty(EdgeTB.Text))
+                    throw new ArgumentException("Проверьте, правильно ли вы ввели кол-во рёбер или вершин. . .");
+
+                if (graphContainer is null)
+                    throw new ArgumentException("Необходимо сгенерировать граф перед сохранением варианта. . .");
+
+                if (container.GetStates().Where(x => x == true).Count() == 0)
+                    throw new ArgumentException("Нужно выбрать хотя бы одну задачу для контрольной работы. . .");
+
+                SaveWithFileDialog("ControlWorkConfig");
+            }
+            catch (Exception ex)
             {
                 var result = CustomMessageBox.Show(
-                    "Проверьте, правильно ли вы ввели кол-во рёбер или вершин.",
+                    ex.Message,
                     "Предупреждение",
                     MessageType.Warning,
                     MessageBoxButton.OK
                 );
-
-                return;
             }
-
-            container.Update();
-            SaveWithFileDialog("ControlWorkConfig");
         }
         #endregion
 
@@ -458,37 +468,65 @@ namespace TeacherGraphApplication
         }
         private void ButtonOpenFile_Click(object sender, RoutedEventArgs e)
         {
-            var openFileDialog = new OpenFileDialog
-            { 
-                Filter = "(*.txt)|*.txt",
-                Title = "Выберите файл с результатами студентов. . ."
-            };
-
-            var targetCfg = OpenTargetCfg(openFileDialog);
-            TableGenerator.SetGraph(targetCfg.Container);
-
-            if (openFileDialog.ShowDialog() is true)
+            try
             {
-                resultTableWithStudentsResultsPath = openFileDialog.FileName;
-                _tableGenerator.DrawResults(resultTableWithStudentsResultsPath);
-                FilterPanel.Visibility = Visibility.Visible;
-                ErasePanel.Visibility = Visibility.Visible;
+                var opf = new OpenFileDialog
+                {
+                    Filter = "(*.txt)|*.txt",
+                    Title = "Выберите файл с результатами студентов. . ."
+                };
+
+                var targetCfg = OpenTargetCfg();
+
+                if (targetCfg is null)
+                    return;
+
+                TableGenerator.SetGraph(targetCfg.Container);
+
+                if (opf.ShowDialog() is true)
+                {
+                    resultTableWithStudentsResultsPath = opf.FileName;
+                    _tableGenerator.DrawResults(resultTableWithStudentsResultsPath);
+                    FilterPanel.Visibility = Visibility.Visible;
+                    ErasePanel.Visibility = Visibility.Visible;
+                }
+            }
+            catch (Exception ex)
+            {
+                var result = CustomMessageBox.Show(
+                    ex.Message + "\n\n1. Выбрать вариант контрольной\n2. Выбрать файл с результатами",
+                    "Предупреждение",
+                    MessageType.Warning,
+                    MessageBoxButton.OK
+                );
             }
         }
 
-        private ControlWorkConfig OpenTargetCfg(OpenFileDialog opf)
+        private ControlWorkConfig OpenTargetCfg()
         {
-            opf.Title = "Выберите варинт контрольной работы. . .";
+            var opf = new OpenFileDialog
+            {
+                Filter = "(*.txt)|*.txt",
+                Title = "Выберите варинт контрольной работы. . ."
+            };
+
             ControlWorkConfig target = null;
 
-            if (opf.ShowDialog() is true)
+            try
             {
-                string temp = File.ReadAllText(opf.FileName);
-                var decrypt = new Encryption();
-                var json = decrypt.Decrypt(temp);
-                target = JsonSerializer.Deserialize<ControlWorkConfig>(json);
+                if (opf.ShowDialog() is true)
+                {
+                    string temp = File.ReadAllText(opf.FileName);
+                    var decrypt = new Encryption();
+                    var json = decrypt.Decrypt(temp);
+                    target = JsonSerializer.Deserialize<ControlWorkConfig>(json);
+                }
             }
-
+            catch (Exception)
+            {
+                throw new ArgumentException("Сначала нужно выбрать вариант контрольной работы. . .");
+            }
+            
             return target;
         }
         #endregion
@@ -553,7 +591,7 @@ namespace TeacherGraphApplication
             if (string.IsNullOrEmpty(VertexTB.Text) || string.IsNullOrEmpty(EdgeTB.Text))
             {
                 var result = CustomMessageBox.Show(
-                        "Некорректные параметры графа!",
+                        "Некорректные параметры графа. . .",
                         "Предупреждение",
                         MessageType.Warning,
                         MessageBoxButton.OK

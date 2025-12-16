@@ -1,7 +1,9 @@
-﻿using TeacherGraphApplication.Results.Generators;
+﻿using Filters;
 using Generators;
-using Filters;
+using System.Windows;
+using TeacherGraphApplication;
 using TeacherGraphApplication.Graph;
+using TeacherGraphApplication.Results.Generators;
 
 namespace Results
 {
@@ -30,6 +32,11 @@ namespace Results
             _studentResultGenerator.SetGraphContainer(container);
         }
 
+        public static void GraphInitialized()
+        {
+            _studentResultGenerator.GraphInitialized();
+        }
+
         public void DrawLabels()
         {
             _gridGenerator.SetLabelsInGrid();
@@ -37,7 +44,14 @@ namespace Results
 
         public void DrawResults(string path, ISorter? sorter = null)
         {
-            _studentResultGenerator.GenerateResults(path, sorter);
+            try
+            {
+                _studentResultGenerator.GenerateResults(path, sorter);
+            }
+            catch (Exception)
+            {
+                throw new ArgumentException("Выберите файл с результатами. . .");
+            }
         }
     }
 }

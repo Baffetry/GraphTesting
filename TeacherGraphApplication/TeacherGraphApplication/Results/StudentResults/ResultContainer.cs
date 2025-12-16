@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.IO;
+using System.Reflection.Metadata.Ecma335;
 using System.Text.Json;
+using System.Windows;
+using TeacherGraphApplication;
 using TeacherGraphApplication.Graph;
 using TeacherGraphApplication.Results.VariantManager;
 
@@ -42,44 +45,53 @@ namespace StudentResultsSpace
             };
         }
 
+        public bool GraphInitialized()
+        {
+            return graph == null;
+        }
+
         public void LoadFromFile(string path)
         {
             if (students.Count > 0)
                 students.Clear();
 
-            if (File.Exists(path))
+            try
             {
-                string[] studentsJson = File.ReadAllText(path).Split(new char[] { '\n', '\r' },
-                    StringSplitOptions.RemoveEmptyEntries);
-                var decrypter = new Encryption();
-
-
-
-                foreach (var encodedJson in studentsJson)
+                if (File.Exists(path))
                 {
-                    string json = decrypter.Decrypt(encodedJson);
-                    var studentResult = JsonSerializer.Deserialize<StudentResults>(json);
+                    string[] studentsJson = File.ReadAllText(path).Split(new char[] { '\n', '\r' },
+                        StringSplitOptions.RemoveEmptyEntries);
+                    var decrypter = new Encryption();
 
-                    int totalQuestions = studentResult.TaskAnswers.Count;
-                    //int solvedQuestions = CountSolvedTasks(studentResult, out List<string> questions);
+                    foreach (var encodedJson in studentsJson)
+                    {
+                        string json = decrypter.Decrypt(encodedJson);
+                        var studentResult = JsonSerializer.Deserialize<StudentResults>(json);
 
-                    int solvedQuestions = studentResult.TaskAnswers
-                        .Where(x => x.Answer != null)
-                        .Count();
+                        int totalQuestions = studentResult.TaskAnswers.Count;
 
-                    int correctSolvedQuestions = studentResult.TaskAnswers
-                        .Where(x => x.Answer.Equals(Results[x.Question]))
-                        .Count();
+                        int solvedQuestions = studentResult.TaskAnswers
+                            .Where(x => x.Answer != null)
+                            .Count();
+
+                        int correctSolvedQuestions = studentResult.TaskAnswers
+                            .Where(x => x.Answer.Equals(Results[x.Question]))
+                            .Count();
 
 
-                    studentResult.SolvedProblems = correctSolvedQuestions;
-                    studentResult.Percent = totalQuestions > 0 
-                        ? (double) correctSolvedQuestions / totalQuestions
-                        : 0;
-                    studentResult.Rate = GetRate(studentResult.Percent);
+                        studentResult.SolvedProblems = correctSolvedQuestions;
+                        studentResult.Percent = totalQuestions > 0
+                            ? (double)correctSolvedQuestions / totalQuestions
+                            : 0;
+                        studentResult.Rate = GetRate(studentResult.Percent);
 
-                    students.Add(studentResult);
+                        students.Add(studentResult);
+                    }
                 }
+            }
+            catch (Exception)
+            {
+                throw new ArgumentException();
             }
         }
 

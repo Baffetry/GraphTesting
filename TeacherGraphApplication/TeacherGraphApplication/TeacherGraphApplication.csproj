@@ -7,9 +7,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <AppDesignerFolder>Props</AppDesignerFolder>
+    <ApplicationIcon>Resources\applicationIcon96x96.ico</ApplicationIcon>
+    <AssemblyName>GraphGen</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\applicationIcon48x48.ico" />
+    <None Remove="Resources\applicationIcon96x96.ico" />
+    <None Remove="Resources\applicationIcon96x96.png" />
     <None Remove="Resources\erase96x96.png" />
     <None Remove="Resources\free-icon-warning-159469.png" />
     <None Remove="Resources\Graph96x96.png" />
@@ -24,6 +29,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Resources\applicationIcon96x96.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="GraphShape.Controls" Version="1.2.2" />
   </ItemGroup>
 
@@ -34,6 +43,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\applicationIcon48x48.ico" />
+    <Resource Include="Resources\applicationIcon96x96.ico" />
     <Resource Include="Resources\erase96x96.png" />
     <Resource Include="Resources\Graph96x96.png" />
     <Resource Include="Resources\newpercent96x96.png" />

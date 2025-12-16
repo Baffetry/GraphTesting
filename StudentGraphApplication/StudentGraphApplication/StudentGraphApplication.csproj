@@ -6,7 +6,17 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Resources\applicationIcon96x96.ico</ApplicationIcon>
+    <AssemblyName>GraphPractice</AssemblyName>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\applicationIcon96x96.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\applicationIcon96x96.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="GraphShape.Controls" Version="1.2.2" />

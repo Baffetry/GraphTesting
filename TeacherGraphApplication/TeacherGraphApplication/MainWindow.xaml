@@ -9,7 +9,8 @@
         Title="Graph tester" 
         WindowState="Maximized"
         WindowStyle="SingleBorderWindow"
-        MinWidth="1000" MinHeight="600">
+        MinWidth="1000" MinHeight="600"
+        Icon="/Resources/applicationIcon96x96.png">
 
     <Window.Resources>
         <Style TargetType="TextBox">

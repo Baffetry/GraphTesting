@@ -136,7 +136,7 @@
     "version": "1.0.0",
     "restore": {
       "projectUniqueName": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\TeacherGraphApplication.csproj",
-      "projectName": "TeacherGraphApplication",
+      "projectName": "GraphGen",
       "projectPath": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\TeacherGraphApplication.csproj",
       "packagesPath": "C:\\Users\\aleks\\.nuget\\packages\\",
       "outputPath": "D:\\Data\\Programming\\GraphProject\\TeacherGraphApplication\\TeacherGraphApplication\\obj\\",
