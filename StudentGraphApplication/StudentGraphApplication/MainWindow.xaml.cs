@@ -570,6 +570,7 @@ namespace StudentGraphApplication
             for (int i = 0; i < taskButtons.Count; i++)
             {
                 var taskContent = currentConfig.TaskList[i].Content?.ToString();
+
                 bool hasAnswer = !string.IsNullOrEmpty(taskContent) && studentResults.HasAnswerForQuestion(taskContent);
 
                 if (i == taskIndex)
@@ -597,9 +598,15 @@ namespace StudentGraphApplication
                 Margin = new Thickness(10)
             };
 
+            var txt = task.Content?.ToString() ?? "Текст задачи отсутствует";
+
+            txt = txt == "Посчитайте радиус." || txt == "Посчитайте диаметр."
+                ? $"{txt}\n\n(Если у вас получилась бесконечность, то в ответ запишите -1)"
+                : txt;
+
             var taskText = new TextBlock
             {
-                Text = task.Content?.ToString() ?? "Текст задачи отсутствует",
+                Text = txt,
                 FontSize = 30,
                 FontWeight = FontWeights.Normal,
                 TextWrapping = TextWrapping.Wrap,

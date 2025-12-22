@@ -425,7 +425,6 @@ namespace TeacherGraphApplication.Results.VariantManager
             double density = GetDensity();
             return density.ToString("0.##").Replace(',', '.');
         }
-
         #endregion
     }
 }

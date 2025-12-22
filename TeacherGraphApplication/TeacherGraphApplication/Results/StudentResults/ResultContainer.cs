@@ -35,8 +35,8 @@ namespace StudentResultsSpace
                 {"Посчитайте цикломатическое число.", graph.GetCyclomaticNumber() },
                 {"Посчитайте число независимости.", graph.GetIndependenceNumber() },
                 {"Посчитайте хроматическое число.", graph.GetChromaticNumber() },
-                {"Посчитайте радиус.", graph.GetRadius() },
-                {"Посчитайте диаметр.", graph.GetDiameter() },
+                {"Посчитайте радиус.", graph.GetRadius() > 1000 ? -1 : graph.GetRadius()},
+                {"Посчитайте диаметр.", graph.GetDiameter() > 1000 ? -1 : graph.GetDiameter() },
                 {"Посчитайте число вершинного покрытия.", graph.GetVertexCoverNumber() },
                 {"Посчитайте число реберного покрытия.", graph.GetEdgeCoverNumber() },
                 {"Посчитайте плотность графа.", graph.GetDensity() },
@@ -102,7 +102,7 @@ namespace StudentResultsSpace
                 return;
             }
 
-            int totalQuestionsInTest = results.Count; 
+            int totalQuestionsInTest = studentResult.TaskAnswers.Count(); 
             int correctSolvedQuestions = 0;
 
             foreach (var taskAnswer in studentResult.TaskAnswers)
@@ -122,7 +122,7 @@ namespace StudentResultsSpace
 
             studentResult.SolvedProblems = correctSolvedQuestions;
             studentResult.Percent = totalQuestionsInTest > 0
-                ? Math.Round((double)correctSolvedQuestions / totalQuestionsInTest, 3)*100
+                ? Math.Round((double)correctSolvedQuestions * 100.0 / totalQuestionsInTest, 2) 
                 : 0;
 
             studentResult.Rate = GetRate(studentResult.Percent);
@@ -203,10 +203,10 @@ namespace StudentResultsSpace
         {
             return percent switch
             {
-                >= 0.9 => 5,  
-                >= 0.75 => 4, 
-                >= 0.6 => 3,  
-                >= 0.4 => 2,  
+                >= 90 => 5,  
+                >= 75 => 4, 
+                >= 60 => 3,  
+                >= 40 => 2,  
                 _ => 1        
             };
         }

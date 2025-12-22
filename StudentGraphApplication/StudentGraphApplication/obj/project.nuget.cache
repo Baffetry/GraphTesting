@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "I9PwOJxUC8g=",
+  "dgSpecHash": "aa+Y43ll0oQ=",
   "success": true,
-  "projectFilePath": "C:\\Users\\matve\\Desktop\\ИНФА\\MP\\ProjectGraph\\GraphTesting\\GraphTesting\\StudentGraphApplication\\StudentGraphApplication\\StudentGraphApplication.csproj",
+  "projectFilePath": "D:\\Data\\Programming\\GraphTesting\\StudentGraphApplication\\StudentGraphApplication\\StudentGraphApplication.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\matve\\.nuget\\packages\\graphshape\\1.2.1\\graphshape.1.2.1.nupkg.sha512",
-    "C:\\Users\\matve\\.nuget\\packages\\graphshape.controls\\1.2.2\\graphshape.controls.1.2.2.nupkg.sha512",
-    "C:\\Users\\matve\\.nuget\\packages\\quikgraph\\2.3.0\\quikgraph.2.3.0.nupkg.sha512"
+    "C:\\Users\\aleks\\.nuget\\packages\\graphshape\\1.2.1\\graphshape.1.2.1.nupkg.sha512",
+    "C:\\Users\\aleks\\.nuget\\packages\\graphshape.controls\\1.2.2\\graphshape.controls.1.2.2.nupkg.sha512",
+    "C:\\Users\\aleks\\.nuget\\packages\\quikgraph\\2.3.0\\quikgraph.2.3.0.nupkg.sha512"
   ],
   "logs": []
 }

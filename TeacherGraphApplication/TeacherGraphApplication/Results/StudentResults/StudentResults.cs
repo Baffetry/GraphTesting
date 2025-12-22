@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using System.Windows.Navigation;
 
 namespace StudentResultsSpace
 {
@@ -19,5 +20,11 @@ namespace StudentResultsSpace
         public int SolvedProblems { get; set; }
 
         public StudentResults() { }
+
+        public string GetSP()
+            => $"{SolvedProblems} / {TaskAnswers.Count()}";
+
+        public string GetPercent()
+            => $"{Percent}%";
     }
 }
