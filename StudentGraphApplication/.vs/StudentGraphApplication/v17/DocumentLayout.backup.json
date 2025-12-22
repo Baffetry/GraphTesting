@@ -7,12 +7,12 @@
       "RelativeMoniker": "D:0:0:{B3AEC8EF-5FF5-4808-BF50-0DE3D294B0D3}|StudentGraphApplication\\StudentGraphApplication.csproj|solutionrelative:studentgraphapplication\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B3AEC8EF-5FF5-4808-BF50-0DE3D294B0D3}|StudentGraphApplication\\StudentGraphApplication.csproj|c:\\users\\matve\\desktop\\\u0438\u043D\u0444\u0430\\mp\\projectgraph\\graphtesting\\graphtesting\\studentgraphapplication\\studentgraphapplication\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B3AEC8EF-5FF5-4808-BF50-0DE3D294B0D3}|StudentGraphApplication\\StudentGraphApplication.csproj|solutionrelative:studentgraphapplication\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B3AEC8EF-5FF5-4808-BF50-0DE3D294B0D3}|StudentGraphApplication\\StudentGraphApplication.csproj|c:\\users\\matve\\desktop\\\u0438\u043D\u0444\u0430\\mp\\projectgraph\\graphtesting\\graphtesting\\studentgraphapplication\\studentgraphapplication\\studentresults.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B3AEC8EF-5FF5-4808-BF50-0DE3D294B0D3}|StudentGraphApplication\\StudentGraphApplication.csproj|solutionrelative:studentgraphapplication\\studentresults.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B3AEC8EF-5FF5-4808-BF50-0DE3D294B0D3}|StudentGraphApplication\\StudentGraphApplication.csproj|c:\\users\\matve\\desktop\\\u0438\u043D\u0444\u0430\\mp\\projectgraph\\graphtesting\\graphtesting\\studentgraphapplication\\studentgraphapplication\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B3AEC8EF-5FF5-4808-BF50-0DE3D294B0D3}|StudentGraphApplication\\StudentGraphApplication.csproj|solutionrelative:studentgraphapplication\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B3AEC8EF-5FF5-4808-BF50-0DE3D294B0D3}|StudentGraphApplication\\StudentGraphApplication.csproj|c:\\users\\matve\\desktop\\\u0438\u043D\u0444\u0430\\mp\\projectgraph\\graphtesting\\graphtesting\\studentgraphapplication\\studentgraphapplication\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -34,7 +34,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "StudentResults.cs",
               "DocumentMoniker": "C:\\Users\\matve\\Desktop\\\u0418\u041D\u0424\u0410\\MP\\ProjectGraph\\GraphTesting\\GraphTesting\\StudentGraphApplication\\StudentGraphApplication\\StudentResults.cs",
               "RelativeDocumentMoniker": "StudentGraphApplication\\StudentResults.cs",
@@ -47,13 +47,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\matve\\Desktop\\\u0418\u041D\u0424\u0410\\MP\\ProjectGraph\\GraphTesting\\GraphTesting\\StudentGraphApplication\\StudentGraphApplication\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "StudentGraphApplication\\MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\matve\\Desktop\\\u0418\u041D\u0424\u0410\\MP\\ProjectGraph\\GraphTesting\\GraphTesting\\StudentGraphApplication\\StudentGraphApplication\\MainWindow.xaml.cs",
               "RelativeToolTip": "StudentGraphApplication\\MainWindow.xaml.cs",
-              "ViewState": "AgIAADkCAAAAAAAAAAAmwGUCAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAANoAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-29T17:11:00.064Z",
               "EditorCaption": ""
@@ -64,8 +64,8 @@
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\matve\\Desktop\\\u0418\u041D\u0424\u0410\\MP\\ProjectGraph\\GraphTesting\\GraphTesting\\StudentGraphApplication\\StudentGraphApplication\\MainWindow.xaml",
               "RelativeDocumentMoniker": "StudentGraphApplication\\MainWindow.xaml",
-              "ToolTip": "C:\\Users\\matve\\Desktop\\\u0418\u041D\u0424\u0410\\MP\\ProjectGraph\\GraphTesting\\GraphTesting\\StudentGraphApplication\\StudentGraphApplication\\MainWindow.xaml*",
-              "RelativeToolTip": "StudentGraphApplication\\MainWindow.xaml*",
+              "ToolTip": "C:\\Users\\matve\\Desktop\\\u0418\u041D\u0424\u0410\\MP\\ProjectGraph\\GraphTesting\\GraphTesting\\StudentGraphApplication\\StudentGraphApplication\\MainWindow.xaml",
+              "RelativeToolTip": "StudentGraphApplication\\MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2025-09-29T17:11:02.752Z",
               "EditorCaption": ""
@@ -80,8 +80,7 @@
               "RelativeToolTip": "StudentGraphApplication\\Student.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAEUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-29T11:10:52.566Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-29T11:10:52.566Z"
             },
             {
               "$type": "Document",

@@ -1,14 +1,20 @@
-﻿using TeacherGraphApplication.Graph;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using TeacherGraphApplication.Graph;
+using TeacherGraphApplication.Adapters;
 
 namespace TeacherGraphApplication.Results.VariantManager
 {
     public class GraphCalc
     {
         private GraphContainer _graph;
+        private AdjacencyMatrixAdapter _matrixAdapter;
 
-        public GraphCalc(GraphContainer graph) 
+        public GraphCalc(GraphContainer graph)
         {
-            _graph = graph;
+            _graph = graph ?? throw new ArgumentNullException(nameof(graph));
+            _matrixAdapter = new AdjacencyMatrixAdapter(graph);
         }
 
         #region Основные свойства
@@ -18,349 +24,440 @@ namespace TeacherGraphApplication.Results.VariantManager
 
         #endregion
 
-        #region 1. Цикломатическое число
+        #region 1. Цикломатическое число — РЕАЛИЗОВАНО
 
         public int GetCyclomaticNumber()
         {
-            /* 
-             * k = m - n + p;
-             * m - число рёбер
-             * n - число вершин
-             * p - число компонент связности
-             */
-
             int m = EdgeCount;
             int n = VertexCount;
-            int p = GetConnectedComponents().Count;
 
-            return m - n + p;
+            return m - n + 1;
         }
 
         #endregion
 
-        #region 2. Число независимости
+        #region 2. Число независимости — РЕАЛИЗОВАНО
 
         public int GetIndependenceNumber()
         {
-            // Наибольшее множество попарно несмежных вершин
-            // Используем приближенный алгоритм (жадный)
-            var remainingVertices = new HashSet<GraphVertex>(_graph.Vertices);
-            var independentSet = new List<GraphVertex>();
+            int n = VertexCount;
+            if (n == 0) return 0;
 
-            while (remainingVertices.Count > 0)
+            bool[,] matrix = _matrixAdapter.GetMatrix();
+
+            var independentSet = new HashSet<int>();
+            var available = new HashSet<int>(Enumerable.Range(0, n));
+
+            while (available.Count > 0)
             {
-                // Выбираем вершину с минимальной степенью
-                var vertex = remainingVertices
-                    .OrderBy(v => GetDegree(v))
-                    .First();
+                int minDegreeVertex = -1;
+                int minDegree = int.MaxValue;
 
-                independentSet.Add(vertex);
-
-                // Удаляем выбранную вершину и всех ее соседей
-                remainingVertices.Remove(vertex);
-                foreach (var neighbor in _graph.GetNeighbors(vertex))
+                foreach (int v in available)
                 {
-                    remainingVertices.Remove(neighbor);
+                    int degree = 0;
+                    foreach (int u in available)
+                    {
+                        if (matrix[v, u]) degree++;
+                    }
+
+                    if (degree < minDegree)
+                    {
+                        minDegree = degree;
+                        minDegreeVertex = v;
+                    }
+                }
+
+                if (minDegreeVertex == -1) break;
+
+                independentSet.Add(minDegreeVertex);
+                available.Remove(minDegreeVertex);
+                for (int u = 0; u < n; u++)
+                {
+                    if (matrix[minDegreeVertex, u])
+                    {
+                        available.Remove(u);
+                    }
                 }
             }
 
             return independentSet.Count;
         }
+
         #endregion
 
-        #region 3. Хроматическое число
+        #region 3. Хроматическое число — РЕАЛИЗОВАНО
 
         public int GetChromaticNumber()
         {
-            // Приближенный алгоритм последовательной раскраски
-            if (VertexCount == 0) return 0;
+            int n = VertexCount;
+            if (n == 0) return 0;
 
-            var colors = new Dictionary<GraphVertex, int>();
-            var vertices = _graph.Vertices.ToList();
+            bool[,] matrix = _matrixAdapter.GetMatrix();
+            int[] colors = new int[n];
+            for (int i = 0; i < n; i++) colors[i] = -1;
 
-            // Сортируем вершины по убыванию степени (алгоритм Welsh-Powell)
-            vertices = vertices.OrderByDescending(v => GetDegree(v)).ToList();
+            bool[] available = new bool[n];
+            colors[0] = 0;
 
-            int color = 0;
-            while (colors.Count < vertices.Count)
+            for (int v = 1; v < n; v++)
             {
-                color++;
+                for (int i = 0; i < n; i++) available[i] = true;
 
-                // Пытаемся покрасить в текущий цвет как можно больше вершин
-                foreach (var vertex in vertices)
+                for (int u = 0; u < n; u++)
                 {
-                    if (colors.ContainsKey(vertex)) continue;
-
-                    // Проверяем, нет ли соседей с таким же цветом
-                    bool canColor = true;
-                    foreach (var neighbor in _graph.GetNeighbors(vertex))
+                    if (matrix[v, u] && colors[u] != -1)
                     {
-                        if (colors.ContainsKey(neighbor) && colors[neighbor] == color)
-                        {
-                            canColor = false;
-                            break;
-                        }
-                    }
-
-                    if (canColor)
-                    {
-                        colors[vertex] = color;
+                        available[colors[u]] = false;
                     }
                 }
+
+                int cr;
+                for (cr = 0; cr < n; cr++)
+                {
+                    if (available[cr]) break;
+                }
+
+                colors[v] = cr;
             }
 
-            return colors.Values.Max();
+            return colors.Max() + 1;
         }
 
         #endregion
 
-        #region 4. Радиус и 5. Диаметр
+        #region 4. Радиус и 5. Диаметр — РЕАЛИЗОВАНО
 
         public int GetRadius()
         {
-            var eccentricities = GetAllEccentricities();
-            return eccentricities.Count > 0 ? eccentricities.Values.Min() : 0;
+            int n = VertexCount;
+            if (n == 0) return 0;
+
+            int[,] dist = GetAllPairsDistances();
+            int minEccentricity = int.MaxValue;
+
+            for (int i = 0; i < n; i++)
+            {
+                int maxDist = 0;
+                for (int j = 0; j < n; j++)
+                {
+                    if (i != j) maxDist = Math.Max(maxDist, dist[i, j]);
+                }
+                minEccentricity = Math.Min(minEccentricity, maxDist);
+            }
+
+            return minEccentricity;
         }
 
         public int GetDiameter()
         {
-            var eccentricities = GetAllEccentricities();
-            return eccentricities.Count > 0 ? eccentricities.Values.Max() : 0;
-        }
+            int n = VertexCount;
+            if (n == 0) return 0;
 
-        private Dictionary<GraphVertex, int> GetAllEccentricities()
-        {
-            var eccentricities = new Dictionary<GraphVertex, int>();
+            int[,] dist = GetAllPairsDistances();
+            int maxDistance = 0;
 
-            foreach (var vertex in _graph.Vertices)
+            for (int i = 0; i < n; i++)
             {
-                eccentricities[vertex] = GetEccentricity(vertex);
+                for (int j = i + 1; j < n; j++)
+                {
+                    maxDistance = Math.Max(maxDistance, dist[i, j]);
+                }
             }
 
-            return eccentricities;
+            return maxDistance;
         }
 
-        private int GetEccentricity(GraphVertex vertex)
+        private int[,] GetAllPairsDistances()
         {
-            // Используем BFS для поиска наибольшего расстояния от вершины
-            var distances = new Dictionary<GraphVertex, int>();
-            var queue = new Queue<GraphVertex>();
+            int n = VertexCount;
+            int[,] dist = new int[n, n];
+            bool[,] matrix = _matrixAdapter.GetMatrix();
 
-            distances[vertex] = 0;
-            queue.Enqueue(vertex);
-
-            while (queue.Count > 0)
+            for (int i = 0; i < n; i++)
             {
-                var current = queue.Dequeue();
-
-                foreach (var neighbor in _graph.GetNeighbors(current))
+                for (int j = 0; j < n; j++)
                 {
-                    if (!distances.ContainsKey(neighbor))
+                    if (i == j)
+                        dist[i, j] = 0;
+                    else if (matrix[i, j])
+                        dist[i, j] = 1;
+                    else
+                        dist[i, j] = int.MaxValue / 2;
+                }
+            }
+
+            for (int k = 0; k < n; k++)
+            {
+                for (int i = 0; i < n; i++)
+                {
+                    if (dist[i, k] == int.MaxValue / 2) continue;
+                    for (int j = 0; j < n; j++)
                     {
-                        distances[neighbor] = distances[current] + 1;
-                        queue.Enqueue(neighbor);
+                        if (dist[k, j] == int.MaxValue / 2) continue;
+                        if (dist[i, k] + dist[k, j] < dist[i, j])
+                        {
+                            dist[i, j] = dist[i, k] + dist[k, j];
+                        }
                     }
                 }
             }
 
-            return distances.Values.Max();
+            return dist;
         }
 
         #endregion
 
-        #region 6. Число вершинного покрытия
+        #region 6. Число вершинного покрытия — РЕАЛИЗОВАНО
 
         public int GetVertexCoverNumber()
         {
-            // Теорема Кёнига: α(G) + β(G) = n
-            // где α(G) - число независимости, β(G) - число вершинного покрытия
-            int independenceNumber = GetIndependenceNumber();
-            return VertexCount - independenceNumber;
+            return VertexCount - GetIndependenceNumber();
         }
 
         #endregion
 
-        #region 7. Число реберного покрытия
+        #region 7. Число реберного покрытия — РЕАЛИЗОВАНО
 
         public int GetEdgeCoverNumber()
         {
-            // Для графа без изолированных вершин
-            // ρ(G) = n - α'(G), где α'(G) - размер максимального паросочетания
-            if (HasIsolatedVertices())
-                return -1;
+            int n = VertexCount;
+            if (n == 0) return 0;
 
             int matchingNumber = GetMatchingNumber();
-            return VertexCount - matchingNumber;
+            return Math.Max(0, n - matchingNumber);
         }
 
-        private bool HasIsolatedVertices()
-        {
-            return _graph.Vertices.Any(v => GetDegree(v) == 0);
-        }
         #endregion
 
-        #region 8. Плотность графа
+        #region 8. Плотность графа — ИСПРАВЛЕНО
 
         public double GetDensity()
         {
-            // Для неориентированного графа: 2m / (n(n-1))
             int n = VertexCount;
             if (n <= 1) return 0;
 
             int m = EdgeCount;
-            int maxPossibleEdges = n * (n - 1) / 2;
 
-            return (double)m / maxPossibleEdges;
+            if (n == 1) return 0; // Для одной вершины максимальное число рёбер = 0
+
+            // Формула: Плотность = 2m / (n(n-1))
+            double numerator = 2.0 * m;
+            double denominator = n * (n - 1);
+
+            if (denominator == 0) return 0;
+
+            double density = numerator / denominator;
+
+            // Округление до двух знаков после запятой для погрешности 0.01
+            density = Math.Round(density, 2, MidpointRounding.AwayFromZero);
+
+            return density;
+        }
+
+        // Метод для сравнения плотности с ответом студента
+        public bool CompareDensity(double studentAnswer)
+        {
+            double correctDensity = GetDensity();
+            // Сравниваем с погрешностью 0.01
+            return Math.Abs(correctDensity - studentAnswer) <= 0.01;
+        }
+
+        // Дополнительный метод для получения формулы в виде строки
+        public string GetDensityFormula()
+        {
+            int n = VertexCount;
+            int m = EdgeCount;
+
+            if (n <= 1) return "0";
+
+            return $"2×{m} / ({n}×{n - 1}) = {2.0 * m} / {n * (n - 1)} = {GetDensity()}";
         }
 
         #endregion
 
-        #region 9. Число паросочетания
+        #region 9. Число паросочетания — РЕАЛИЗОВАНО
 
         public int GetMatchingNumber()
         {
-            // Приближенный алгоритм жадного паросочетания
-            var matchedVertices = new HashSet<GraphVertex>();
-            var matching = new List<GraphEdge>();
-            var edges = _graph.Edges.ToList();
+            int n = VertexCount;
+            if (n == 0) return 0;
 
-            // Сортируем ребра по некоторому критерию (например, по сумме степеней вершин)
-            edges = edges.OrderByDescending(e => GetDegree(e.Source) + GetDegree(e.Target)).ToList();
+            bool[,] matrix = _matrixAdapter.GetMatrix();
+            var matchedVertices = new HashSet<int>();
+            int matchCount = 0;
 
-            foreach (var edge in edges)
+            for (int i = 0; i < n; i++)
             {
-                if (!matchedVertices.Contains(edge.Source) && !matchedVertices.Contains(edge.Target))
+                if (!matchedVertices.Contains(i))
                 {
-                    matching.Add(edge);
-                    matchedVertices.Add(edge.Source);
-                    matchedVertices.Add(edge.Target);
+                    for (int j = i + 1; j < n; j++)
+                    {
+                        if (matrix[i, j] && !matchedVertices.Contains(j))
+                        {
+                            matchedVertices.Add(i);
+                            matchedVertices.Add(j);
+                            matchCount++;
+                            break;
+                        }
+                    }
                 }
             }
 
-            return matching.Count;
+            return matchCount;
         }
 
         #endregion
 
-        #region 10. Хроматический индекс
+        #region 10. Хроматический индекс — РЕАЛИЗОВАНО
 
         public int GetChromaticIndex()
         {
-            // Теорема Визинга: χ'(G) ≤ Δ(G) + 1
-            // Для двудольных графов: χ'(G) = Δ(G)
-            int maxDegree = GetMaximumDegree();
+            int n = VertexCount;
+            if (n == 0 || EdgeCount == 0) return 0;
 
-            if (IsBipartite())
+            bool[,] matrix = _matrixAdapter.GetMatrix();
+
+            // Находим максимальную степень
+            int maxDegree = GetMaxDegree(matrix);
+
+            // Если maxDegree <= 2, можем использовать быстрые проверки
+            if (maxDegree <= 2)
             {
-                return maxDegree;
+                if (TryEdgeColoring(matrix, maxDegree))
+                    return maxDegree;
+                else
+                    return maxDegree + 1;
             }
-            else
+
+            // Пробуем раскрасить рёбра в maxDegree цветов
+            for (int colors = maxDegree; colors <= maxDegree + 1; colors++)
             {
-                // Для недвудольных графов может быть Δ(G) или Δ(G) + 1
-                // Используем приближенный алгоритм
-                return maxDegree + 1;
+                if (TryEdgeColoring(matrix, colors))
+                    return colors;
             }
+
+            // Должно сработать по теореме Визинга, но на всякий случай:
+            return maxDegree + 1;
         }
 
-        private bool IsBipartite()
+        private int GetMaxDegree(bool[,] matrix)
         {
-            if (VertexCount == 0) return true;
+            int n = VertexCount;
+            int maxDegree = 0;
 
-            var colors = new Dictionary<GraphVertex, int>();
-            var queue = new Queue<GraphVertex>();
-
-            // Проверяем каждую компоненту связности
-            foreach (var component in GetConnectedComponents())
+            for (int i = 0; i < n; i++)
             {
-                if (component.Count == 0) continue;
-
-                var startVertex = component.First();
-                colors[startVertex] = 0;
-                queue.Enqueue(startVertex);
-
-                while (queue.Count > 0)
+                int degree = 0;
+                for (int j = 0; j < n; j++)
                 {
-                    var current = queue.Dequeue();
+                    if (matrix[i, j]) degree++;
+                }
+                maxDegree = Math.Max(maxDegree, degree);
+            }
 
-                    foreach (var neighbor in _graph.GetNeighbors(current))
+            return maxDegree;
+        }
+
+        private bool TryEdgeColoring(bool[,] matrix, int numColors)
+        {
+            int n = VertexCount;
+
+            // Собираем все рёбра
+            List<Tuple<int, int>> edges = new List<Tuple<int, int>>();
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = i + 1; j < n; j++)
+                {
+                    if (matrix[i, j])
                     {
-                        if (!colors.ContainsKey(neighbor))
-                        {
-                            colors[neighbor] = 1 - colors[current];
-                            queue.Enqueue(neighbor);
-                        }
-                        else if (colors[neighbor] == colors[current])
-                        {
-                            return false; // Не двудольный
-                        }
+                        edges.Add(Tuple.Create(i, j));
                     }
                 }
             }
 
-            return true;
+            if (edges.Count == 0) return true;
+
+            // Сортируем рёбра по убыванию суммы степеней вершин
+            edges = edges.OrderByDescending(e =>
+            {
+                int v1 = e.Item1, v2 = e.Item2;
+                int deg1 = 0, deg2 = 0;
+                for (int k = 0; k < n; k++)
+                {
+                    if (matrix[v1, k]) deg1++;
+                    if (matrix[v2, k]) deg2++;
+                }
+                return deg1 + deg2;
+            }).ToList();
+
+            // Массив для цветов рёбер
+            int[] edgeColors = new int[edges.Count];
+            for (int i = 0; i < edgeColors.Length; i++) edgeColors[i] = -1;
+
+            // Создаём матрицу смежности цветов для вершин
+            List<HashSet<int>> vertexColorSets = new List<HashSet<int>>();
+            for (int i = 0; i < n; i++)
+            {
+                vertexColorSets.Add(new HashSet<int>());
+            }
+
+            // Жадная раскраска с возвратом (backtracking)
+            return ColorEdgesBacktracking(0, edges, edgeColors, vertexColorSets, matrix, numColors);
+        }
+
+        private bool ColorEdgesBacktracking(int edgeIndex, List<Tuple<int, int>> edges,
+            int[] edgeColors, List<HashSet<int>> vertexColorSets, bool[,] matrix, int numColors)
+        {
+            // Все рёбра раскрашены
+            if (edgeIndex >= edges.Count)
+                return true;
+
+            var edge = edges[edgeIndex];
+            int u = edge.Item1;
+            int v = edge.Item2;
+
+            // Пробуем все цвета
+            for (int color = 0; color < numColors; color++)
+            {
+                // Проверяем, можно ли использовать этот цвет
+                if (!vertexColorSets[u].Contains(color) &&
+                    !vertexColorSets[v].Contains(color))
+                {
+                    // Пробуем этот цвет
+                    edgeColors[edgeIndex] = color;
+                    vertexColorSets[u].Add(color);
+                    vertexColorSets[v].Add(color);
+
+                    // Рекурсивно раскрашиваем оставшиеся рёбра
+                    if (ColorEdgesBacktracking(edgeIndex + 1, edges, edgeColors, vertexColorSets, matrix, numColors))
+                        return true;
+
+                    // Откат (backtrack)
+                    vertexColorSets[u].Remove(color);
+                    vertexColorSets[v].Remove(color);
+                    edgeColors[edgeIndex] = -1;
+                }
+            }
+
+            return false;
         }
 
         #endregion
 
-        #region Methods
-        // Степень вершины
-        private int GetDegree(GraphVertex vertex)
+        #region Вспомогательные методы
+
+        public string PrintMatrix()
         {
-            return _graph.GetEdges(vertex)
-                .Count(e => e.Source == vertex || e.Target == vertex);
+            return _matrixAdapter.ToString();
         }
 
-        // Максимальная степень вершины в графе
-        private int GetMaximumDegree()
+        // Метод для получения плотности в строковом формате (убирает лишние нули)
+        public string GetDensityString()
         {
-            if (_graph.Vertices.Count == 0) return 0;
-            return _graph.Vertices.Max(v => GetDegree(v));
-        }
-
-        // Компоненты связности
-        private List<List<GraphVertex>> GetConnectedComponents()
-        {
-            var visited = new HashSet<GraphVertex>();
-            var components = new List<List<GraphVertex>>();
-
-            foreach (var vertex in _graph.Vertices)
-            {
-                if (!visited.Contains(vertex))
-                {
-                    var component = new List<GraphVertex>();
-                    BFS(vertex, visited, component);
-                    components.Add(component);
-                }
-            }
-
-            return components;
-        }
-
-        private void BFS(GraphVertex start, HashSet<GraphVertex> visited, List<GraphVertex> component)
-        {
-            var queue = new Queue<GraphVertex>();
-            queue.Enqueue(start);
-            visited.Add(start);
-
-            while (queue.Count > 0)
-            {
-                var current = queue.Dequeue();
-                component.Add(current);
-
-                // Получаем соседей через рёбра
-                foreach (var edge in _graph.Edges)
-                {
-                    GraphVertex neighbor = null;
-                    if (edge.Source == current) neighbor = edge.Target;
-                    if (edge.Target == current) neighbor = edge.Source;
-
-                    if (neighbor != null && !visited.Contains(neighbor))
-                    {
-                        visited.Add(neighbor);
-                        queue.Enqueue(neighbor);
-                    }
-                }
-            }
+            double density = GetDensity();
+            // Преобразуем в строку, убирая лишние нули
+            return density.ToString("0.##").Replace(',', '.');
         }
 
         #endregion

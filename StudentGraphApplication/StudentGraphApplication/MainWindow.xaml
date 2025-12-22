@@ -10,7 +10,7 @@
         WindowState="Maximized"
         WindowStyle="ThreeDBorderWindow"
         MinWidth="1000" MinHeight="600"
-        Icon="/Resources/applicationIcon96x96.png">
+        >
 
     <Window.Resources>
         <Style TargetType="TextBlock">
