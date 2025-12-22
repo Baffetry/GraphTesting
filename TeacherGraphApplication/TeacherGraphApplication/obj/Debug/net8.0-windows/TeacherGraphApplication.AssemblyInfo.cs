@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GraphGen")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+02b7ea20cc5af858532a0a0e2a1b847348fc6d3c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d70488c72bd478d70d9c3e8ed078fbe7c4f7b295")]
 [assembly: System.Reflection.AssemblyProductAttribute("GraphGen")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GraphGen")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

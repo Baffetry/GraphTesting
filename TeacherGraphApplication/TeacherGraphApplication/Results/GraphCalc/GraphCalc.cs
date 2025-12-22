@@ -239,31 +239,24 @@ namespace TeacherGraphApplication.Results.VariantManager
 
             int m = EdgeCount;
 
-            if (n == 1) return 0; // Для одной вершины максимальное число рёбер = 0
-
-            // Формула: Плотность = 2m / (n(n-1))
+            if (n == 1) return 0;
             double numerator = 2.0 * m;
             double denominator = n * (n - 1);
 
             if (denominator == 0) return 0;
 
             double density = numerator / denominator;
-
-            // Округление до двух знаков после запятой для погрешности 0.01
             density = Math.Round(density, 2, MidpointRounding.AwayFromZero);
 
             return density;
         }
 
-        // Метод для сравнения плотности с ответом студента
         public bool CompareDensity(double studentAnswer)
         {
             double correctDensity = GetDensity();
-            // Сравниваем с погрешностью 0.01
             return Math.Abs(correctDensity - studentAnswer) <= 0.01;
         }
 
-        // Дополнительный метод для получения формулы в виде строки
         public string GetDensityFormula()
         {
             int n = VertexCount;
@@ -317,11 +310,7 @@ namespace TeacherGraphApplication.Results.VariantManager
             if (n == 0 || EdgeCount == 0) return 0;
 
             bool[,] matrix = _matrixAdapter.GetMatrix();
-
-            // Находим максимальную степень
             int maxDegree = GetMaxDegree(matrix);
-
-            // Если maxDegree <= 2, можем использовать быстрые проверки
             if (maxDegree <= 2)
             {
                 if (TryEdgeColoring(matrix, maxDegree))
@@ -329,15 +318,12 @@ namespace TeacherGraphApplication.Results.VariantManager
                 else
                     return maxDegree + 1;
             }
-
-            // Пробуем раскрасить рёбра в maxDegree цветов
             for (int colors = maxDegree; colors <= maxDegree + 1; colors++)
             {
                 if (TryEdgeColoring(matrix, colors))
                     return colors;
             }
 
-            // Должно сработать по теореме Визинга, но на всякий случай:
             return maxDegree + 1;
         }
 
@@ -363,7 +349,6 @@ namespace TeacherGraphApplication.Results.VariantManager
         {
             int n = VertexCount;
 
-            // Собираем все рёбра
             List<Tuple<int, int>> edges = new List<Tuple<int, int>>();
             for (int i = 0; i < n; i++)
             {
@@ -377,8 +362,6 @@ namespace TeacherGraphApplication.Results.VariantManager
             }
 
             if (edges.Count == 0) return true;
-
-            // Сортируем рёбра по убыванию суммы степеней вершин
             edges = edges.OrderByDescending(e =>
             {
                 int v1 = e.Item1, v2 = e.Item2;
@@ -390,50 +373,36 @@ namespace TeacherGraphApplication.Results.VariantManager
                 }
                 return deg1 + deg2;
             }).ToList();
-
-            // Массив для цветов рёбер
             int[] edgeColors = new int[edges.Count];
             for (int i = 0; i < edgeColors.Length; i++) edgeColors[i] = -1;
-
-            // Создаём матрицу смежности цветов для вершин
             List<HashSet<int>> vertexColorSets = new List<HashSet<int>>();
             for (int i = 0; i < n; i++)
             {
                 vertexColorSets.Add(new HashSet<int>());
             }
-
-            // Жадная раскраска с возвратом (backtracking)
             return ColorEdgesBacktracking(0, edges, edgeColors, vertexColorSets, matrix, numColors);
         }
 
         private bool ColorEdgesBacktracking(int edgeIndex, List<Tuple<int, int>> edges,
             int[] edgeColors, List<HashSet<int>> vertexColorSets, bool[,] matrix, int numColors)
         {
-            // Все рёбра раскрашены
             if (edgeIndex >= edges.Count)
                 return true;
 
             var edge = edges[edgeIndex];
             int u = edge.Item1;
             int v = edge.Item2;
-
-            // Пробуем все цвета
             for (int color = 0; color < numColors; color++)
             {
-                // Проверяем, можно ли использовать этот цвет
                 if (!vertexColorSets[u].Contains(color) &&
                     !vertexColorSets[v].Contains(color))
                 {
-                    // Пробуем этот цвет
                     edgeColors[edgeIndex] = color;
                     vertexColorSets[u].Add(color);
                     vertexColorSets[v].Add(color);
 
-                    // Рекурсивно раскрашиваем оставшиеся рёбра
                     if (ColorEdgesBacktracking(edgeIndex + 1, edges, edgeColors, vertexColorSets, matrix, numColors))
                         return true;
-
-                    // Откат (backtrack)
                     vertexColorSets[u].Remove(color);
                     vertexColorSets[v].Remove(color);
                     edgeColors[edgeIndex] = -1;
@@ -451,12 +420,9 @@ namespace TeacherGraphApplication.Results.VariantManager
         {
             return _matrixAdapter.ToString();
         }
-
-        // Метод для получения плотности в строковом формате (убирает лишние нули)
         public string GetDensityString()
         {
             double density = GetDensity();
-            // Преобразуем в строку, убирая лишние нули
             return density.ToString("0.##").Replace(',', '.');
         }
 

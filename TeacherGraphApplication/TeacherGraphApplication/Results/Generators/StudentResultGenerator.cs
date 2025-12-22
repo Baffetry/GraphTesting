@@ -1,5 +1,4 @@
-﻿
-using Generators;
+﻿using Generators;
 using Filters;
 using StudentResultsSpace;
 using System.Windows;
@@ -40,36 +39,23 @@ namespace TeacherGraphApplication.Results.Generators
         {
             if (string.IsNullOrWhiteSpace(path))
                 throw new ArgumentException("Path cannot be null or empty", nameof(path));
-
-            // Очищаем Grid
             _grid.Children.Clear();
             _grid.RowDefinitions.Clear();
             _grid.ColumnDefinitions.Clear();
-
-            // Загружаем результаты из файла
             _container.LoadFromFile(path);
 
             try
             {
-                // Устанавливаем максимальный индекс для генератора границ
                 _borderGenerator.MaxIndex = _container.Count - 1;
-
-                // Получаем список для отображения (сортированный или исходный)
                 List<StudentResults> displayResults = sorter != null
                     ? [.. sorter.Sort(_container)]
                     : _container.Students;
-
-                // Если нет результатов для отображения
                 if (displayResults.Count == 0)
                 {
                     ShowNoResultsMessage();
                     return;
                 }
-
-                // Добавляем заголовки столбцов
                 AddColumnHeaders();
-
-                // Генерируем строки с результатами
                 for (int i = 0; i < displayResults.Count; i++)
                 {
                     AddResultRow(i, displayResults[i]);
@@ -77,7 +63,6 @@ namespace TeacherGraphApplication.Results.Generators
             }
             catch (Exception ex)
             {
-                // Показываем сообщение об ошибке
                 ShowErrorMessage($"Ошибка генерации результатов: {ex.Message}");
                 throw new ArgumentException($"Ошибка генерации результатов: {ex.Message}", ex);
             }
@@ -85,7 +70,6 @@ namespace TeacherGraphApplication.Results.Generators
 
         private void AddColumnHeaders()
         {
-            // Создаем заголовки столбцов
             _grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(40, GridUnitType.Pixel) });
 
             string[] headers = { "Студент", "Правильных ответов", "Процент", "Оценка" };
@@ -129,20 +113,17 @@ namespace TeacherGraphApplication.Results.Generators
 
         private void AddResultRow(int rowIndex, StudentResults result)
         {
-            // Добавляем строку для данных
-            int dataRowIndex = rowIndex + 1; // +1 из-за заголовка
+            int dataRowIndex = rowIndex + 1;
             _grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(60, GridUnitType.Pixel) });
 
-            // Создаем ячейки с данными
             var borders = new[]
             {
                 _borderGenerator.GenerateBorder($"{result.Student.LastName} {result.Student.FirstName}", rowIndex),
                 _borderGenerator.GenerateBorder(result.SolvedProblems.ToString(), rowIndex),
-                _borderGenerator.GenerateBorder($"{result.Percent:P1}", rowIndex), // Форматируем как процент
+                _borderGenerator.GenerateBorder($"{result.Percent:P1}", rowIndex),
                 _borderGenerator.GenerateBorder(result.Rate.ToString(), rowIndex)
             };
 
-            // Размещаем ячейки в Grid
             for (int colIndex = 0; colIndex < borders.Length; colIndex++)
             {
                 Grid.SetRow(borders[colIndex], dataRowIndex);
@@ -187,7 +168,6 @@ namespace TeacherGraphApplication.Results.Generators
             _grid.Children.Add(textBlock);
         }
 
-        // Метод для получения статистики по всем студентам
         public Dictionary<string, object> GetStatistics()
         {
             if (_container.Count == 0)
@@ -203,7 +183,6 @@ namespace TeacherGraphApplication.Results.Generators
             };
         }
 
-        // Метод для получения правильных ответов (для отладки)
         public Dictionary<string, object> GetCorrectAnswers()
         {
             return _container.GetCorrectAnswers();

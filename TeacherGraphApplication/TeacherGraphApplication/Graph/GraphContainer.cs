@@ -14,8 +14,6 @@ namespace TeacherGraphApplication.Graph
         public List<GraphEdge> Edges { get; set; } = new List<GraphEdge>();
 
         private Dictionary<GraphVertex, List<GraphEdge>> adjacencyList = new Dictionary<GraphVertex, List<GraphEdge>>();
-
-        // Метод для добавления вершины
         public void AddVertex(GraphVertex vertex)
         {
             if (!Vertices.Contains(vertex))
@@ -24,15 +22,11 @@ namespace TeacherGraphApplication.Graph
                 adjacencyList[vertex] = new List<GraphEdge>();
             }
         }
-
-        // Метод для добавления ребра
         public void AddEdge(GraphEdge edge)
         {
             if (!Edges.Contains(edge))
             {
                 Edges.Add(edge);
-
-                // Добавляем в списки смежности для быстрого доступа
                 if (!adjacencyList.ContainsKey(edge.Source))
                     adjacencyList[edge.Source] = new List<GraphEdge>();
                 if (!adjacencyList.ContainsKey(edge.Target))
@@ -43,7 +37,6 @@ namespace TeacherGraphApplication.Graph
             }
         }
 
-        // Метод для создания ребра между двумя вершинами
         public GraphEdge AddEdge(GraphVertex source, GraphVertex target)
         {
             var edge = new GraphEdge(source, target);
@@ -51,7 +44,6 @@ namespace TeacherGraphApplication.Graph
             return edge;
         }
 
-        // Получить все инцидентные ребра для вершины
         public List<GraphEdge> GetEdges(GraphVertex vertex)
         {
             return adjacencyList.ContainsKey(vertex)
@@ -59,7 +51,6 @@ namespace TeacherGraphApplication.Graph
                 : new List<GraphEdge>();
         }
 
-        // Получить соседние вершины для вершины
         public List<GraphVertex> GetNeighbors(GraphVertex vertex)
         {
             var neighbors = new HashSet<GraphVertex>();
@@ -76,7 +67,6 @@ namespace TeacherGraphApplication.Graph
             return neighbors.ToList();
         }
 
-        // Проверить, существует ли ребро между вершинами
         public bool HasEdge(GraphVertex source, GraphVertex target)
         {
             if (!adjacencyList.ContainsKey(source))
@@ -87,7 +77,6 @@ namespace TeacherGraphApplication.Graph
                 (edge.Source == target && edge.Target == source));
         }
 
-        // Очистить граф
         public void Clear()
         {
             Vertices.Clear();
@@ -99,11 +88,11 @@ namespace TeacherGraphApplication.Graph
         {
             var graph = new BidirectionalGraph<object, IEdge<object>>();
 
-            // Добавляем вершины
+          
             foreach (var vertex in Vertices)
                 graph.AddVertex(vertex);
 
-            // Добавляем ребра
+        
             foreach (var edge in Edges)
                 graph.AddEdge(new Edge<object>(edge.Source, edge.Target));
 

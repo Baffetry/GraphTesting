@@ -20,7 +20,7 @@ namespace StudentGraphApplication
         private int currentTaskIndex = 0;
         private StudentResults studentResults;
         private Student currentStudent;
-        private bool resultsSaved = false; // Флаг для отслеживания сохранения
+        private bool resultsSaved = false; 
 
         public MainWindow()
         {
@@ -56,7 +56,6 @@ namespace StudentGraphApplication
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            // Сохраняем результаты только если они еще не сохранены
             if (!resultsSaved)
             {
                 SaveResultsToFile();
@@ -68,7 +67,7 @@ namespace StudentGraphApplication
             timeInSeconds = 0;
             currentConfig = null;
             TimerTextBlock.Text = "00:00:00";
-            resultsSaved = false; // Сбрасываем флаг для следующей сессии
+            resultsSaved = false; 
         }
 
         #region SaveButton
@@ -137,14 +136,14 @@ namespace StudentGraphApplication
 
             graphLayout.Graph = currentConfig.Container.ToGraph();
 
-            resultsSaved = false; // Сбрасываем флаг при начале новой сессии
+            resultsSaved = false; 
         }
         #endregion
 
         #region ExitButton
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
-            // Сохраняем результаты только если они еще не сохранены
+
             if (!resultsSaved)
             {
                 SaveResultsToFile();
@@ -276,7 +275,6 @@ namespace StudentGraphApplication
             if (result is MessageBoxResult.Yes)
             {
                 SaveResultsToFile();
-                // Возвращаемся в меню (без повторного сохранения)
                 ReturnToMenuWithoutSaving();
             }
         }
@@ -544,7 +542,7 @@ namespace StudentGraphApplication
                     }
 
                     CustomMessageBoxWindow.Show($"Результаты сохранены в файл: Results.txt", "Сохранение", MessageType.Warning, MessageBoxButton.OK);
-                    resultsSaved = true; // Устанавливаем флаг, что результаты сохранены
+                    resultsSaved = true;
                 }
             }
             catch (Exception ex)
