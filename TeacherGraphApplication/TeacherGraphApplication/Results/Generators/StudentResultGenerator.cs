@@ -22,9 +22,9 @@ namespace TeacherGraphApplication.Results.Generators
             borderGenerator = new BorderGenerator();
         }
 
-        public void SetGraphContainer(GraphContainer graphContainer)
+        public void SetGraphContainer(GraphContainer graphContainer, int taskCount)
         {
-            container.SetGraph(graphContainer);
+            container.SetGraph(graphContainer, taskCount);
         }
 
         public bool GraphInitialized()

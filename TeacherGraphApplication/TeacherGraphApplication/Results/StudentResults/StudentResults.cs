@@ -19,10 +19,12 @@ namespace StudentResultsSpace
 
         public int SolvedProblems { get; set; }
 
+        public int TotalTask { get; set; }
+
         public StudentResults() { }
 
         public string GetSP()
-            => $"{SolvedProblems} / {TaskAnswers.Count()}";
+            => $"{SolvedProblems} / {TotalTask}";
 
         public string GetPercent()
             => $"{Percent}%";

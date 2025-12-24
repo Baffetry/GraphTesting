@@ -27,9 +27,9 @@ namespace Results
             return instance;
         }
 
-        public static void SetGraph(GraphContainer container)
+        public static void SetGraph(GraphContainer container, int taskCount)
         {
-            _studentResultGenerator.SetGraphContainer(container);
+            _studentResultGenerator.SetGraphContainer(container, taskCount);
         }
 
         public static void GraphInitialized()

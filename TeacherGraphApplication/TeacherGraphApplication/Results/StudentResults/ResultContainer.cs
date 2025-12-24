@@ -13,6 +13,8 @@ namespace StudentResultsSpace
         private Dictionary<string, object> results;
         private GraphCalc graph;
 
+        private int TaskCount;
+
         public ResultContainer() { }
 
         public int Count
@@ -24,10 +26,12 @@ namespace StudentResultsSpace
         public StudentResults this[int index]
             => students[index];
 
-        public void SetGraph(GraphContainer container)
+        public void SetGraph(GraphContainer container, int taskCount)
         {
             if (container == null)
                 throw new ArgumentNullException(nameof(container));
+
+            TaskCount = taskCount;
 
             graph = new GraphCalc(container);
             results = new Dictionary<string, object>()
@@ -120,9 +124,10 @@ namespace StudentResultsSpace
                 }
             }
 
+            studentResult.TotalTask = TaskCount;
             studentResult.SolvedProblems = correctSolvedQuestions;
             studentResult.Percent = totalQuestionsInTest > 0
-                ? Math.Round((double)correctSolvedQuestions * 100.0 / totalQuestionsInTest, 2) 
+                ? Math.Round((double)correctSolvedQuestions * 100.0 / TaskCount, 2) 
                 : 0;
 
             studentResult.Rate = GetRate(studentResult.Percent);

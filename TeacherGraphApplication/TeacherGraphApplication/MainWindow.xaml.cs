@@ -481,7 +481,7 @@ namespace TeacherGraphApplication
                 if (targetCfg is null)
                     return;
 
-                TableGenerator.SetGraph(targetCfg.Container);
+                TableGenerator.SetGraph(targetCfg.Container, targetCfg.TaskList.Count());
 
                 if (opf.ShowDialog() is true)
                 {
