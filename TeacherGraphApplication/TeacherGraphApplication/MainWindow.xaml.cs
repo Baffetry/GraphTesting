@@ -603,6 +603,19 @@ namespace TeacherGraphApplication
             int vertices = int.Parse(VertexTB.Text);
             int edges = int.Parse(EdgeTB.Text);
 
+            if (vertices > 10)
+            {
+                var result = CustomMessageBox.Show(
+                    "Количество ребёр больше 10. . .",
+                    "Предупреждение",
+                    MessageType.Warning,
+                    MessageBoxButton.OK
+                );
+
+                if (result is MessageBoxResult.OK || result is MessageBoxResult.Cancel || result is MessageBoxResult.None)
+                    return;
+            }
+
             CreateGraphWithRandomPositions(vertices, edges);
         }
         #endregion

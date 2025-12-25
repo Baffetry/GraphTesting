@@ -229,14 +229,14 @@
                             <StackPanel Orientation="Horizontal" Margin="0, 10">
 
                                 <Label Content="Количество вершин:" />
-                                <TextBox x:Name="VertexTB" PreviewTextInput="VertexTB_PreviewTextInput" Margin="20, 0"/>
+                                <TextBox x:Name="VertexTB" PreviewTextInput="VertexTB_PreviewTextInput" Margin="20, 0" MaxLength="2"/>
 
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Margin="0, 10">
 
                                 <Label Content="Количество рёбер:" />
-                                <TextBox x:Name="EdgeTB" PreviewTextInput="EdgeTB_PreviewTextInput" Margin="57, 0"/>
+                                <TextBox x:Name="EdgeTB" PreviewTextInput="EdgeTB_PreviewTextInput" Margin="57, 0" MaxLength="2"/>
 
                             </StackPanel>
 
