@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TeacherGraphApplication.Graph;
 using TeacherGraphApplication.Adapters;
+using TeacherGraphApplication.Graph;
+//using TeacherGraphApplication.Results.GraphCalc;
 
 namespace TeacherGraphApplication.Results.VariantManager
 {
@@ -224,8 +225,119 @@ namespace TeacherGraphApplication.Results.VariantManager
             int n = VertexCount;
             if (n == 0) return 0;
 
-            int matchingNumber = GetMatchingNumber();
-            return Math.Max(0, n - matchingNumber);
+            bool[,] matrix = _matrixAdapter.GetMatrix();
+
+
+            int minEdges = (int)Math.Ceiling(n / 2.0);
+            int maxEdges = n - 1;
+
+
+            for (int i = 0; i < n; i++)
+            {
+                bool hasNeighbor = false;
+                for (int j = 0; j < n; j++)
+                {
+                    if (matrix[i, j] && i != j)
+                    {
+                        hasNeighbor = true;
+                        break;
+                    }
+                }
+                if (!hasNeighbor)
+                {
+                    return -1;
+                }
+            }
+
+            for (int k = minEdges; k <= maxEdges; k++)
+            {
+                if (TryFindEdgeCover(matrix, n, k))
+                {
+                    return k;
+                }
+            }
+
+            return maxEdges;
+        }
+
+        private bool TryFindEdgeCover(bool[,] matrix, int n, int k)
+        {
+            var allEdges = GetAllEdges(matrix, n);
+
+            if (allEdges.Count < k) return false;
+            var combinations = GenerateCombinations(allEdges, k);
+
+            foreach (var edgeSet in combinations)
+            {
+                if (IsEdgeCover(edgeSet, n))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private List<(int, int)> GetAllEdges(bool[,] matrix, int n)
+        {
+            var edges = new List<(int, int)>();
+
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = i + 1; j < n; j++)
+                {
+                    if (matrix[i, j])
+                    {
+                        edges.Add((i, j));
+                    }
+                }
+            }
+
+            return edges;
+        }
+
+        private IEnumerable<List<(int, int)>> GenerateCombinations(List<(int, int)> edges, int k)
+        {
+            var result = new List<List<(int, int)>>();
+            GenerateCombinationsRecursive(edges, k, 0, new List<(int, int)>(), result);
+            return result;
+        }
+
+        private void GenerateCombinationsRecursive(List<(int, int)> edges, int k, int start,
+                                                   List<(int, int)> current, List<List<(int, int)>> result)
+        {
+            if (current.Count == k)
+            {
+                result.Add(new List<(int, int)>(current));
+                return;
+            }
+
+            for (int i = start; i < edges.Count; i++)
+            {
+                current.Add(edges[i]);
+                GenerateCombinationsRecursive(edges, k, i + 1, current, result);
+                current.RemoveAt(current.Count - 1);
+            }
+        }
+
+        private bool IsEdgeCover(List<(int, int)> edgeSet, int n)
+        {
+            bool[] covered = new bool[n];
+
+            foreach (var (u, v) in edgeSet)
+            {
+                covered[u] = true;
+                covered[v] = true;
+            }
+            for (int i = 0; i < n; i++)
+            {
+                if (!covered[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         #endregion
@@ -235,36 +347,92 @@ namespace TeacherGraphApplication.Results.VariantManager
         public double GetDensity()
         {
             int n = VertexCount;
-            if (n <= 1) return 0;
+            if (n == 0) return 0;
 
-            int m = EdgeCount;
+            bool[,] matrix = _matrixAdapter.GetMatrix();
+            int[] colors = new int[n];
+            List<int> vertices = new List<int>();
 
-            if (n == 1) return 0;
-            double numerator = 2.0 * m;
-            double denominator = n * (n - 1);
+            for (int i = 0; i < n; i++)
+            {
+                vertices.Add(i);
+            }
 
-            if (denominator == 0) return 0;
+            vertices.Sort((a, b) =>
+            {
+                int degA = 0, degB = 0;
+                for (int i = 0; i < n; i++)
+                {
+                    if (matrix[a, i]) degA++;
+                    if (matrix[b, i]) degB++;
+                }
+                return degB.CompareTo(degA);
+            });
 
-            double density = numerator / denominator;
-            density = Math.Round(density, 2, MidpointRounding.AwayFromZero);
+            int maxClique = 0;
+            List<int> current = new List<int>();
 
-            return density;
+            BronKerbosch(matrix, vertices, current, ref maxClique, 0, n);
+
+            return maxClique;
         }
 
-        public bool CompareDensity(double studentAnswer)
+        private void BronKerbosch(bool[,] matrix, List<int> candidates,
+                                  List<int> current, ref int maxClique,
+                                  int depth, int n)
         {
-            double correctDensity = GetDensity();
-            return Math.Abs(correctDensity - studentAnswer) <= 0.01;
-        }
+            if (candidates.Count == 0)
+            {
+                if (current.Count > maxClique)
+                {
+                    maxClique = current.Count;
+                }
+                return;
+            }
 
-        public string GetDensityFormula()
-        {
-            int n = VertexCount;
-            int m = EdgeCount;
+            if (current.Count + candidates.Count <= maxClique)
+            {
+                return;
+            }
 
-            if (n <= 1) return "0";
+            int pivot = candidates[0];
+            List<int> candidatesWithoutPivot = new List<int>();
 
-            return $"2×{m} / ({n}×{n - 1}) = {2.0 * m} / {n * (n - 1)} = {GetDensity()}";
+            foreach (int v in candidates)
+            {
+                if (v != pivot && matrix[v, pivot])
+                {
+                    candidatesWithoutPivot.Add(v);
+                }
+            }
+
+            while (candidates.Count > 0)
+            {
+                int v = candidates[0];
+                current.Add(v);
+
+
+                List<int> newCandidates = new List<int>();
+                foreach (int u in candidates)
+                {
+                    if (matrix[v, u])
+                    {
+                        newCandidates.Add(u);
+                    }
+                }
+
+                BronKerbosch(matrix, newCandidates, current, ref maxClique, depth + 1, n);
+
+
+                current.RemoveAt(current.Count - 1);
+                candidates.Remove(v);
+
+
+                if (current.Count + candidates.Count <= maxClique)
+                {
+                    break;
+                }
+            }
         }
 
         #endregion
@@ -276,28 +444,44 @@ namespace TeacherGraphApplication.Results.VariantManager
             int n = VertexCount;
             if (n == 0) return 0;
 
+            int edgeCoverNumber = GetEdgeCoverNumber();
+
+            if (edgeCoverNumber == -1)
+            {
+
+                return FindMatchingDirectly();
+            }
+
+            return n - edgeCoverNumber;
+        }
+
+        private int FindMatchingDirectly()
+        {
+            int n = VertexCount;
+            if (n == 0) return 0;
+
             bool[,] matrix = _matrixAdapter.GetMatrix();
-            var matchedVertices = new HashSet<int>();
-            int matchCount = 0;
+            bool[] used = new bool[n];
+            int matching = 0;
 
             for (int i = 0; i < n; i++)
             {
-                if (!matchedVertices.Contains(i))
+                if (!used[i])
                 {
                     for (int j = i + 1; j < n; j++)
                     {
-                        if (matrix[i, j] && !matchedVertices.Contains(j))
+                        if (!used[j] && matrix[i, j])
                         {
-                            matchedVertices.Add(i);
-                            matchedVertices.Add(j);
-                            matchCount++;
+                            used[i] = true;
+                            used[j] = true;
+                            matching++;
                             break;
                         }
                     }
                 }
             }
 
-            return matchCount;
+            return matching;
         }
 
         #endregion
@@ -425,6 +609,7 @@ namespace TeacherGraphApplication.Results.VariantManager
             double density = GetDensity();
             return density.ToString("0.##").Replace(',', '.');
         }
+
         #endregion
     }
 }

@@ -15,7 +15,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Shapes;
 using TeacherGraphApplication.CWC;
 using TeacherGraphApplication.Graph;
 using TeacherGraphApplication.Props.Brusher;
@@ -193,9 +192,6 @@ namespace TeacherGraphApplication
                     WriteIndented = true,
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase
                 });
-
-                File.WriteAllText(saveDialog.FileName + "JSON", json);
-
 
                 var encprition = new Encryption();
                 string result = encprition.Encrypt(json);
