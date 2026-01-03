@@ -96,33 +96,60 @@ namespace TeacherGraphApplication.Results.VariantManager
 
             bool[,] matrix = _matrixAdapter.GetMatrix();
             int[] colors = new int[n];
-            for (int i = 0; i < n; i++) colors[i] = -1;
 
-            bool[] available = new bool[n];
-            colors[0] = 0;
-
-            for (int v = 1; v < n; v++)
+          
+            for (int k = 1; k <= n; k++)
             {
-                for (int i = 0; i < n; i++) available[i] = true;
-
-                for (int u = 0; u < n; u++)
+                Array.Fill(colors, -1);
+                if (TryColorGraph(matrix, colors, 0, k))
                 {
-                    if (matrix[v, u] && colors[u] != -1)
-                    {
-                        available[colors[u]] = false;
-                    }
+                    return k;
                 }
-
-                int cr;
-                for (cr = 0; cr < n; cr++)
-                {
-                    if (available[cr]) break;
-                }
-
-                colors[v] = cr;
             }
 
-            return colors.Max() + 1;
+            return n; 
+        }
+        private bool TryColorGraph(bool[,] matrix, int[] colors, int vertex, int k)
+        {
+            int n = colors.Length;
+            if (vertex == n)
+            {
+                return true;
+            }
+
+            for (int c = 0; c < k; c++)
+            {
+                if (IsColorSafe(matrix, colors, vertex, c))
+                {
+                   
+                    colors[vertex] = c;
+
+                   
+                    if (TryColorGraph(matrix, colors, vertex + 1, k))
+                    {
+                        return true;
+                    }
+
+                    colors[vertex] = -1;
+                }
+            }
+
+            return false;
+        }
+
+        private bool IsColorSafe(bool[,] matrix, int[] colors, int v, int c)
+        {
+            int n = colors.Length;
+
+            for (int u = 0; u < n; u++)
+            {
+                if (matrix[v, u] && colors[u] == c)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         #endregion
