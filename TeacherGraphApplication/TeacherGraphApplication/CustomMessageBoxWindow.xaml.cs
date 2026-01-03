@@ -29,13 +29,18 @@ namespace TeacherGraphApplication
     {
         public MessageBoxResult result { get; set; }
 
-        public CustomMessageBox(string message, string title, MessageType type, MessageBoxButton button)
+        public CustomMessageBox(string message, string title, MessageType type, MessageBoxButton button, double width, double height)
         {
             InitializeComponent();
 
             SetIcon(type);
 
             TitleLabel.Content = title;
+
+            Width = width;
+            Height = height;
+
+            ContentLabel.Height = height - 160;
             ContentLabel.Content = message;
 
             switch (button)
@@ -68,9 +73,9 @@ namespace TeacherGraphApplication
                 this.DragMove();
         }
 
-        public static MessageBoxResult Show(string message, string title, MessageType type, MessageBoxButton button)
+        public static MessageBoxResult Show(string message, string title, MessageType type, MessageBoxButton button, double width = 500, double height = 300)
         {
-            var messageBox = new CustomMessageBox(message, title, type, button);
+            var messageBox = new CustomMessageBox(message, title, type, button, width, height);
             messageBox.ShowDialog();
             return messageBox.result;
         }

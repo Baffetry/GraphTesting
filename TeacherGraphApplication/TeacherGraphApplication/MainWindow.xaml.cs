@@ -7,8 +7,6 @@ using Microsoft.Win32;
 using QuikGraph;
 using Results;
 using StudentGraphApplication;
-using StudentResultsSpace;
-using System;
 using System.IO;
 using System.Text.Json;
 using System.Windows;
@@ -394,13 +392,16 @@ namespace TeacherGraphApplication
                     string.IsNullOrEmpty(EdgeTB.Text))
                     throw new ArgumentException("Проверьте, правильно ли вы ввели кол-во рёбер или вершин. . .");
 
+                if (int.Parse(VertexTB.Text) > 10)
+                    throw new ArgumentException("Кол-во вершин должно быть меньше или равно 10. . .");
+
                 if (graphContainer is null)
                     throw new ArgumentException("Необходимо сгенерировать граф перед сохранением варианта. . .");
 
                 if (container.GetStates().Where(x => x == true).Count() == 0)
                     throw new ArgumentException("Нужно выбрать хотя бы одну задачу для контрольной работы. . .");
 
-                SaveWithFileDialog("ControlWorkConfig");
+                SaveWithFileDialog($"Вариант_{DateTime.Today:yyyy-MM-dd}");
             }
             catch (Exception ex)
             {
@@ -493,7 +494,9 @@ namespace TeacherGraphApplication
                     ex.Message + "\n\n1. Выбрать вариант контрольной\n2. Выбрать файл с результатами",
                     "Предупреждение",
                     MessageType.Warning,
-                    MessageBoxButton.OK
+                    MessageBoxButton.OK,
+                    Width = 500,
+                    Height = 350
                 );
             }
         }

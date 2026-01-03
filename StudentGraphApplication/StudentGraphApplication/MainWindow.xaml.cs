@@ -528,7 +528,7 @@ namespace StudentGraphApplication
                 if (dialog.ShowDialog() == true)
                 {
                     string directory = Path.GetDirectoryName(dialog.FileName);
-                    string graphResultsPath = Path.Combine(directory, "Results.txt");
+                    string graphResultsPath = Path.Combine(directory, $"Результаты_{DateTime.Today:yyyy-MM-dd}");
 
                     string resultLine = $"{encryptedJson}" + "\n";
 
@@ -541,7 +541,7 @@ namespace StudentGraphApplication
                         File.WriteAllText(graphResultsPath, resultLine);
                     }
 
-                    CustomMessageBoxWindow.Show($"Результаты сохранены в файл: Results.txt", "Сохранение", MessageType.Warning, MessageBoxButton.OK);
+                    CustomMessageBoxWindow.Show($"Результаты сохранены в файл: {graphResultsPath}", "Сохранение", MessageType.Warning, MessageBoxButton.OK);
                     resultsSaved = true;
                 }
             }
